@@ -1,0 +1,56 @@
+<html>
+<body>
+<pre>
+<h1>礦ision Build Log</h1>
+<h2>Project:</h2>
+C:\Users\Administrator\Desktop\STC8A-170608\程序方面\10 外部中断 1\text10.uvproj
+Project File Date:  07/01/2013
+
+<h2>Output:</h2>
+Build target 'Target 1'
+compiling text10.c...
+text10.c(7): warning C318: can't open file 'stc82.h'
+text10.c(10): error C202: 'P5': undefined identifier
+text10.c(18): error C202: 'EX0': undefined identifier
+text10.c(19): error C202: 'IT0': undefined identifier
+text10.c(20): error C202: 'EA': undefined identifier
+text10.c(28): error C202: 'led': undefined identifier
+Target not created
+Build target 'Target 1'
+compiling text10.c...
+text10.c(7): warning C318: can't open file 'stc82.h'
+text10.c(10): error C202: 'P5': undefined identifier
+text10.c(18): error C202: 'EX0': undefined identifier
+text10.c(19): error C202: 'IT0': undefined identifier
+text10.c(20): error C202: 'EA': undefined identifier
+text10.c(28): error C202: 'led': undefined identifier
+Target not created
+Rebuild target 'Target 1'
+assembling STARTUP.A51...
+compiling text10.c...
+linking...
+Program Size: data=9.0 xdata=0 code=54
+creating hex file from "text10"...
+"text10" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: data=9.0 xdata=0 code=54
+creating hex file from "text10"...
+"text10" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling text10.c...
+linking...
+Program Size: data=9.0 xdata=0 code=54
+creating hex file from "text10"...
+"text10" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+compiling text10.c...
+linking...
+Program Size: data=9.0 xdata=0 code=29
+creating hex file from "text10"...
+"text10" - 0 Error(s), 0 Warning(s).
+Build target 'Target 1'
+linking...
+Program Size: data=9.0 xdata=0 code=29
+creating hex file from "text10"...
+"text10" - 0 Error(s), 0 Warning(s).

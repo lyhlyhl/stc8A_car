@@ -1,0 +1,51 @@
+C51 COMPILER V9.05   TEXT10                                                                06/12/2017 18:20:46 PAGE 1   
+
+
+C51 COMPILER V9.05, COMPILATION OF MODULE TEXT10
+OBJECT MODULE PLACED IN text10.OBJ
+COMPILER INVOKED BY: C:\Keil\C51\BIN\C51.EXE text10.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          
+   2          //   中断函数
+   3          //  P32口  有下降沿变化  板子上的运行指示灯会发生相应的翻转
+   4          
+   5          
+   6          
+   7          #include "stc8.h"
+   8          
+   9          
+  10          sbit  led=P5^5;
+  11          
+  12          
+  13          
+  14          main()
+  15          {
+  16   1      
+  17   1         EX0=1;   //开启外部中断0  即P3.2
+  18   1         IT0=0;       //下降沿触发   IT0=1 为 上升沿 下降沿均可
+  19   1         EA=1;        //开启总中断
+  20   1         while(1);
+  21   1      
+  22   1      }
+  23          
+  24          
+  25          void zhong() interrupt 0
+  26          {
+  27   1      led=!led;
+  28   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     11    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

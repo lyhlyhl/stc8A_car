@@ -1,0 +1,106 @@
+C51 COMPILER V9.53.0.0   MAIN                                                              06/18/2020 17:14:00 PAGE 1   
+
+
+C51 COMPILER V9.53.0.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN main.OBJ
+COMPILER INVOKED BY: F:\MDK5\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND TABS(3)
+
+line level    source
+
+   1                                                                                  
+   2          /*
+   3          
+   4          串口1通讯实验        定时器T1 工作模式0  串口工作模式2
+   5          发送16进制数据 8A 会返回  我爱单片机       这样实现一个串口收发的过程
+   6          说明 串口1波特率为9600   STC15内部晶振频率为11.0592MHz
+   7          */
+   8          
+   9          
+  10          
+  11          #include "stc8.h"
+  12          
+  13          char  code  MESSAGE[]= "我爱单片机 ";  //定义到程序空间中
+  14          
+  15          
+  16          
+  17          
+  18          void ISP_Check(unsigned char tmp)      //串口收到数据处理并发送数据
+  19          {
+  20   1        unsigned char a;
+  21   1          if(tmp==0x8A)                   //收到的数据为0x15
+  22   1           {
+  23   2         
+  24   2           ES= 0;                      //关闭串口中断
+  25   2           a=0;
+  26   2            while(MESSAGE[a]!= '\0')
+  27   2               {
+  28   3            SBUF = MESSAGE[a];           //SUBF接受/发送缓冲器(又叫串行通信特殊功能寄存器)
+  29   3               while(!TI);          // 等特数据传送   (TI发送中断标志)
+  30   3             TI = 0;             // 清除数据传送标志
+  31   3            
+  32   3            a++;                  // 下一个字符
+  33   3             } 
+  34   2       
+  35   2           ES= 1;                       //开启串口中断
+  36   2           }
+  37   1      
+  38   1        }   
+  39          
+  40          
+  41          
+  42          
+  43          void main()           //主函数
+  44          {
+  45   1      
+  46   1             SCON=0x50;        //REN=1允许串行接受状态，串口工作模式2         
+  47   1            TMOD= 0x00;       //定时器1为模式0（16位自动重载）                
+  48   1            AUXR=0X40;      //开启1T模式
+  49   1             TL1=(65535-(24000000/4/9600));    //设置波特率重装值
+  50   1            TH1=(65535-(24000000/4/9600))>>8;
+  51   1      
+  52   1                              // 如有不明白请查 STC15手册上有详细说明    619页
+  53   1            
+  54   1            TR1  = 1;        //开启定时器1  
+  55   1            ES   = 1;        //开串口中断                                                                     
+C51 COMPILER V9.53.0.0   MAIN                                                              06/18/2020 17:14:00 PAGE 2   
+
+  56   1            EA   = 1;        // 开总中断 
+  57   1            while(1);
+  58   1      }
+  59          
+  60          
+  61          
+  62          void uart_int(void) interrupt 4 using 1
+  63          { 
+  64   1      unsigned char tmp;
+  65   1          
+  66   1         if (RI) 
+  67   1          {
+  68   2      
+  69   2            tmp = SBUF;
+  70   2      
+  71   2           ISP_Check(tmp); 
+  72   2      
+  73   2            RI = 0;
+  74   2          }
+  75   1      }  
+  76          
+  77          
+  78           
+  79          
+  80          
+  81          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     81    ----
+   CONSTANT SIZE    =     12    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

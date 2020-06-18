@@ -1,0 +1,4 @@
+"STARTUP.obj",
+"text9.obj" 
+TO "text9" 
+RAMSIZE(256) 

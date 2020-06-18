@@ -1,0 +1,7 @@
+"STARTUP.obj",
+"text1.obj",
+".\OLED.obj",
+".\I2C.obj",
+".\delay.obj" 
+TO "text1" 
+RAMSIZE(256) 

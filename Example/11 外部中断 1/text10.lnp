@@ -1,0 +1,4 @@
+"STARTUP.obj",
+"text10.obj" 
+TO "text10" 
+RAMSIZE(256) 
