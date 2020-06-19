@@ -122,7 +122,7 @@
             <Oh166RecLen>16</Oh166RecLen>
           </OPTHX>
           <Simulator>
-            <UseSimulator>0</UseSimulator>
+            <UseSimulator>1</UseSimulator>
             <LoadApplicationAtStartup>1</LoadApplicationAtStartup>
             <RunToMain>1</RunToMain>
             <RestoreBreakpoints>1</RestoreBreakpoints>
@@ -134,7 +134,7 @@
             <RestoreSysVw>1</RestoreSysVw>
           </Simulator>
           <Target>
-            <UseTarget>1</UseTarget>
+            <UseTarget>0</UseTarget>
             <LoadApplicationAtStartup>1</LoadApplicationAtStartup>
             <RunToMain>0</RunToMain>
             <RestoreBreakpoints>1</RestoreBreakpoints>
@@ -144,9 +144,10 @@
             <RestoreToolbox>1</RestoreToolbox>
             <RestoreTracepoints>0</RestoreTracepoints>
             <RestoreSysVw>1</RestoreSysVw>
+            <UsePdscDebugDescription>1</UsePdscDebugDescription>
           </Target>
           <RunDebugAfterBuild>0</RunDebugAfterBuild>
-          <TargetSelection>9</TargetSelection>
+          <TargetSelection>-1</TargetSelection>
           <SimDlls>
             <CpuDll></CpuDll>
             <CpuDllArguments></CpuDllArguments>
@@ -160,7 +161,7 @@
             <PeripheralDll></PeripheralDll>
             <PeripheralDllArguments></PeripheralDllArguments>
             <InitializationFile></InitializationFile>
-            <Driver>BIN\STCMON51.DLL</Driver>
+            <Driver></Driver>
           </TargetDlls>
         </DebugOption>
         <Utilities>
@@ -172,9 +173,9 @@
             <Capability>0</Capability>
             <DriverSelection>-1</DriverSelection>
           </Flash1>
-          <bUseTDR>1</bUseTDR>
+          <bUseTDR>0</bUseTDR>
           <Flash2></Flash2>
-          <Flash3>"" ()</Flash3>
+          <Flash3></Flash3>
           <Flash4></Flash4>
           <pFcarmOut></pFcarmOut>
           <pFcarmGrp></pFcarmGrp>
@@ -228,7 +229,7 @@
               <RCB>
                 <Type>0</Type>
                 <StartAddress>0x0</StartAddress>
-                <Size>0xffff</Size>
+                <Size>0x10000</Size>
               </RCB>
               <RXB>
                 <Type>0</Type>
@@ -309,7 +310,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\hardware\delay;..\hardware\IIC;..\hardware\OLED;..\hardware\ADC</IncludePath>
+              <IncludePath></IncludePath>
             </VariousControls>
           </C51>
           <Ax51>
@@ -359,7 +360,7 @@
       </TargetOption>
       <Groups>
         <Group>
-          <GroupName>Main</GroupName>
+          <GroupName>Source Group 1</GroupName>
           <Files>
             <File>
               <FileName>STARTUP.A51</FileName>
@@ -370,31 +371,6 @@
               <FileName>text1.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\text1.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>Hardware</GroupName>
-          <Files>
-            <File>
-              <FileName>OLED.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\hardware\OLED\OLED.c</FilePath>
-            </File>
-            <File>
-              <FileName>I2C.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\hardware\IIC\I2C.c</FilePath>
-            </File>
-            <File>
-              <FileName>delay.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\hardware\delay\delay.c</FilePath>
-            </File>
-            <File>
-              <FileName>adc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\hardware\ADC\adc.c</FilePath>
             </File>
           </Files>
         </Group>
