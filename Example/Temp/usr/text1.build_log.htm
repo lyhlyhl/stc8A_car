@@ -22,19 +22,18 @@ Dialog DLL:      TP51.DLL V2.58
  
 <h2>Project:</h2>
 C:\Users\DELL\Desktop\ÖÇÄÜ³µ\stc8A_car\Example\Temp\usr\text1.uvproj
-Project File Date:  06/18/2020
+Project File Date:  06/19/2020
 
 <h2>Output:</h2>
 Rebuild target 'Target 1'
 assembling STARTUP.A51...
 compiling text1.c...
-text1.c(12): warning C280: 'Vo': unreferenced local variable
-text1.c(12): warning C280: 'a': unreferenced local variable
 compiling OLED.c...
 compiling I2C.c...
 compiling delay.c...
 compiling adc.c...
-..\hardware\ADC\adc.c(7): warning C280: 'Vo': unreferenced local variable
+compiling SEEKFREE_MPU6050.c...
+compiling SEEKFREE_IIC.c...
 linking...
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?_FILL_PICTURE?OLED
@@ -55,12 +54,25 @@ linking...
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?_RCVBYTE?I2C
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_DELAY1MS?DELAY
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?_DELAY1US?DELAY
-Program Size: data=96.1 xdata=0 code=4992
-creating hex file from "text1"...
-"text1" - 0 Error(s), 14 Warning(s).
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?MPU6050_INIT?SEEKFREE_MPU6050
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?MPU6050_GET_ACCDATA?SEEKFREE_MPU6050
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?MPU6050_GET_GYRO?SEEKFREE_MPU6050
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?SIMIIC_INIT?SEEKFREE_IIC
+*** ERROR L107: ADDRESS SPACE OVERFLOW
+    SPACE:   DATA    
+    SEGMENT: ?DT?OLED_ON?OLED
+    LENGTH:  0002H
+*** ERROR L107: ADDRESS SPACE OVERFLOW
+    SPACE:   DATA    
+    SEGMENT: ?DT?_SIMIIC_READ_REG?SEEKFREE_IIC
+    LENGTH:  0001H
+Program Size: data=131.1 xdata=0 code=5663
+Target not created.
 </pre>
 </body>
 </html>

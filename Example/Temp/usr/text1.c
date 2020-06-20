@@ -9,7 +9,6 @@
 
 void main(void)
 {
-   u16 Vo,a;
    float V;
    char test[10];
    OLED_Init();

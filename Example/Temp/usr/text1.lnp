@@ -3,6 +3,8 @@
 ".\OLED.obj",
 ".\I2C.obj",
 ".\delay.obj",
-".\adc.obj" 
+".\adc.obj",
+".\SEEKFREE_MPU6050.obj",
+".\SEEKFREE_IIC.obj" 
 TO "text1" 
 RAMSIZE(256) 

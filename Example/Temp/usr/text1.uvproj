@@ -299,7 +299,7 @@
             <uAregs>0</uAregs>
             <UseInterruptVector>1</UseInterruptVector>
             <Fuzzy>3</Fuzzy>
-            <Optimize>8</Optimize>
+            <Optimize>5</Optimize>
             <WarningLevel>2</WarningLevel>
             <SizeSpeed>1</SizeSpeed>
             <ObjectExtend>1</ObjectExtend>
@@ -309,7 +309,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\hardware\delay;..\hardware\IIC;..\hardware\OLED;..\hardware\ADC</IncludePath>
+              <IncludePath>..\hardware\delay;..\hardware\IIC;..\hardware\OLED;..\hardware\ADC;..\hardware\Mpu6050</IncludePath>
             </VariousControls>
           </C51>
           <Ax51>
@@ -395,6 +395,16 @@
               <FileName>adc.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\hardware\ADC\adc.c</FilePath>
+            </File>
+            <File>
+              <FileName>SEEKFREE_MPU6050.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\hardware\Mpu6050\SEEKFREE_MPU6050.c</FilePath>
+            </File>
+            <File>
+              <FileName>SEEKFREE_IIC.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\hardware\Mpu6050\SEEKFREE_IIC.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -4,7 +4,7 @@
 
 u16 GetADCResult(u8 ch)         //这里如有不懂 请仔细看资料
 {   
-    u16 Vo,adc_value;     
+    u16 adc_value;     
     P1M0=0x00;
     P1M1=0x01;
    //选择P1口的哪一口 这里的口和ch要对应才能达到选择该口
