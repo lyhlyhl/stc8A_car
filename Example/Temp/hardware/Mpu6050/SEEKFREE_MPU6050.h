@@ -63,6 +63,7 @@
 extern int mpu_gyro_x,mpu_gyro_y,mpu_gyro_z;
 extern int mpu_acc_x,mpu_acc_y,mpu_acc_z;
 
+void mpu6050_self1_check(void);
 void  mpu6050_init(void);               //≥ı ºªØMPU6050
 void  mpu6050_get_accdata(void);
 void  mpu6050_get_gyro(void);

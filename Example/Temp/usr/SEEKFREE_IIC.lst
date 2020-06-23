@@ -1,11 +1,11 @@
-C51 COMPILER V9.53.0.0   SEEKFREE_IIC                                                      06/21/2020 03:08:32 PAGE 1   
+C51 COMPILER V9.53.0.0   SEEKFREE_IIC                                                      06/23/2020 16:39:43 PAGE 1   
 
 
 C51 COMPILER V9.53.0.0, COMPILATION OF MODULE SEEKFREE_IIC
 OBJECT MODULE PLACED IN .\SEEKFREE_IIC.obj
-COMPILER INVOKED BY: F:\MDK5\C51\BIN\C51.EXE ..\hardware\Mpu6050\SEEKFREE_IIC.c OPTIMIZE(5,SPEED) BROWSE INCDIR(..\hardw
-                    -are\delay;..\hardware\IIC;..\hardware\OLED;..\hardware\ADC;..\hardware\Mpu6050) DEBUG OBJECTEXTEND PRINT(.\SEEKFREE_IIC.
-                    -lst) TABS(3) OBJECT(.\SEEKFREE_IIC.obj)
+COMPILER INVOKED BY: F:\MDK5\C51\BIN\C51.EXE ..\hardware\Mpu6050\SEEKFREE_IIC.c LARGE OMF2 OPTIMIZE(2,SPEED) BROWSE INCD
+                    -IR(..\hardware\delay;..\hardware\IIC;..\hardware\OLED;..\hardware\ADC;..\hardware\Mpu6050;..\hardware\KEY;..\hardware\LE
+                    -D) DEBUG PRINT(.\SEEKFREE_IIC.lst) TABS(3) OBJECT(.\SEEKFREE_IIC.obj)
 
 line level    source
 
@@ -62,12 +62,12 @@ line level    source
   49          
   50          void  simiic_init(void)
   51          {
-C51 COMPILER V9.53.0.0   SEEKFREE_IIC                                                      06/21/2020 03:08:32 PAGE 2   
+C51 COMPILER V9.53.0.0   SEEKFREE_IIC                                                      06/23/2020 16:39:43 PAGE 2   
 
-  52   1      // P1M1 |= 1<<3;
-  53   1      // P1M0 |= 1<<3;
-  54   1      // P1M1 |= 1<<5;
-  55   1      // P1M0 |= 1<<5;
+  52   1         P3M1 |= 1<<2;
+  53   1         P3M0 |= 1<<2;
+  54   1         P3M1 |= 1<<3;
+  55   1         P3M0 |= 1<<3;
   56   1      }
   57          
   58          //--------------------------------------------------------------------------------------------------------
@@ -126,7 +126,7 @@ line level    source
  109          
  110          static int sccb_waitack(void)
  111          {
-C51 COMPILER V9.53.0.0   SEEKFREE_IIC                                                      06/21/2020 03:08:32 PAGE 3   
+C51 COMPILER V9.53.0.0   SEEKFREE_IIC                                                      06/23/2020 16:39:43 PAGE 3   
 
  112   1          SCL0();
  113   1      
@@ -190,7 +190,7 @@ line level    source
  171   2              if(SDA) 
  172   2              {
  173   3                  c+=1;   //读数据位，将接收的数据存c
-C51 COMPILER V9.53.0.0   SEEKFREE_IIC                                                      06/21/2020 03:08:32 PAGE 4   
+C51 COMPILER V9.53.0.0   SEEKFREE_IIC                                                      06/23/2020 16:39:43 PAGE 4   
 
  174   3              }
  175   2          }
@@ -254,7 +254,7 @@ line level    source
              ------------
  229          //  @brief      模拟IIC读取多字节数据
  230          //  @param      dev_add       设备地址(低七位地址)
-C51 COMPILER V9.53.0.0   SEEKFREE_IIC                                                      06/21/2020 03:08:32 PAGE 5   
+C51 COMPILER V9.53.0.0   SEEKFREE_IIC                                                      06/23/2020 16:39:43 PAGE 5   
 
  231          //  @param      reg           寄存器地址
  232          //  @param      dat_add       数据保存的地址指针
@@ -288,13 +288,17 @@ line level    source
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    385    ----
+   CODE SIZE        =    581    ----
    CONSTANT SIZE    =   ----    ----
-   XDATA SIZE       =   ----    ----
+   XDATA SIZE       =      6      22
    PDATA SIZE       =   ----    ----
-   DATA SIZE        =      6       9
+   DATA SIZE        =   ----    ----
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
+   EDATA SIZE       =   ----    ----
+   HDATA SIZE       =   ----    ----
+   XDATA CONST SIZE =   ----    ----
+   FAR CONST SIZE   =   ----    ----
 END OF MODULE INFORMATION.
 
 

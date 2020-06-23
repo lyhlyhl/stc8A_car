@@ -1,11 +1,11 @@
-C51 COMPILER V9.53.0.0   ADC                                                               06/21/2020 03:08:30 PAGE 1   
+C51 COMPILER V9.53.0.0   ADC                                                               06/23/2020 16:39:41 PAGE 1   
 
 
 C51 COMPILER V9.53.0.0, COMPILATION OF MODULE ADC
 OBJECT MODULE PLACED IN .\adc.obj
-COMPILER INVOKED BY: F:\MDK5\C51\BIN\C51.EXE ..\hardware\ADC\adc.c OPTIMIZE(5,SPEED) BROWSE INCDIR(..\hardware\delay;..\
-                    -hardware\IIC;..\hardware\OLED;..\hardware\ADC;..\hardware\Mpu6050) DEBUG OBJECTEXTEND PRINT(.\adc.lst) TABS(3) OBJECT(.\
-                    -adc.obj)
+COMPILER INVOKED BY: F:\MDK5\C51\BIN\C51.EXE ..\hardware\ADC\adc.c LARGE OMF2 OPTIMIZE(2,SPEED) BROWSE INCDIR(..\hardwar
+                    -e\delay;..\hardware\IIC;..\hardware\OLED;..\hardware\ADC;..\hardware\Mpu6050;..\hardware\KEY;..\hardware\LED) DEBUG PRIN
+                    -T(.\adc.lst) TABS(3) OBJECT(.\adc.obj)
 
 line level    source
 
@@ -47,13 +47,17 @@ line level    source
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =     42    ----
+   CODE SIZE        =    101    ----
    CONSTANT SIZE    =   ----    ----
-   XDATA SIZE       =   ----    ----
+   XDATA SIZE       =   ----       3
    PDATA SIZE       =   ----    ----
    DATA SIZE        =   ----    ----
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
+   EDATA SIZE       =   ----    ----
+   HDATA SIZE       =   ----    ----
+   XDATA CONST SIZE =   ----    ----
+   FAR CONST SIZE   =   ----    ----
 END OF MODULE INFORMATION.
 
 

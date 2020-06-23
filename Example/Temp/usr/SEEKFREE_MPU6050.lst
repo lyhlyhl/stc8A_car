@@ -1,11 +1,11 @@
-C51 COMPILER V9.53.0.0   SEEKFREE_MPU6050                                                  06/21/2020 03:08:31 PAGE 1   
+C51 COMPILER V9.53.0.0   SEEKFREE_MPU6050                                                  06/23/2020 16:39:42 PAGE 1   
 
 
 C51 COMPILER V9.53.0.0, COMPILATION OF MODULE SEEKFREE_MPU6050
 OBJECT MODULE PLACED IN .\SEEKFREE_MPU6050.obj
-COMPILER INVOKED BY: F:\MDK5\C51\BIN\C51.EXE ..\hardware\Mpu6050\SEEKFREE_MPU6050.c OPTIMIZE(5,SPEED) BROWSE INCDIR(..\h
-                    -ardware\delay;..\hardware\IIC;..\hardware\OLED;..\hardware\ADC;..\hardware\Mpu6050) DEBUG OBJECTEXTEND PRINT(.\SEEKFREE_
-                    -MPU6050.lst) TABS(3) OBJECT(.\SEEKFREE_MPU6050.obj)
+COMPILER INVOKED BY: F:\MDK5\C51\BIN\C51.EXE ..\hardware\Mpu6050\SEEKFREE_MPU6050.c LARGE OMF2 OPTIMIZE(2,SPEED) BROWSE 
+                    -INCDIR(..\hardware\delay;..\hardware\IIC;..\hardware\OLED;..\hardware\ADC;..\hardware\Mpu6050;..\hardware\KEY;..\hardwar
+                    -e\LED) DEBUG PRINT(.\SEEKFREE_MPU6050.lst) TABS(3) OBJECT(.\SEEKFREE_MPU6050.obj)
 
 line level    source
 
@@ -40,123 +40,130 @@ line level    source
   27          #include "SEEKFREE_IIC.h"
   28          #include "SEEKFREE_MPU6050.h"
   29          #include "delay.h"
-  30          int mpu_gyro_x,mpu_gyro_y,mpu_gyro_z;
-  31          int mpu_acc_x,mpu_acc_y,mpu_acc_z;
-  32          
+  30          #include "LED.h"
+  31          int mpu_gyro_x,mpu_gyro_y,mpu_gyro_z;
+  32          int mpu_acc_x,mpu_acc_y,mpu_acc_z;
   33          
   34          
   35          
   36          
-  37          //--------------------------------------------------------------------------------------------------------
+  37          
+  38          //--------------------------------------------------------------------------------------------------------
              ------------
-  38          //  @brief      MPU6050自检函数
-  39          //  @param      NULL
-  40          //  @return     void             
-  41          //  @since      v1.0
-  42          //  Sample usage:          调用该函数前，请先调用模拟IIC的初始化
-  43          //--------------------------------------------------------------------------------------------------------
+  39          //  @brief      MPU6050自检函数
+  40          //  @param      NULL
+  41          //  @return     void             
+  42          //  @since      v1.0
+  43          //  Sample usage:          调用该函数前，请先调用模拟IIC的初始化
+  44          //--------------------------------------------------------------------------------------------------------
              ------------
-  44          void mpu6050_self1_check(void)
-  45          {
-  46   1          simiic_write_reg(MPU6050_DEV_ADDR, PWR_MGMT_1, 0x00);   //解除休眠状态
-  47   1          simiic_write_reg(MPU6050_DEV_ADDR, SMPLRT_DIV, 0x07);   //125HZ采样率
-  48   1          while(0x07 != simiic_read_reg(MPU6050_DEV_ADDR, SMPLRT_DIV,SIMIIC))
-  49   1          {
-C51 COMPILER V9.53.0.0   SEEKFREE_MPU6050                                                  06/21/2020 03:08:31 PAGE 2   
+  45          void mpu6050_self1_check(void)
+  46          {
+  47   1          simiic_write_reg(MPU6050_DEV_ADDR, PWR_MGMT_1, 0x00);   //解除休眠状态
+  48   1          simiic_write_reg(MPU6050_DEV_ADDR, SMPLRT_DIV, 0x07);   //125HZ采样率
+  49   1          while(0x07 != simiic_read_reg(MPU6050_DEV_ADDR, SMPLRT_DIV,SIMIIC))
+C51 COMPILER V9.53.0.0   SEEKFREE_MPU6050                                                  06/23/2020 16:39:42 PAGE 2   
 
-  50   2              //卡在这里原因有以下几点
-  51   2              //1 MPU6050坏了，如果是新的这样的概率极低
-  52   2              //2 接线错误或者没有接好
-  53   2              //3 可能你需要外接上拉电阻，上拉到3.3V
-  54   2            //4 可能没有调用模拟IIC的初始化函数
-  55   2          }
-  56   1      }
-  57          
-  58          
-  59          //--------------------------------------------------------------------------------------------------------
+  50   1          {
+  51   2             LED = 1;
+  52   2              //卡在这里原因有以下几点
+  53   2              //1 MPU6050坏了，如果是新的这样的概率极低
+  54   2              //2 接线错误或者没有接好
+  55   2              //3 可能你需要外接上拉电阻，上拉到3.3V
+  56   2            //4 可能没有调用模拟IIC的初始化函数
+  57   2          }
+  58   1          LED = 02;
+  59   1      }
+  60          
+  61          
+  62          //--------------------------------------------------------------------------------------------------------
              ------------
-  60          //  @brief      初始化MPU6050
-  61          //  @param      NULL
-  62          //  @return     void             
-  63          //  @since      v1.0
-  64          //  Sample usage:          调用该函数前，请先调用模拟IIC的初始化
-  65          //--------------------------------------------------------------------------------------------------------
+  63          //  @brief      初始化MPU6050
+  64          //  @param      NULL
+  65          //  @return     void             
+  66          //  @since      v1.0
+  67          //  Sample usage:          调用该函数前，请先调用模拟IIC的初始化
+  68          //--------------------------------------------------------------------------------------------------------
              ------------
-  66          void mpu6050_init(void)
-  67          {
-  68   1          Delay1ms(100);                                   //上电延时
-  69   1      
-  70   1          mpu6050_self1_check();
-  71   1          simiic_write_reg(MPU6050_DEV_ADDR, PWR_MGMT_1, 0x00);   //解除休眠状态
-  72   1          simiic_write_reg(MPU6050_DEV_ADDR, SMPLRT_DIV, 0x07);   //125HZ采样率
-  73   1          simiic_write_reg(MPU6050_DEV_ADDR, MPU6050_CONFIG, 0x04);       //
-  74   1          simiic_write_reg(MPU6050_DEV_ADDR, GYRO_CONFIG, 0x18);  //2000
-  75   1          simiic_write_reg(MPU6050_DEV_ADDR, ACCEL_CONFIG, 0x10); //8g
-  76   1         simiic_write_reg(MPU6050_DEV_ADDR, User_Control, 0x00);
-  77   1          simiic_write_reg(MPU6050_DEV_ADDR, INT_PIN_CFG, 0x02);
-  78   1      }
-  79          
-  80          
-  81          
-  82          //--------------------------------------------------------------------------------------------------------
+  69          void mpu6050_init(void)
+  70          {
+  71   1          Delay1ms(100);                                   //上电延时
+  72   1      
+  73   1          mpu6050_self1_check();
+  74   1          simiic_write_reg(MPU6050_DEV_ADDR, PWR_MGMT_1, 0x00);   //解除休眠状态
+  75   1          simiic_write_reg(MPU6050_DEV_ADDR, SMPLRT_DIV, 0x07);   //125HZ采样率
+  76   1          simiic_write_reg(MPU6050_DEV_ADDR, MPU6050_CONFIG, 0x04);       //
+  77   1          simiic_write_reg(MPU6050_DEV_ADDR, GYRO_CONFIG, 0x18);  //2000
+  78   1          simiic_write_reg(MPU6050_DEV_ADDR, ACCEL_CONFIG, 0x10); //8g
+  79   1         simiic_write_reg(MPU6050_DEV_ADDR, User_Control, 0x00);
+  80   1          simiic_write_reg(MPU6050_DEV_ADDR, INT_PIN_CFG, 0x02);
+  81   1      }
+  82          
+  83          
+  84          
+  85          //--------------------------------------------------------------------------------------------------------
              ------------
-  83          //  @brief      获取MPU6050加速度计数据
-  84          //  @param      NULL
-  85          //  @return     void
-  86          //  @since      v1.0
-  87          //  Sample usage:          执行该函数后，直接查看对应的变量即可
-  88          //--------------------------------------------------------------------------------------------------------
+  86          //  @brief      获取MPU6050加速度计数据
+  87          //  @param      NULL
+  88          //  @return     void
+  89          //  @since      v1.0
+  90          //  Sample usage:          执行该函数后，直接查看对应的变量即可
+  91          //--------------------------------------------------------------------------------------------------------
              ------------
-  89          void mpu6050_get_accdata(void)
-  90          {
-  91   1          uint8 dat[6];
-  92   1      
-  93   1          simiic_read_regs(MPU6050_DEV_ADDR, ACCEL_XOUT_H, dat, 6, SIMIIC);  
-  94   1          mpu_acc_x = (int)(((uint16)dat[0]<<8 | dat[1]));
-  95   1          mpu_acc_y = (int)(((uint16)dat[2]<<8 | dat[3]));
-  96   1          mpu_acc_z = (int)(((uint16)dat[4]<<8 | dat[5]));
-  97   1      }
-  98          
-  99          
- 100          //--------------------------------------------------------------------------------------------------------
+  92          void mpu6050_get_accdata(void)
+  93          {
+  94   1          uint8 dat[6];
+  95   1      
+  96   1          simiic_read_regs(MPU6050_DEV_ADDR, ACCEL_XOUT_H, dat, 6, SIMIIC);  
+  97   1          mpu_acc_x = (int)(((uint16)dat[0]<<8 | dat[1]));
+  98   1          mpu_acc_y = (int)(((uint16)dat[2]<<8 | dat[3]));
+  99   1          mpu_acc_z = (int)(((uint16)dat[4]<<8 | dat[5]));
+ 100   1      }
+ 101          
+ 102          
+ 103          //--------------------------------------------------------------------------------------------------------
              ------------
- 101          //  @brief      获取MPU6050陀螺仪数据
- 102          //  @param      NULL
- 103          //  @return     void
- 104          //  @since      v1.0
- 105          //  Sample usage:          执行该函数后，直接查看对应的变量即可
- 106          //--------------------------------------------------------------------------------------------------------
-C51 COMPILER V9.53.0.0   SEEKFREE_MPU6050                                                  06/21/2020 03:08:31 PAGE 3   
+ 104          //  @brief      获取MPU6050陀螺仪数据
+ 105          //  @param      NULL
+ 106          //  @return     void
+C51 COMPILER V9.53.0.0   SEEKFREE_MPU6050                                                  06/23/2020 16:39:42 PAGE 3   
 
+ 107          //  @since      v1.0
+ 108          //  Sample usage:          执行该函数后，直接查看对应的变量即可
+ 109          //--------------------------------------------------------------------------------------------------------
              ------------
- 107          void mpu6050_get_gyro(void)
- 108          {
- 109   1          uint8 dat[6];
- 110   1      
- 111   1          simiic_read_regs(MPU6050_DEV_ADDR, GYRO_XOUT_H, dat, 6, SIMIIC);  
- 112   1          mpu_gyro_x = (int)(((uint16)dat[0]<<8 | dat[1]));
- 113   1          mpu_gyro_y = (int)(((uint16)dat[2]<<8 | dat[3]));
- 114   1          mpu_gyro_z = (int)(((uint16)dat[4]<<8 | dat[5]));
- 115   1      }
- 116          
- 117          
- 118          
+ 110          void mpu6050_get_gyro(void)
+ 111          {
+ 112   1          uint8 dat[6];
+ 113   1      
+ 114   1          simiic_read_regs(MPU6050_DEV_ADDR, GYRO_XOUT_H, dat, 6, SIMIIC);  
+ 115   1          mpu_gyro_x = (int)(((uint16)dat[0]<<8 | dat[1]));
+ 116   1          mpu_gyro_y = (int)(((uint16)dat[2]<<8 | dat[3]));
+ 117   1          mpu_gyro_z = (int)(((uint16)dat[4]<<8 | dat[5]));
+ 118   1      }
  119          
  120          
  121          
  122          
  123          
  124          
+ 125          
+ 126          
+ 127          
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    194    ----
+   CODE SIZE        =    355    ----
    CONSTANT SIZE    =   ----    ----
-   XDATA SIZE       =   ----    ----
+   XDATA SIZE       =     12      12
    PDATA SIZE       =   ----    ----
-   DATA SIZE        =     12      12
+   DATA SIZE        =   ----    ----
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
+   EDATA SIZE       =   ----    ----
+   HDATA SIZE       =   ----    ----
+   XDATA CONST SIZE =   ----    ----
+   FAR CONST SIZE   =   ----    ----
 END OF MODULE INFORMATION.
 
 

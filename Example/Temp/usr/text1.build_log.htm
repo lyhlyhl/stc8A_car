@@ -5,16 +5,16 @@
 <h2>Tool Versions:</h2>
 IDE-Version: ¦ÌVision V5.14.0.0
 Copyright (C) 2015 ARM Ltd and ARM Germany GmbH. All rights reserved.
-License Information: 123 DELL, 123, LIC=EXTNN-Y5LRB-F5DT4-FM0HD-V2YWX-QRLUR
+License Information: 123 DELL, 123, LIC=KI4EI-TDBL6-YN1A2-9R4LH-VZYPZ-4QWWK
  
 Tool Versions:
 Toolchain:       PK51 Prof. Developers Kit  Version: 9.53.0.0
 Toolchain Path:  F:\MDK5\C51\BIN
 C Compiler:      C51.exe V9.53.0.0
 Assembler:       A51.exe V8.02b
-Linker/Locator:  BL51.exe V6.22
-Library Manager: LIB51.exe V4.30.0.2
-Hex Converter:   OH51.exe V2.7.0.0
+Linker/Locator:  LX51.exe V4.66.30.0
+Library Manager: LIBX51.exe V4.30.0.2
+Hex Converter:   OHX51.exe V1.43.0.0
 CPU DLL:         S8051.DLL V3.95.0.0
 Dialog DLL:      DP51.DLL V2.62.0.1
 Target DLL:      STCMON51.DLL V1, 0, 8, 0
@@ -22,57 +22,17 @@ Dialog DLL:      TP51.DLL V2.58
  
 <h2>Project:</h2>
 C:\Users\DELL\Desktop\ÖÇÄÜ³µ\stc8A_car\Example\Temp\usr\text1.uvproj
-Project File Date:  06/19/2020
+Project File Date:  06/23/2020
 
 <h2>Output:</h2>
-Rebuild target 'Target 1'
-assembling STARTUP.A51...
+Build target 'Target 1'
 compiling text1.c...
-compiling OLED.c...
-compiling I2C.c...
-compiling delay.c...
-compiling adc.c...
-compiling SEEKFREE_MPU6050.c...
-compiling SEEKFREE_IIC.c...
+text1.c(17): warning C280: 'V': unreferenced local variable
+text1.c(18): warning C280: 'test': unreferenced local variable
 linking...
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_FILL_PICTURE?OLED
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_DELAY_50MS?OLED
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_DELAY_1MS?OLED
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?OLED_DISPLAY_ON?OLED
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?OLED_DISPLAY_OFF?OLED
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?OLED_ON?OLED
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_OLED_SHOWNUM?OLED
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_OLED_SHOW_FLOAT?OLED
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_RCVBYTE?I2C
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_DELAY1US?DELAY
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?MPU6050_INIT?SEEKFREE_MPU6050
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?MPU6050_GET_ACCDATA?SEEKFREE_MPU6050
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?MPU6050_GET_GYRO?SEEKFREE_MPU6050
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?SIMIIC_INIT?SEEKFREE_IIC
-*** ERROR L107: ADDRESS SPACE OVERFLOW
-    SPACE:   DATA    
-    SEGMENT: ?DT?OLED_ON?OLED
-    LENGTH:  0002H
-*** ERROR L107: ADDRESS SPACE OVERFLOW
-    SPACE:   DATA    
-    SEGMENT: ?DT?_SIMIIC_READ_REG?SEEKFREE_IIC
-    LENGTH:  0001H
-Program Size: data=131.1 xdata=0 code=5663
-Target not created.
+Program Size: data=9.0 xdata=61 const=0 code=4705
+creating hex file from "text1"...
+"text1" - 0 Error(s), 2 Warning(s).
 </pre>
 </body>
 </html>
