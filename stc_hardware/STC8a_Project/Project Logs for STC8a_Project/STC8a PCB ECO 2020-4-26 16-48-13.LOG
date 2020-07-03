@@ -1,5 +1,0 @@
-Added Component: Designator=R49(0603-r)
-Added Pin To Net: NetName=PGND Pin=R49-1
-Added Pin To Net: NetName=GND Pin=R49-2
-Added Member To Class: ClassName=STC8a Member=Component R49 
-Added Room: Name=STC8a

@@ -1,7 +1,0 @@
-Removed Pin From Net: NetName=P2.4£¨PWM3£© Pin=R47-1
-Removed Pin From Net: NetName=P2.2£¨PWM4£© Pin=R48-1
-Added Pin To Net: NetName=P2.2£¨PWM4£© Pin=R47-1
-Added Pin To Net: NetName=P2.4£¨PWM3£© Pin=R48-1
-Added Member To Class: ClassName=STC8a Member=Component key1 KEY
-Added Member To Class: ClassName=STC8a Member=Component P1 USB_Micro
-Added Room: Name=STC8a

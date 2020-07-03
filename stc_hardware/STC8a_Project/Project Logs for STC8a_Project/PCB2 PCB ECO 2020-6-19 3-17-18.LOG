@@ -1,6 +1,0 @@
-Removed Pin From Net: NetName=P2.5 Pin=P7-2
-Removed Pin From Net: NetName=P2.3 Pin=P7-3
-Added Pin To Net: NetName=P2.3 Pin=P7-2
-Added Pin To Net: NetName=P2.5 Pin=P7-3
-Added Member To Class: ClassName=STC8a Member=Component P6 Header 2H
-Added Room: Name=STC8a
