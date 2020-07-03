@@ -1,10 +1,10 @@
-C51 COMPILER V9.53.0.0   TEXT1                                                             06/29/2020 19:17:33 PAGE 1   
+C51 COMPILER V9.54   TEXT1                                                                 07/04/2020 03:31:44 PAGE 1   
 
 
-C51 COMPILER V9.53.0.0, COMPILATION OF MODULE TEXT1
+C51 COMPILER V9.54, COMPILATION OF MODULE TEXT1
 OBJECT MODULE PLACED IN text1.OBJ
-COMPILER INVOKED BY: F:\MDK5\C51\BIN\C51.EXE text1.c LARGE OMF2 OPTIMIZE(2,SPEED) BROWSE INCDIR(..\hardware\delay;..\har
-                    -dware\IIC;..\hardware\OLED;..\hardware\ADC;..\hardware\Mpu6050;..\hardware\KEY;..\hardware\LED) DEBUG TABS(3)
+COMPILER INVOKED BY: D:\danpianji\C51\BIN\C51.EXE text1.c LARGE OMF2 OPTIMIZE(2,SPEED) BROWSE INCDIR(..\hardware\delay;.
+                    -.\hardware\IIC;..\hardware\OLED;..\hardware\ADC;..\hardware\Mpu6050;..\hardware\KEY;..\hardware\LED) DEBUG TABS(2)
 
 line level    source
 
@@ -42,10 +42,9 @@ line level    source
   32   2              Delay1ms(100);
   33   2              LED=1;
   34   2              Delay1ms(100);
-  35   2           
-  36   2            //LED = 0;
-  37   2         }
-  38   1      }
+  35   2      
+  36   2         }
+  37   1      }
 *** WARNING C280 IN LINE 17 OF text1.c: 'V': unreferenced local variable
 
 
@@ -62,8 +61,6 @@ MODULE INFORMATION:   STATIC OVERLAYABLE
    XDATA CONST SIZE =   ----    ----
    FAR CONST SIZE   =   ----    ----
 END OF MODULE INFORMATION.
-
-C51 COMPILER V9.53.0.0   TEXT1                                                             06/29/2020 19:17:33 PAGE 2   
 
 
 C51 COMPILATION COMPLETE.  1 WARNING(S),  0 ERROR(S)

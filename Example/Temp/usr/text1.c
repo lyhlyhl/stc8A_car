@@ -32,7 +32,6 @@ void main(void)
         Delay1ms(100);
         LED=1;
         Delay1ms(100);
-     
-      //LED = 0;
+
    }
 }
