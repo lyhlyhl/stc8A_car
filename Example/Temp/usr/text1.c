@@ -26,12 +26,12 @@ void main(void)
       OLED_ShowNum(0,0,mpu_gyro_x,5);
       OLED_ShowNum(0,1,mpu_gyro_y,5);
       OLED_ShowNum(0,2,mpu_gyro_z,5);
-      //sprintf(test,"%d %d %d",mpu_gyro_x,mpu_gyro_x,mpu_gyro_z);
-      //OLED_ShowString(0,3,test);
-     LED=0;
-     Delay1ms(100);
-     LED=1;
-     Delay1ms(100);
+      sprintf(test,"%d %d %d",mpu_gyro_x,mpu_gyro_x,mpu_gyro_z);
+      OLED_ShowString(0,3,test);
+        LED=0;
+        Delay1ms(100);
+        LED=1;
+        Delay1ms(100);
      
       //LED = 0;
    }

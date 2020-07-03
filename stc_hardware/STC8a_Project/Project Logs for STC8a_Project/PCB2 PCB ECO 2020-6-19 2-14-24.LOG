@@ -1,0 +1,5 @@
+Removed Pin From Net: NetName=P0.7 Pin=P2-5
+Removed Pin From Net: NetName=P1.1 Pin=P6-1
+Added Pin To Net: NetName=P1.1 Pin=P2-5
+Added Pin To Net: NetName=P0.7 Pin=P6-1
+Added Room: Name=STC8a

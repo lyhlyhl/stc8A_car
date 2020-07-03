@@ -309,7 +309,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\hardware\delay;..\hardware\IIC;..\hardware\OLED;..\hardware\ADC;..\hardware\Mpu6050;..\hardware\KEY</IncludePath>
+              <IncludePath>..\hardware\delay;..\hardware\IIC;..\hardware\OLED;..\hardware\ADC;..\hardware\Mpu6050;..\hardware\KEY;..\hardware\LED</IncludePath>
             </VariousControls>
           </C51>
           <Ax51>
@@ -410,6 +410,11 @@
               <FileName>KEY.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\hardware\KEY\KEY.c</FilePath>
+            </File>
+            <File>
+              <FileName>LED.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\hardware\LED\LED.c</FilePath>
             </File>
           </Files>
         </Group>

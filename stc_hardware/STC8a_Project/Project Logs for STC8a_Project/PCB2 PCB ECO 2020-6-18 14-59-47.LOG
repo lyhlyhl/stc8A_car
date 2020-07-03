@@ -1,0 +1,7 @@
+Added Pin To Net: NetName=12V-VCC Pin=C19-1
+Added Pin To Net: NetName=12V-VCC Pin=C20-1
+Added Pin To Net: NetName=12V-VCC Pin=C21-1
+Added Pin To Net: NetName=12V-VCC Pin=R20-2
+Added Pin To Net: NetName=12V-VCC Pin=U3-3
+Added Member To Class: ClassName=STC8a Member=Component P5 Header 6
+Added Room: Name=STC8a

@@ -1,4 +1,4 @@
-C51 COMPILER V9.53.0.0   SEEKFREE_MPU6050                                                  06/23/2020 16:39:42 PAGE 1   
+C51 COMPILER V9.53.0.0   SEEKFREE_MPU6050                                                  06/29/2020 19:17:35 PAGE 1   
 
 
 C51 COMPILER V9.53.0.0, COMPILATION OF MODULE SEEKFREE_MPU6050
@@ -62,7 +62,7 @@ line level    source
   47   1          simiic_write_reg(MPU6050_DEV_ADDR, PWR_MGMT_1, 0x00);   //解除休眠状态
   48   1          simiic_write_reg(MPU6050_DEV_ADDR, SMPLRT_DIV, 0x07);   //125HZ采样率
   49   1          while(0x07 != simiic_read_reg(MPU6050_DEV_ADDR, SMPLRT_DIV,SIMIIC))
-C51 COMPILER V9.53.0.0   SEEKFREE_MPU6050                                                  06/23/2020 16:39:42 PAGE 2   
+C51 COMPILER V9.53.0.0   SEEKFREE_MPU6050                                                  06/29/2020 19:17:35 PAGE 2   
 
   50   1          {
   51   2             LED = 1;
@@ -126,7 +126,7 @@ line level    source
  104          //  @brief      获取MPU6050陀螺仪数据
  105          //  @param      NULL
  106          //  @return     void
-C51 COMPILER V9.53.0.0   SEEKFREE_MPU6050                                                  06/23/2020 16:39:42 PAGE 3   
+C51 COMPILER V9.53.0.0   SEEKFREE_MPU6050                                                  06/29/2020 19:17:35 PAGE 3   
 
  107          //  @since      v1.0
  108          //  Sample usage:          执行该函数后，直接查看对应的变量即可

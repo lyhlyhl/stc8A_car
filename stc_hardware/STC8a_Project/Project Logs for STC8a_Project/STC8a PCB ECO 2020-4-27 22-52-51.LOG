@@ -1,0 +1,5 @@
+Removed Pin From Net: NetName=P1.0£¨PWM1£© Pin=R39-1
+Removed Pin From Net: NetName=P2.6£¨PWM2£© Pin=R40-1
+Added Pin To Net: NetName=P2.6£¨PWM2£© Pin=R39-1
+Added Pin To Net: NetName=P1.0£¨PWM1£© Pin=R40-1
+Added Room: Name=STC8a

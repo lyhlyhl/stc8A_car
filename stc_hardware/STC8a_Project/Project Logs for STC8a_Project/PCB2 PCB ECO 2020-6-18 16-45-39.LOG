@@ -1,0 +1,6 @@
+Change Component Footprint: Designator=U7 Old Footprint=LC-VQFN-14_3.6x3.6x05P New Footprint=VQFN-14¸Ä
+Added Pin To Net: NetName=GND Pin=U7-15
+Added Pin To Net: NetName=GND Pin=U7-15
+Added Pin To Net: NetName=GND Pin=U7-15
+Added Pin To Net: NetName=GND Pin=U7-15
+Added Room: Name=STC8a
