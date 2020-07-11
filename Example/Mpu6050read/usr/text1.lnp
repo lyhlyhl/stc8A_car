@@ -1,0 +1,13 @@
+"STARTUP.obj",
+"text1.obj",
+".\OLED.obj",
+".\I2C.obj",
+".\delay.obj",
+".\adc.obj",
+".\SEEKFREE_MPU6050.obj",
+".\SEEKFREE_IIC.obj",
+".\KEY.obj",
+".\LED.obj" 
+TO "text1" 
+
+REMOVEUNUSED 
