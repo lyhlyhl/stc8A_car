@@ -1,0 +1,1 @@
+"..\hardware\delay\delay.c" LARGE OMF2 OPTIMIZE (2,SPEED) BROWSE INCDIR(..\hardware\delay;..\hardware\IIC;..\hardware\OLED;..\hardware\ADC;..\hardware\Mpu6050;..\hardware\KEY;..\hardware\LED) DEBUG PRINT(.\delay.lst) TABS (3) OBJECT(.\delay.obj)

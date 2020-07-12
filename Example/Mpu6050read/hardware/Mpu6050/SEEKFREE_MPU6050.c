@@ -115,6 +115,24 @@ void mpu6050_get_gyro(void)
     mpu_gyro_x = (int)(((uint16)dat[0]<<8 | dat[1]));
     mpu_gyro_y = (int)(((uint16)dat[2]<<8 | dat[3]));
     mpu_gyro_z = (int)(((uint16)dat[4]<<8 | dat[5]));
+   
+}
+
+void mpu6050_get_gyro_mean(int*x, int *y, int *z,int t)
+{
+   long sum_x = 0,sum_y = 0,sum_z = 0;
+   int i;
+   for(i = 0;i < t;i++)
+   {
+      mpu6050_get_gyro();
+      sum_x += mpu_gyro_x;
+      sum_y += mpu_gyro_y;
+      sum_z += mpu_gyro_z;
+   }
+   *x = (int)(sum_x/t);
+   *y = (int)(sum_y/t);
+   *z = (int)(sum_z/t);
+   
 }
 
 

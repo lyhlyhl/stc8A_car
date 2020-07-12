@@ -67,5 +67,6 @@ void mpu6050_self1_check(void);
 void  mpu6050_init(void);               //≥ı ºªØMPU6050
 void  mpu6050_get_accdata(void);
 void  mpu6050_get_gyro(void);
+void mpu6050_get_gyro_mean(int*x, int *y, int *z,int t);
 
 #endif

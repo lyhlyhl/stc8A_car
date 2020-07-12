@@ -1,4 +1,4 @@
-C51 COMPILER V9.53.0.0   SEEKFREE_MPU6050                                                  07/11/2020 10:53:35 PAGE 1   
+C51 COMPILER V9.53.0.0   SEEKFREE_MPU6050                                                  07/12/2020 17:11:05 PAGE 1   
 
 
 C51 COMPILER V9.53.0.0, COMPILATION OF MODULE SEEKFREE_MPU6050
@@ -62,7 +62,7 @@ line level    source
   47   1          simiic_write_reg(MPU6050_DEV_ADDR, PWR_MGMT_1, 0x00);   //解除休眠状态
   48   1          simiic_write_reg(MPU6050_DEV_ADDR, SMPLRT_DIV, 0x07);   //125HZ采样率
   49   1          while(0x07 != simiic_read_reg(MPU6050_DEV_ADDR, SMPLRT_DIV,SIMIIC))
-C51 COMPILER V9.53.0.0   SEEKFREE_MPU6050                                                  07/11/2020 10:53:35 PAGE 2   
+C51 COMPILER V9.53.0.0   SEEKFREE_MPU6050                                                  07/12/2020 17:11:05 PAGE 2   
 
   50   1          {
   51   2             LED = 1;
@@ -126,7 +126,7 @@ line level    source
  104          //  @brief      获取MPU6050陀螺仪数据
  105          //  @param      NULL
  106          //  @return     void
-C51 COMPILER V9.53.0.0   SEEKFREE_MPU6050                                                  07/11/2020 10:53:35 PAGE 3   
+C51 COMPILER V9.53.0.0   SEEKFREE_MPU6050                                                  07/12/2020 17:11:05 PAGE 3   
 
  107          //  @since      v1.0
  108          //  Sample usage:          执行该函数后，直接查看对应的变量即可
@@ -140,22 +140,40 @@ line level    source
  115   1          mpu_gyro_x = (int)(((uint16)dat[0]<<8 | dat[1]));
  116   1          mpu_gyro_y = (int)(((uint16)dat[2]<<8 | dat[3]));
  117   1          mpu_gyro_z = (int)(((uint16)dat[4]<<8 | dat[5]));
- 118   1      }
- 119          
+ 118   1         
+ 119   1      }
  120          
- 121          
- 122          
- 123          
- 124          
- 125          
- 126          
- 127          
+ 121          void mpu6050_get_gyro_mean(int*x, int *y, int *z,int t)
+ 122          {
+ 123   1         long sum_x = 0,sum_y = 0,sum_z = 0;
+ 124   1         int i;
+ 125   1         for(i = 0;i < t;i++)
+ 126   1         {
+ 127   2            mpu6050_get_gyro();
+ 128   2            sum_x += mpu_gyro_x;
+ 129   2            sum_y += mpu_gyro_y;
+ 130   2            sum_z += mpu_gyro_z;
+ 131   2         }
+ 132   1         *x = (int)(sum_x/t);
+ 133   1         *y = (int)(sum_y/t);
+ 134   1         *z = (int)(sum_z/t);
+ 135   1         
+ 136   1      }
+ 137          
+ 138          
+ 139          
+ 140          
+ 141          
+ 142          
+ 143          
+ 144          
+ 145          
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    355    ----
+   CODE SIZE        =    751    ----
    CONSTANT SIZE    =   ----    ----
-   XDATA SIZE       =     12      12
+   XDATA SIZE       =     12      37
    PDATA SIZE       =   ----    ----
    DATA SIZE        =   ----    ----
    IDATA SIZE       =   ----    ----
