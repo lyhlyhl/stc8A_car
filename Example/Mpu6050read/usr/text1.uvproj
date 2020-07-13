@@ -416,6 +416,11 @@
               <FileType>1</FileType>
               <FilePath>..\hardware\LED\LED.c</FilePath>
             </File>
+            <File>
+              <FileName>Kalman_Filter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\hardware\Mpu6050\Kalman_Filter.c</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>

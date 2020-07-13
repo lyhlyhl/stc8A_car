@@ -48,14 +48,14 @@ void mpu6050_self1_check(void)
     simiic_write_reg(MPU6050_DEV_ADDR, SMPLRT_DIV, 0x07);   //125HZ采样率
     while(0x07 != simiic_read_reg(MPU6050_DEV_ADDR, SMPLRT_DIV,SIMIIC))
     {
-       LED = 1;
+       LED = 0;
         //卡在这里原因有以下几点
         //1 MPU6050坏了，如果是新的这样的概率极低
         //2 接线错误或者没有接好
         //3 可能你需要外接上拉电阻，上拉到3.3V
 		//4 可能没有调用模拟IIC的初始化函数
     }
-    LED = 02;
+    LED = 1;
 }
 
 

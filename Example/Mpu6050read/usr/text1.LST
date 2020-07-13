@@ -1,4 +1,4 @@
-C51 COMPILER V9.53.0.0   TEXT1                                                             07/12/2020 17:10:15 PAGE 1   
+C51 COMPILER V9.53.0.0   TEXT1                                                             07/14/2020 02:29:37 PAGE 1   
 
 
 C51 COMPILER V9.53.0.0, COMPILATION OF MODULE TEXT1
@@ -19,68 +19,70 @@ line level    source
    9          #include "SEEKFREE_IIC.h"
   10          #include "SEEKFREE_MPU6050.h"
   11          #include "LED.h"
-  12          
-  13          extern int mpu_gyro_x,mpu_gyro_y,mpu_gyro_z;
-  14          
-  15          void main(void)
-  16          {
-  17   1         float V;
-  18   1         char test[30];
-  19   1         unsigned char a, i;
-  20   1         int i_x,i_y,i_z;
-  21   1         int *p_x=&i_x, *p_y=&i_y, *p_z=&i_z;
-  22   1         OLED_Init();
-  23   1         simiic_init();
-  24   1         mpu6050_init();
-  25   1         mpu6050_self1_check();
-  26   1         
-  27   1         SCON=0x50;        //REN=1允许串行接受状态，串口工作模式2          
-  28   1         TMOD= 0x00;       //定时器1为模式0（16位自动重载）                
-  29   1         AUXR=0X40;      //开启1T模式
-  30   1          TL1=(65535-(24000000/4/9600));    //设置波特率重装值
-  31   1         TH1=(65535-(24000000/4/9600))>>8;
-  32   1      
-  33   1                           // 如有不明白请查 STC15手册上有详细说明    619页
-  34   1         
-  35   1         TR1  = 1;        //开启定时器1  
-  36   1         ES   = 1;        //开串口中断                                                                     
-  37   1         EA   = 1;        // 开总中断 
-  38   1         while(1)
-  39   1         {
-  40   2            //mpu6050_get_accdata();
-  41   2            //mpu6050_get_gyro();
-  42   2            OLED_ShowNum(0,0,mpu_gyro_x,5);
-  43   2            OLED_ShowNum(0,1,mpu_gyro_y,5);
-  44   2            OLED_ShowNum(0,2,mpu_gyro_z,5);
-  45   2            mpu6050_get_gyro_mean(p_x, p_y, p_z,5);
-  46   2            sprintf(test,"%c%c%c%c%c%c%c%c",0x03,0xFC,(char)i_x,(char)(i_x>>4),(char)(i_x>>8),(char)(i_x>>12),0x
-             -FC,0x03);
-  47   2            //OLED_ShowString(0,3,test);
-  48   2            for(i = 0;i < 8;i++)
-  49   2            {
-  50   3               SBUF = test[i];           //SUBF接受/发送缓冲器(又叫串行通信特殊功能寄存器)
-  51   3               while(!TI);          // 等特数据传送   (TI发送中断标志)
-  52   3               TI = 0;              // 清除数据传送标志
-  53   3            } 
-C51 COMPILER V9.53.0.0   TEXT1                                                             07/12/2020 17:10:15 PAGE 2   
+  12          #include "Kalman_Filter.h"
+  13          
+  14          extern int mpu_gyro_x,mpu_gyro_y,mpu_gyro_z;
+  15          extern int mpu_acc_x,mpu_acc_y,mpu_acc_z;
+  16          void main(void)
+  17          {
+  18   1         float V;
+  19   1         char test[30];
+  20   1         unsigned char a, i;
+  21   1         float angleAx,gyroGy;
+  22   1         float Angle;
+  23   1         int Angle_i;
+  24   1         //int i_x,i_y,i_z,;
+  25   1         //int *p_x=&i_x, *p_y=&i_y, *p_z=&i_z;
+  26   1         OLED_Init();
+  27   1         simiic_init();
+  28   1         mpu6050_init();
+  29   1         mpu6050_self1_check();
+  30   1         
+  31   1         SCON=0x50;        //REN=1允许串行接受状态，串口工作模式2          
+  32   1         TMOD= 0x00;       //定时器1为模式0（16位自动重载）                
+  33   1         AUXR=0X40;      //开启1T模式
+  34   1          TL1=(65535-(24000000/4/19200));    //设置波特率重装值
+  35   1         TH1=(65535-(24000000/4/19200))>>8;
+  36   1         TR1  = 1;        //开启定时器1  
+  37   1         ES   = 1;        //开串口中断                                                                     
+  38   1         EA   = 1;        // 开总中断 
+  39   1         while(1)
+  40   1         {
+  41   2            mpu6050_get_accdata();
+  42   2            mpu6050_get_gyro();
+  43   2            angleAx=atan2(mpu_acc_x,mpu_acc_z)*180/3.14;
+  44   2            gyroGy= (-mpu_gyro_y)/16.40;
+  45   2            Angle = Kalman_Filter(angleAx,gyroGy);
+  46   2            
+  47   2            //Angle_i=(int)Angle;
+  48   2            //mpu6050_get_gyro_mean(p_x, p_y, p_z,5);  
+  49   2            //sprintf(test,"%c%c%c%c%c%c%c%c",0x03,0xFC,(char)Angle_i,(char)(Angle_i>>4),(char)(Angle_i>>8),(cha
+             -r)(Angle_i>>12),0xFC,0x03);
+  50   2            //OLED_ShowString(0,3,test);
+  51   2            sprintf(test,"%.2f\t %d\t%d\n",Angle, angleAx,mpu_gyro_x);
+  52   2            for(i = 0;test[i] != '\0';i++)
+  53   2            {
+C51 COMPILER V9.53.0.0   TEXT1                                                             07/14/2020 02:29:37 PAGE 2   
 
-  54   2            
-  55   2      
-  56   2         }
-  57   1      }
-*** WARNING C280 IN LINE 17 OF text1.c: 'V': unreferenced local variable
-*** WARNING C280 IN LINE 19 OF text1.c: 'a': unreferenced local variable
-  58          
-  59          void uart_int(void) interrupt 4 using 1
-  60          { 
-  61   1         ;
-  62   1      }  
+  54   3               SBUF = test[i];           //SUBF接受/发送缓冲器(又叫串行通信特殊功能寄存器)
+  55   3               while(!TI);          // 等特数据传送   (TI发送中断标志)
+  56   3               TI = 0;              // 清除数据传送标志
+  57   3            } 
+  58   2            
+  59   2      
+  60   2         }
+  61   1      }
+*** WARNING C280 IN LINE 18 OF text1.c: 'V': unreferenced local variable
+*** WARNING C280 IN LINE 20 OF text1.c: 'a': unreferenced local variable
+*** WARNING C280 IN LINE 23 OF text1.c: 'Angle_i': unreferenced local variable
+  62          
+  63           
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    462    ----
-   CONSTANT SIZE    =     17    ----
-   XDATA SIZE       =   ----      51
+   CODE SIZE        =    366    ----
+   CONSTANT SIZE    =     13    ----
+   XDATA SIZE       =   ----      50
    PDATA SIZE       =   ----    ----
    DATA SIZE        =   ----    ----
    IDATA SIZE       =   ----    ----
@@ -92,4 +94,4 @@ MODULE INFORMATION:   STATIC OVERLAYABLE
 END OF MODULE INFORMATION.
 
 
-C51 COMPILATION COMPLETE.  2 WARNING(S),  0 ERROR(S)
+C51 COMPILATION COMPLETE.  3 WARNING(S),  0 ERROR(S)

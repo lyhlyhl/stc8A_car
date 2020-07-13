@@ -7,7 +7,8 @@
 ".\SEEKFREE_MPU6050.obj",
 ".\SEEKFREE_IIC.obj",
 ".\KEY.obj",
-".\LED.obj" 
+".\LED.obj",
+".\Kalman_Filter.obj" 
 TO "text1" 
 
 REMOVEUNUSED 

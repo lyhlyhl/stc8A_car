@@ -1,4 +1,4 @@
-BL51 BANKED LINKER/LOCATER V6.22                                                        07/10/2020  23:27:18  PAGE 1
+BL51 BANKED LINKER/LOCATER V6.22                                                        07/13/2020  20:05:51  PAGE 1
 
 
 BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
@@ -25,8 +25,8 @@ LINK MAP OF MODULE:  text1 (?C_STARTUP)
 
             * * * * * * *   C O D E   M E M O R Y   * * * * * * *
             CODE    0000H     0003H     ABSOLUTE     
-            CODE    0003H     0034H     UNIT         ?PR?MAIN?TEXT1
-            CODE    0037H     000CH     UNIT         ?C_C51STARTUP
+            CODE    0003H     0036H     UNIT         ?PR?MAIN?TEXT1
+            CODE    0039H     000CH     UNIT         ?C_C51STARTUP
 
 
 
@@ -47,7 +47,7 @@ SYMBOL TABLE OF MODULE:  text1 (?C_STARTUP)
   ----------------------------------
 
   -------         MODULE        ?C_STARTUP
-  C:0037H         SEGMENT       ?C_C51STARTUP
+  C:0039H         SEGMENT       ?C_C51STARTUP
   I:0008H         SEGMENT       ?STACK
   C:0000H         PUBLIC        ?C_STARTUP
   D:00E0H         SYMBOL        ACC
@@ -57,9 +57,9 @@ SYMBOL TABLE OF MODULE:  text1 (?C_STARTUP)
   N:0000H         SYMBOL        IBPSTACK
   N:0100H         SYMBOL        IBPSTACKTOP
   N:0080H         SYMBOL        IDATALEN
-  C:003AH         SYMBOL        IDATALOOP
+  C:003CH         SYMBOL        IDATALOOP
   N:0000H         SYMBOL        PBPSTACK
-BL51 BANKED LINKER/LOCATER V6.22                                                      07/10/2020  23:27:18  PAGE 2
+BL51 BANKED LINKER/LOCATER V6.22                                                      07/13/2020  20:05:51  PAGE 2
 
 
   N:0100H         SYMBOL        PBPSTACKTOP
@@ -69,18 +69,18 @@ SYMBOL TABLE OF MODULE:  text1 (?C_STARTUP)
   N:0000H         SYMBOL        PPAGEENABLE
   D:00A0H         SYMBOL        PPAGE_SFR
   D:0081H         SYMBOL        SP
-  C:0037H         SYMBOL        STARTUP1
+  C:0039H         SYMBOL        STARTUP1
   N:0000H         SYMBOL        XBPSTACK
   N:0000H         SYMBOL        XBPSTACKTOP
   N:0000H         SYMBOL        XDATALEN
   N:0000H         SYMBOL        XDATASTART
   C:0000H         LINE#         126
-  C:0037H         LINE#         133
-  C:0039H         LINE#         134
-  C:003AH         LINE#         135
-  C:003BH         LINE#         136
-  C:003DH         LINE#         185
-  C:0040H         LINE#         196
+  C:0039H         LINE#         133
+  C:003BH         LINE#         134
+  C:003CH         LINE#         135
+  C:003DH         LINE#         136
+  C:003FH         LINE#         185
+  C:0042H         LINE#         196
   -------         ENDMOD        ?C_STARTUP
 
   -------         MODULE        TEXT1
@@ -108,18 +108,18 @@ SYMBOL TABLE OF MODULE:  text1 (?C_STARTUP)
   C:0003H         LINE#         8
   C:0006H         LINE#         9
   C:000BH         LINE#         10
-  C:0014H         LINE#         12
-  C:001DH         LINE#         14
-  C:0025H         LINE#         16
-  C:002BH         LINE#         17
-  C:002FH         LINE#         18
-  C:0032H         LINE#         20
-  C:0035H         LINE#         21
+  C:0014H         LINE#         15
+  C:001EH         LINE#         16
+  C:0027H         LINE#         20
+  C:002DH         LINE#         21
+  C:0031H         LINE#         22
+  C:0034H         LINE#         24
+  C:0037H         LINE#         25
   -------         ENDPROC       MAIN
   -------         ENDMOD        TEXT1
 
-Program Size: data=9.0 xdata=0 code=67
-BL51 BANKED LINKER/LOCATER V6.22                                                      07/10/2020  23:27:18  PAGE 3
+Program Size: data=9.0 xdata=0 code=69
+BL51 BANKED LINKER/LOCATER V6.22                                                      07/13/2020  20:05:51  PAGE 3
 
 
 LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)
