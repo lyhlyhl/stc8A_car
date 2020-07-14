@@ -30,7 +30,7 @@ void main(void)
    
    SCON=0x50;        //REN=1允许串行接受状态，串口工作模式2     	   
    TMOD= 0x00;       //定时器1为模式0（16位自动重载）                
-   AUXR=0X40;		 //开启1T模式
+   AUXR=0X40;		 //开启1T模式`
     TL1=(65535-(24000000/4/19200));    //设置波特率重装值
    TH1=(65535-(24000000/4/19200))>>8;
    TR1  = 1;        //开启定时器1  
@@ -44,11 +44,17 @@ void main(void)
       gyroGy= (-mpu_gyro_y)/16.40;
       Angle = Kalman_Filter(angleAx,gyroGy);
       
-      //Angle_i=(int)Angle;
+      Angle_i=(int)Angle;
       //mpu6050_get_gyro_mean(p_x, p_y, p_z,5);  
       //sprintf(test,"%c%c%c%c%c%c%c%c",0x03,0xFC,(char)Angle_i,(char)(Angle_i>>4),(char)(Angle_i>>8),(char)(Angle_i>>12),0xFC,0x03);
       //OLED_ShowString(0,3,test);
-      sprintf(test,"%.2f\t %d\t%d\n",Angle, angleAx,mpu_gyro_x);
+      sprintf(test,"%d %.2f %.2f\n",Angle_i, angleAx,gyroGy);
+//      for(i = 0;i < 8;i++)
+//   	{
+//         SBUF = test[i];	        //SUBF接受/发送缓冲器(又叫串行通信特殊功能寄存器)
+//         while(!TI);				// 等特数据传送	(TI发送中断标志)
+//         TI = 0;					// 清除数据传送标志
+//      } 
       for(i = 0;test[i] != '\0';i++)
    	{
          SBUF = test[i];	        //SUBF接受/发送缓冲器(又叫串行通信特殊功能寄存器)
