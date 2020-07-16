@@ -1,4 +1,4 @@
-C51 COMPILER V9.53.0.0   SEEKFREE_MPU6050                                                  07/16/2020 00:25:25 PAGE 1   
+C51 COMPILER V9.53.0.0   SEEKFREE_MPU6050                                                  07/17/2020 00:17:36 PAGE 1   
 
 
 C51 COMPILER V9.53.0.0, COMPILATION OF MODULE SEEKFREE_MPU6050
@@ -62,7 +62,7 @@ line level    source
   46          {
   47   1          simiic_write_reg(MPU6050_DEV_ADDR, PWR_MGMT_1, 0x00);   //解除休眠状态
   48   1          simiic_write_reg(MPU6050_DEV_ADDR, SMPLRT_DIV, 0x07);   //125HZ采样率
-C51 COMPILER V9.53.0.0   SEEKFREE_MPU6050                                                  07/16/2020 00:25:25 PAGE 2   
+C51 COMPILER V9.53.0.0   SEEKFREE_MPU6050                                                  07/17/2020 00:17:36 PAGE 2   
 
   49   1          while(0x07 != simiic_read_reg(MPU6050_DEV_ADDR, SMPLRT_DIV,SIMIIC))
   50   1          {
@@ -126,7 +126,7 @@ line level    source
              ------------
  104          //  @brief      获取MPU6050陀螺仪数据
  105          //  @param      NULL
-C51 COMPILER V9.53.0.0   SEEKFREE_MPU6050                                                  07/16/2020 00:25:25 PAGE 3   
+C51 COMPILER V9.53.0.0   SEEKFREE_MPU6050                                                  07/17/2020 00:17:36 PAGE 3   
 
  106          //  @return     void
  107          //  @since      v1.0

@@ -5,6 +5,6 @@
 #include "delay.h"
 #include "stc8.h"
 
-sbit LED = P5^5;
+sbit LED = P2 ^ 1;
 
 #endif

@@ -173,7 +173,7 @@ void OLED_ShowNum(u8 x,u8 y,u32 num,u8 len)
 void OLED_Show_float(u8 x,u8 y,float num)
 {         	
 	char t[10];
-	sprintf(t,"%g",num);
+	sprintf(t,"%.2f   ",num);
 	OLED_ShowString(x,y,t);
 } 
 

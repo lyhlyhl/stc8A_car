@@ -1,4 +1,4 @@
-C51 COMPILER V9.53.0.0   KALMAN_FILTER                                                     07/16/2020 00:25:29 PAGE 1   
+C51 COMPILER V9.53.0.0   KALMAN_FILTER                                                     07/17/2020 00:17:40 PAGE 1   
 
 
 C51 COMPILER V9.53.0.0, COMPILATION OF MODULE KALMAN_FILTER
@@ -11,75 +11,92 @@ COMPILER INVOKED BY: F:\MDK5\C51\BIN\C51.EXE ..\hardware\Mpu6050\Kalman_Filter.c
 line level    source
 
    1          #include "Kalman_Filter.h"
-   2          
+   2          #include "SEEKFREE_MPU6050.h"
    3          
-   4          float Angle = 0;         //????????  
-   5          float Gyro_y = 0;
+   4          extern int mpu_gyro_x,mpu_gyro_y,mpu_gyro_z;
+   5          extern int mpu_acc_x,mpu_acc_y,mpu_acc_z;
    6          
-   7          
-   8          float Q_angle=0.01;  
-   9          float Q_gyro=0.001;
-  10          float R_angle=0.5;
-  11          float dt=0.3;                    //dt?kalman???????;
-  12          char  C_0 = 1;
-  13          float Q_bias = 0, Angle_err;
-  14          float PCt_0, PCt_1, E;
-  15          float K_0, K_1, t_0, t_1;
-  16          float Pdot[4] ={0,0,0,0};
-  17          float PP[2][2] = { { 1, 0 },{ 0, 1 } };
-  18                
-  19          float Kalman_Filter(float Accel,float Gyro)    
-  20          {  
-  21   1       
-  22   1      
-  23   1         Angle+=(Gyro - Q_bias) * dt; //????  
-  24   1           
-  25   1         Pdot[0]=Q_angle - PP[0][1] - PP[1][0]; // Pk-????????????  
-  26   1           
-  27   1         Pdot[1]=- PP[1][1];  
-  28   1         Pdot[2]=- PP[1][1];  
-  29   1         Pdot[3]=Q_gyro;  
-  30   1           
-  31   1         PP[0][0] += Pdot[0] * dt;   // Pk-??????????????  
-  32   1         PP[0][1] += Pdot[1] * dt;   // =?????????  
-  33   1         PP[1][0] += Pdot[2] * dt;  
-  34   1         PP[1][1] += Pdot[3] * dt;  
-  35   1           
-  36   1         Angle_err = Accel - Angle;  
-  37   1         //zk-????  
+   7          float Angle = 0;         //????????  
+   8          float Gyro_y = 0;
+   9          
+  10          
+  11          float Q_angle=0.01;  
+  12          float Q_gyro=0.001;
+  13          float R_angle=0.5;
+  14          float dt=0.3;                    //dt?kalman???????;
+  15          char  C_0 = 1;
+  16          float Q_bias = 0, Angle_err;
+  17          float PCt_0, PCt_1, E;
+  18          float K_0, K_1, t_0, t_1;
+  19          float Pdot[4] ={0,0,0,0};
+  20          float PP[2][2] = { { 1, 0 },{ 0, 1 } };
+  21                
+  22          float Kalman_Filter(float Accel,float Gyro)     //¿¨¶ûÂüÂË²¨
+  23          {  
+  24   1       
+  25   1      
+  26   1         Angle+=(Gyro - Q_bias) * dt; //????  
+  27   1           
+  28   1         Pdot[0]=Q_angle - PP[0][1] - PP[1][0]; // Pk-????????????  
+  29   1           
+  30   1         Pdot[1]=- PP[1][1];  
+  31   1         Pdot[2]=- PP[1][1];  
+  32   1         Pdot[3]=Q_gyro;  
+  33   1           
+  34   1         PP[0][0] += Pdot[0] * dt;   // Pk-??????????????  
+  35   1         PP[0][1] += Pdot[1] * dt;   // =?????????  
+  36   1         PP[1][0] += Pdot[2] * dt;  
+  37   1         PP[1][1] += Pdot[3] * dt;  
   38   1           
-  39   1         PCt_0 = C_0 * PP[0][0];  
-  40   1         PCt_1 = C_0 * PP[1][0];  
+  39   1         Angle_err = Accel - Angle;  
+  40   1         //zk-????  
   41   1           
-  42   1         E = R_angle + C_0 * PCt_0;  
-  43   1           
-  44   1         K_0 = PCt_0 / E;  
-  45   1         K_1 = PCt_1 / E;  
+  42   1         PCt_0 = C_0 * PP[0][0];  
+  43   1         PCt_1 = C_0 * PP[1][0];  
+  44   1           
+  45   1         E = R_angle + C_0 * PCt_0;  
   46   1           
-  47   1         t_0 = PCt_0;  
-  48   1         t_1 = C_0 * PP[0][1];  
+  47   1         K_0 = PCt_0 / E;  
+  48   1         K_1 = PCt_1 / E;  
   49   1           
-  50   1         PP[0][0] -= K_0 * t_0;  
-  51   1         //?????????  
-  52   1         PP[0][1] -= K_0 * t_1;  
-C51 COMPILER V9.53.0.0   KALMAN_FILTER                                                     07/16/2020 00:25:29 PAGE 2   
+  50   1         t_0 = PCt_0;  
+  51   1         t_1 = C_0 * PP[0][1];  
+  52   1           
+C51 COMPILER V9.53.0.0   KALMAN_FILTER                                                     07/17/2020 00:17:40 PAGE 2   
 
-  53   1         PP[1][0] -= K_1 * t_0;  
-  54   1         PP[1][1] -= K_1 * t_1;  
-  55   1           
-  56   1         Angle += K_0 * Angle_err ;  
-  57   1         //????  
-  58   1         Q_bias  += K_1 * Angle_err; //????  
-  59   1         Gyro_y   = Gyro - Q_bias;  
-  60   1         //???(????)???=???  
-  61   1         return  Angle;  
-  62   1      }
+  53   1         PP[0][0] -= K_0 * t_0;  
+  54   1         //?????????  
+  55   1         PP[0][1] -= K_0 * t_1;  
+  56   1         PP[1][0] -= K_1 * t_0;  
+  57   1         PP[1][1] -= K_1 * t_1;  
+  58   1           
+  59   1         Angle += K_0 * Angle_err ;  
+  60   1         //????  
+  61   1         Q_bias  += K_1 * Angle_err; //????  
+  62   1         Gyro_y   = Gyro - Q_bias;  
+  63   1         //???(????)???=???  
+  64   1         return  Angle;  
+  65   1      }
+  66          
+  67          float GetAngle(void)
+  68          {
+  69   1         float angleAx,gyroGy;
+  70   1         float Angle;
+  71   1         
+  72   1         mpu6050_get_accdata();
+  73   1         mpu6050_get_gyro();
+  74   1         angleAx=atan2(mpu_acc_x,mpu_acc_z)*180/3.14;
+  75   1         gyroGy= (-mpu_gyro_y)/16.40;
+  76   1         Angle = Kalman_Filter(angleAx,gyroGy);
+  77   1         
+  78   1         return Angle;
+  79   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =   1329    ----
+   CODE SIZE        =   1522    ----
    CONSTANT SIZE    =   ----    ----
-   XDATA SIZE       =     93       8
+   XDATA SIZE       =     93      20
    PDATA SIZE       =   ----    ----
    DATA SIZE        =   ----    ----
    IDATA SIZE       =   ----    ----

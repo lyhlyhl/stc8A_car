@@ -6,6 +6,6 @@
 void Timer_uart_init();
 void Timer0_init();
 void speed_count_init();
-
+float GetCarSpeed(int dat);
 
 #endif

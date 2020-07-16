@@ -1,4 +1,4 @@
-C51 COMPILER V9.53.0.0   PWM                                                               07/16/2020 00:25:28 PAGE 1   
+C51 COMPILER V9.53.0.0   PWM                                                               07/17/2020 00:17:39 PAGE 1   
 
 
 C51 COMPILER V9.53.0.0, COMPILATION OF MODULE PWM
@@ -19,51 +19,54 @@ line level    source
    8   1         PWMC=0x0600;   //计数器的值
    9   1         if(L > 0)
   10   1         {
-  11   2            PWM2T1=(PWMC*(L/100)); //高低电平计数器的值
-  12   2            //PWM1T2=0x0300;
-  13   2            PWM4T1=PWMC-PWM2T1;
-  14   2         }
-  15   1         else
-  16   1         {
-  17   2            L = -L;
-  18   2            PWM4T1=(PWMC*(L/100)); //高低电平计数器的值
-  19   2            PWM2T1=PWMC-PWM4T1;
-  20   2         }
-  21   1         if(R > 0)
-  22   1         {
-  23   2            PWM3T1=(PWMC*(R/100));
-  24   2            PWM6T1=PWMC-PWM3T1;
+  11   2            
+  12   2              PWM2T1=(PWMC*(L/100)); //高低电平计数器的值
+  13   2              P24 = 0;
+  14   2              PWM2CR=0x80;
+  15   2            //PWM1T2=0x0300;
+  16   2            //PWM4T1=PWMC-PWM2T1;
+  17   2         }
+  18   1         else
+  19   1         {
+  20   2            L = -L;
+  21   2            //PWM4T1=(PWMC*(L/100)); //高低电平计数器的值
+  22   2            PWM4T1=(PWMC*(L/100));
+  23   2            P22 = 0;
+  24   2            PWM4CR=0x80;
   25   2         }
-  26   1         else
+  26   1         if(R > 0)
   27   1         {
-  28   2            R = -R;
-  29   2            PWM6T1=(PWMC*(R/100));
-  30   2            PWM3T1=PWMC-PWM6T1;
+  28   2            PWM3T1=(PWMC*(R/100));
+  29   2            P26 = 0;
+  30   2            PWM3CR=0x80;
   31   2         }
-  32   1         
-  33   1         PWM2CR=0x80;   //PWM控制寄存器
-  34   1         PWM3CR=0x80;
-  35   1         PWM4CR=0x80;
-  36   1         PWM6CR=0x80;
-  37   1         P_SW2=0x00;    //关闭寄存器操作
-  38   1         
-  39   1         PWMCR=0x80; //使能PWM波
-  40   1      }
+  32   1         else
+  33   1         {
+  34   2            
+  35   2            R = -R;
+  36   2            PWM6T1=(PWMC*(R/100));
+  37   2            P23 = 0;
+  38   2            PWM6CR=0x80;
+  39   2         }
+  40   1         P_SW2=0x00;    //关闭寄存器操作
+  41   1         
+  42   1         PWMCR=0x80; //使能PWM波
+  43   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    588    ----
+   CODE SIZE        =    470    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----       8
    PDATA SIZE       =   ----    ----
    DATA SIZE        =   ----    ----
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
+C51 COMPILER V9.53.0.0   PWM                                                               07/17/2020 00:17:39 PAGE 2   
+
    EDATA SIZE       =   ----    ----
    HDATA SIZE       =   ----    ----
    XDATA CONST SIZE =   ----    ----
-C51 COMPILER V9.53.0.0   PWM                                                               07/16/2020 00:25:28 PAGE 2   
-
    FAR CONST SIZE   =   ----    ----
 END OF MODULE INFORMATION.
 

@@ -1,5 +1,8 @@
 #include "Kalman_Filter.h"
+#include "SEEKFREE_MPU6050.h"
 
+extern int mpu_gyro_x,mpu_gyro_y,mpu_gyro_z;
+extern int mpu_acc_x,mpu_acc_y,mpu_acc_z;
 
 float Angle = 0;         //????????  
 float Gyro_y = 0;
@@ -16,7 +19,7 @@ float K_0, K_1, t_0, t_1;
 float Pdot[4] ={0,0,0,0};
 float PP[2][2] = { { 1, 0 },{ 0, 1 } };
       
-float Kalman_Filter(float Accel,float Gyro)    
+float Kalman_Filter(float Accel,float Gyro)     //¿¨¶ûÂüÂË²¨
 {  
  
 
@@ -59,4 +62,18 @@ float Kalman_Filter(float Accel,float Gyro)
    Gyro_y   = Gyro - Q_bias;  
    //???(????)???=???  
    return  Angle;  
+}
+
+float GetAngle(void)
+{
+   float angleAx,gyroGy;
+   float Angle;
+   
+   mpu6050_get_accdata();
+   mpu6050_get_gyro();
+   angleAx=atan2(mpu_acc_x,mpu_acc_z)*180/3.14;
+   gyroGy= (-mpu_gyro_y)/16.40;
+   Angle = Kalman_Filter(angleAx,gyroGy);
+   
+   return Angle;
 }

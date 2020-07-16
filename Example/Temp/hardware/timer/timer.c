@@ -1,6 +1,5 @@
 #include "timer.h"
 #include "LED.h"
-
 int flag = 0;
 void Timer_uart_init() //串口中断初始化
 {
@@ -25,13 +24,13 @@ void Timer0_init() //定时器中断0初始化
    EA = 1;
 }
 
-void speed_count_init()
+void speed_count_init() //设定T3T4计数器读取编码器的值
 {
-   T3L = 0x55;
-   T3H = 0x55;
+   T3L = 0x00;
+   T3H = 0x00;
 
-   T4L = 0x55;
-   T4H = 0x55;
+   T4L = 0x00;
+   T4H = 0x00;
 
    IE2 = 0x60;
    T4T3M = 0xcc;
@@ -39,13 +38,23 @@ void speed_count_init()
    EA = 1;
 }
 
-void time0_itp() interrupt 1
+float GetCarSpeed(int dat)
 {
-   static int cnt = 0;
+   float speed;
+   speed = (float)dat;
+   speed = speed / 70 * 0.045 * 3.14;
+   speed = speed * 20;
+   return speed;
+}
+
+void time0_itp() interrupt 1 //定时器0中断服务函数
+{
+   static int cnt = 0; //设置计数 到50读取计数器计数值
    if (cnt >= 50)
    {
       flag = 1;
       cnt = 0;
+      LED = ~LED;
    }
    cnt++;
 }
