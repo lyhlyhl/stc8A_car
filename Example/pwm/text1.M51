@@ -1,8 +1,8 @@
-BL51 BANKED LINKER/LOCATER V6.22                                                        07/14/2020  14:10:45  PAGE 1
+BL51 BANKED LINKER/LOCATER V6.22                                                        07/14/2020  23:25:51  PAGE 1
 
 
 BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
-F:\MDK5\C51\BIN\BL51.EXE STARTUP.obj, text1.obj TO text1 RAMSIZE (256)
+F:\MDK5\C51\BIN\BL51.EXE STARTUP.obj, text1.obj, pwm.obj TO text1 RAMSIZE (256)
 
 
 MEMORY MODEL: SMALL
@@ -11,6 +11,10 @@ MEMORY MODEL: SMALL
 INPUT MODULES INCLUDED:
   STARTUP.obj (?C_STARTUP)
   text1.obj (TEXT1)
+  pwm.obj (PWM)
+  F:\MDK5\C51\LIB\C51S.LIB (?C?IMUL)
+  F:\MDK5\C51\LIB\C51S.LIB (?C?SIDIV)
+  F:\MDK5\C51\LIB\C51S.LIB (?C?UIDIV)
 
 
 LINK MAP OF MODULE:  text1 (?C_STARTUP)
@@ -25,8 +29,10 @@ LINK MAP OF MODULE:  text1 (?C_STARTUP)
 
             * * * * * * *   C O D E   M E M O R Y   * * * * * * *
             CODE    0000H     0003H     ABSOLUTE     
-            CODE    0003H     0051H     UNIT         ?PR?MAIN?TEXT1
-            CODE    0054H     000CH     UNIT         ?C_C51STARTUP
+            CODE    0003H     009DH     UNIT         ?C?LIB_CODE
+            CODE    00A0H     009CH     UNIT         ?PR?_PWM_INIT?PWM
+            CODE    013CH     000DH     UNIT         ?PR?MAIN?TEXT1
+            CODE    0149H     000CH     UNIT         ?C_C51STARTUP
 
 
 
@@ -39,6 +45,9 @@ SEGMENT
 ?C_C51STARTUP
   +--> ?PR?MAIN?TEXT1
 
+?PR?MAIN?TEXT1
+  +--> ?PR?_PWM_INIT?PWM
+
 
 
 SYMBOL TABLE OF MODULE:  text1 (?C_STARTUP)
@@ -47,9 +56,12 @@ SYMBOL TABLE OF MODULE:  text1 (?C_STARTUP)
   ----------------------------------
 
   -------         MODULE        ?C_STARTUP
-  C:0054H         SEGMENT       ?C_C51STARTUP
+  C:0149H         SEGMENT       ?C_C51STARTUP
   I:0008H         SEGMENT       ?STACK
   C:0000H         PUBLIC        ?C_STARTUP
+BL51 BANKED LINKER/LOCATER V6.22                                                      07/14/2020  23:25:51  PAGE 2
+
+
   D:00E0H         SYMBOL        ACC
   D:00F0H         SYMBOL        B
   D:0083H         SYMBOL        DPH
@@ -57,11 +69,8 @@ SYMBOL TABLE OF MODULE:  text1 (?C_STARTUP)
   N:0000H         SYMBOL        IBPSTACK
   N:0100H         SYMBOL        IBPSTACKTOP
   N:0080H         SYMBOL        IDATALEN
-  C:0057H         SYMBOL        IDATALOOP
+  C:014CH         SYMBOL        IDATALOOP
   N:0000H         SYMBOL        PBPSTACK
-BL51 BANKED LINKER/LOCATER V6.22                                                      07/14/2020  14:10:45  PAGE 2
-
-
   N:0100H         SYMBOL        PBPSTACKTOP
   N:0000H         SYMBOL        PDATALEN
   N:0000H         SYMBOL        PDATASTART
@@ -69,22 +78,50 @@ SYMBOL TABLE OF MODULE:  text1 (?C_STARTUP)
   N:0000H         SYMBOL        PPAGEENABLE
   D:00A0H         SYMBOL        PPAGE_SFR
   D:0081H         SYMBOL        SP
-  C:0054H         SYMBOL        STARTUP1
+  C:0149H         SYMBOL        STARTUP1
   N:0000H         SYMBOL        XBPSTACK
   N:0000H         SYMBOL        XBPSTACKTOP
   N:0000H         SYMBOL        XDATALEN
   N:0000H         SYMBOL        XDATASTART
   C:0000H         LINE#         126
-  C:0054H         LINE#         133
-  C:0056H         LINE#         134
-  C:0057H         LINE#         135
-  C:0058H         LINE#         136
-  C:005AH         LINE#         185
-  C:005DH         LINE#         196
+  C:0149H         LINE#         133
+  C:014BH         LINE#         134
+  C:014CH         LINE#         135
+  C:014DH         LINE#         136
+  C:014FH         LINE#         185
+  C:0152H         LINE#         196
   -------         ENDMOD        ?C_STARTUP
 
   -------         MODULE        TEXT1
   C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  D:00C0H         PUBLIC        P4
+  D:00C8H         PUBLIC        P5
+  D:00E8H         PUBLIC        P6
+  D:00F8H         PUBLIC        P7
+  D:00A8H         PUBLIC        IE
+  D:00B8H         PUBLIC        IP
+  D:00D8H         PUBLIC        CCON
+  C:013CH         PUBLIC        main
+  D:0098H         PUBLIC        SCON
+  D:0088H         PUBLIC        TCON
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          MAIN
+  C:013CH         LINE#         6
+  C:013CH         LINE#         7
+  C:013CH         LINE#         25
+  C:0147H         LINE#         26
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        TEXT1
+
+  -------         MODULE        PWM
+  C:0000H         SYMBOL        _ICE_DUMMY_
+BL51 BANKED LINKER/LOCATER V6.22                                                      07/14/2020  23:25:51  PAGE 3
+
+
   D:0080H         PUBLIC        P0
   D:0090H         PUBLIC        P1
   D:00A0H         PUBLIC        P2
@@ -98,32 +135,43 @@ SYMBOL TABLE OF MODULE:  text1 (?C_STARTUP)
   D:00A8H         PUBLIC        IE
   D:00B8H         PUBLIC        IP
   D:00D8H         PUBLIC        CCON
-  C:0003H         PUBLIC        main
   D:0098H         PUBLIC        SCON
   D:0088H         PUBLIC        TCON
+  C:00A0H         PUBLIC        _Pwm_init
   D:00D0H         PUBLIC        PSW
-  -------         PROC          MAIN
-  C:0003H         LINE#         6
-  C:0003H         LINE#         7
-  C:0003H         LINE#         8
-  C:0006H         LINE#         9
-  C:000BH         LINE#         10
-  C:0014H         LINE#         12
-  C:001EH         LINE#         14
-  C:0027H         LINE#         15
-  C:0031H         LINE#         16
-  C:003AH         LINE#         18
-  C:0040H         LINE#         19
-  C:0044H         LINE#         20
-  C:0048H         LINE#         21
-  C:004CH         LINE#         22
-  C:004FH         LINE#         24
-  C:0052H         LINE#         25
-BL51 BANKED LINKER/LOCATER V6.22                                                      07/14/2020  14:10:45  PAGE 3
+  -------         PROC          _PWM_INIT
+  D:0006H         SYMBOL        L
+  D:0002H         SYMBOL        R
+  C:00A0H         LINE#         4
+  C:00A4H         LINE#         5
+  C:00A4H         LINE#         6
+  C:00A7H         LINE#         7
+  C:00ACH         LINE#         8
+  C:00B5H         LINE#         10
+  C:00CEH         LINE#         12
+  C:00E9H         LINE#         13
+  C:0107H         LINE#         14
+  C:0122H         LINE#         16
+  C:0128H         LINE#         17
+  C:012CH         LINE#         18
+  C:0130H         LINE#         19
+  C:0134H         LINE#         20
+  C:0137H         LINE#         22
+  C:013AH         LINE#         23
+  -------         ENDPROC       _PWM_INIT
+  -------         ENDMOD        PWM
 
+  -------         MODULE        ?C?IMUL
+  C:0003H         PUBLIC        ?C?IMUL
+  -------         ENDMOD        ?C?IMUL
 
-  -------         ENDPROC       MAIN
-  -------         ENDMOD        TEXT1
+  -------         MODULE        ?C?SIDIV
+  C:0015H         PUBLIC        ?C?SIDIV
+  -------         ENDMOD        ?C?SIDIV
 
-Program Size: data=9.0 xdata=0 code=96
+  -------         MODULE        ?C?UIDIV
+  C:004BH         PUBLIC        ?C?UIDIV
+  -------         ENDMOD        ?C?UIDIV
+
+Program Size: data=9.0 xdata=0 code=341
 LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)

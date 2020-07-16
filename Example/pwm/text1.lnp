@@ -1,4 +1,5 @@
 "STARTUP.obj",
-"text1.obj" 
+"text1.obj",
+"pwm.obj" 
 TO "text1" 
 RAMSIZE(256) 

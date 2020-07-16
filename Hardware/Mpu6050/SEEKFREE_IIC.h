@@ -29,8 +29,8 @@
 #define _SEEKFREE_IIC_h
 
 #include "common.h"
-#define SIMIIC_SCL_PIN P15
-#define SIMIIC_SDA_PIN P13
+#define SIMIIC_SCL_PIN P32
+#define SIMIIC_SDA_PIN P33
 
 
 

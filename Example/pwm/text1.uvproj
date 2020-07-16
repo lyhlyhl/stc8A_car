@@ -309,7 +309,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath></IncludePath>
+              <IncludePath>.\PWM</IncludePath>
             </VariousControls>
           </C51>
           <Ax51>
@@ -370,6 +370,11 @@
               <FileName>text1.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\text1.c</FilePath>
+            </File>
+            <File>
+              <FileName>pwm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\PWM\pwm.c</FilePath>
             </File>
           </Files>
         </Group>

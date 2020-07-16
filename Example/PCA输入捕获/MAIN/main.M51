@@ -1,0 +1,179 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        07/15/2020  01:07:55  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+F:\MDK5\C51\BIN\BL51.EXE main.obj, .\delay.obj, .\pca.obj TO main RAMSIZE (256)
+
+
+MEMORY MODEL: LARGE
+
+
+INPUT MODULES INCLUDED:
+  main.obj (MAIN)
+  .\delay.obj (DELAY)
+  .\pca.obj (PCA)
+  F:\MDK5\C51\LIB\C51L.LIB (?C_STARTUP)
+
+
+LINK MAP OF MODULE:  main (MAIN)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            IDATA   0008H     0001H     UNIT         ?STACK
+
+            * * * * * * *  X D A T A   M E M O R Y  * * * * * * *
+            XDATA   0000H     0004H     UNIT         ?XD?_DELAY1MS?DELAY
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     0038H     UNIT         ?PR?_DELAY1MS?DELAY
+            CODE    003BH     0019H     UNIT         ?PR?_DELAY4US?DELAY
+            CODE    0054H     0016H     UNIT         ?PR?PCA?PCA
+            CODE    006AH     000CH     UNIT         ?C_C51STARTUP
+            CODE    0076H     0005H     UNIT         ?PR?MAIN?MAIN
+
+
+
+OVERLAY MAP OF MODULE:   main (MAIN)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?C_C51STARTUP
+  +--> ?PR?MAIN?MAIN
+
+?PR?MAIN?MAIN
+  +--> ?PR?PCA?PCA
+
+
+
+SYMBOL TABLE OF MODULE:  main (MAIN)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        MAIN
+  C:0000H         SYMBOL        _ICE_DUMMY_
+BL51 BANKED LINKER/LOCATER V6.22                                                      07/15/2020  01:07:55  PAGE 2
+
+
+  D:0080H         PUBLIC        P0
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  D:00C0H         PUBLIC        P4
+  D:00C8H         PUBLIC        P5
+  D:00E8H         PUBLIC        P6
+  D:00F8H         PUBLIC        P7
+  D:00A8H         PUBLIC        IE
+  D:00B8H         PUBLIC        IP
+  D:00D8H         PUBLIC        CCON
+  C:0076H         PUBLIC        main
+  D:0098H         PUBLIC        SCON
+  D:0088H         PUBLIC        TCON
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          MAIN
+  C:0076H         LINE#         21
+  C:0076H         LINE#         22
+  C:0076H         LINE#         24
+  C:0079H         LINE#         25
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        MAIN
+
+  -------         MODULE        DELAY
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  D:00C0H         PUBLIC        P4
+  D:00C8H         PUBLIC        P5
+  D:00E8H         PUBLIC        P6
+  D:00F8H         PUBLIC        P7
+  D:00A8H         PUBLIC        IE
+  D:00B8H         PUBLIC        IP
+  D:00D8H         PUBLIC        CCON
+  C:0003H         PUBLIC        _delay1ms
+  C:003BH         PUBLIC        _delay4us
+  D:0098H         PUBLIC        SCON
+  D:0088H         PUBLIC        TCON
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          _DELAY4US
+  D:0006H         SYMBOL        us
+  -------         DO            
+  D:0004H         SYMBOL        i
+  D:0003H         SYMBOL        m
+  -------         ENDDO         
+  C:003BH         LINE#         16
+  C:003BH         LINE#         17
+  C:003BH         LINE#         20
+  C:0045H         LINE#         21
+  C:0053H         LINE#         22
+  -------         ENDPROC       _DELAY4US
+  -------         PROC          _DELAY1MS
+  X:0000H         SYMBOL        ms
+  -------         DO            
+  X:0002H         SYMBOL        m
+BL51 BANKED LINKER/LOCATER V6.22                                                      07/15/2020  01:07:55  PAGE 3
+
+
+  -------         ENDDO         
+  C:0003H         LINE#         28
+  C:000BH         LINE#         29
+  C:000BH         LINE#         31
+  C:0025H         LINE#         32
+  C:003AH         LINE#         33
+  -------         ENDPROC       _DELAY1MS
+  -------         ENDMOD        DELAY
+
+  -------         MODULE        PCA
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  D:00C0H         PUBLIC        P4
+  D:00C8H         PUBLIC        P5
+  B:00A8H.7       PUBLIC        EA
+  D:00E8H         PUBLIC        P6
+  D:00F8H         PUBLIC        P7
+  D:00F9H         PUBLIC        CH
+  D:00A8H         PUBLIC        IE
+  D:00E9H         PUBLIC        CL
+  D:00FAH         PUBLIC        CCAP0H
+  D:00EAH         PUBLIC        CCAP0L
+  B:00D8H.6       PUBLIC        CR
+  D:00DAH         PUBLIC        CCAPM0
+  D:00B8H         PUBLIC        IP
+  D:00D9H         PUBLIC        CMOD
+  D:00D8H         PUBLIC        CCON
+  D:0098H         PUBLIC        SCON
+  C:0054H         PUBLIC        pca
+  D:0088H         PUBLIC        TCON
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          PCA
+  C:0054H         LINE#         7
+  C:0054H         LINE#         8
+  C:0054H         LINE#         9
+  C:0057H         LINE#         10
+  C:005AH         LINE#         11
+  C:005CH         LINE#         12
+  C:005EH         LINE#         13
+  C:0061H         LINE#         14
+  C:0063H         LINE#         15
+  C:0065H         LINE#         16
+  C:0067H         LINE#         17
+  C:0069H         LINE#         20
+  -------         ENDPROC       PCA
+  -------         ENDMOD        PCA
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_DELAY1MS?DELAY
+
+Program Size: data=9.0 xdata=4 code=123
+LINK/LOCATE RUN COMPLETE.  1 WARNING(S),  0 ERROR(S)

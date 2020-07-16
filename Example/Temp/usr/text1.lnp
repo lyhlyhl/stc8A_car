@@ -7,7 +7,12 @@
 ".\SEEKFREE_MPU6050.obj",
 ".\SEEKFREE_IIC.obj",
 ".\KEY.obj",
-".\LED.obj" 
+".\LED.obj",
+".\pwm.obj",
+".\Kalman_Filter.obj",
+".\PID.obj",
+".\pca.obj",
+".\timer.obj" 
 TO "text1" 
 
 REMOVEUNUSED 

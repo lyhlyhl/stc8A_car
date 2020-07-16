@@ -1,0 +1,60 @@
+C51 COMPILER V9.53.0.0   DELAY                                                             07/15/2020 01:07:54 PAGE 1   
+
+
+C51 COMPILER V9.53.0.0, COMPILATION OF MODULE DELAY
+OBJECT MODULE PLACED IN .\delay.obj
+COMPILER INVOKED BY: F:\MDK5\C51\BIN\C51.EXE ..\delay\delay.c LARGE OPTIMIZE(8,SPEED) BROWSE INCDIR(..\delay;..\GUI;..\H
+                    -ARDWARE\ad;..\HARDWARE\pca;..\HARDWARE\spi;..\HARDWARE\xpt2046;..\MAIN;..\tft) DEBUG OBJECTEXTEND PRINT(.\delay.lst) TAB
+                    -S(3) OBJECT(.\delay.obj)
+
+line level    source
+
+   1          
+   2          
+   3          #include "stc8.h"
+   4          #include "delay.h"
+   5          
+   6          /*
+   7          24MHz主频下 
+   8          在示波器下看
+   9          一个语句的时间大概是 0.8us
+  10          */
+  11          
+  12          
+  13          //4微秒  延时
+  14          //此函数是以4us的倍数增加
+  15          //t  4us的倍数
+  16          void delay4us(u16 us)
+  17           {
+  18   1        u16 i;
+  19   1        u8 m;
+  20   1        for(i=0;i<us;i++)
+  21   1        for(m=0;m<5;m++);
+  22   1       }  
+  23          
+  24          
+  25          
+  26          //1毫秒 延时
+  27          //ms 1ms的倍数
+  28          void delay1ms(u16 ms)
+  29          {
+  30   1       u16 m;
+  31   1       for(m=0;m<ms;m++)
+  32   1       delay4us(250);
+  33   1      } 
+  34            
+  35          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     81    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----       4
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

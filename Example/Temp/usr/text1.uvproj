@@ -309,7 +309,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\hardware\delay;..\hardware\IIC;..\hardware\OLED;..\hardware\ADC;..\hardware\Mpu6050;..\hardware\KEY;..\hardware\LED</IncludePath>
+              <IncludePath>..\hardware\delay;..\hardware\IIC;..\hardware\OLED;..\hardware\ADC;..\hardware\Mpu6050;..\hardware\KEY;..\hardware\LED;..\hardware\PWM;..\hardware\pca;..\hardware\timer;..\hardware\PID</IncludePath>
             </VariousControls>
           </C51>
           <Ax51>
@@ -415,6 +415,31 @@
               <FileName>LED.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\hardware\LED\LED.c</FilePath>
+            </File>
+            <File>
+              <FileName>pwm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\hardware\PWM\pwm.c</FilePath>
+            </File>
+            <File>
+              <FileName>Kalman_Filter.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\hardware\Mpu6050\Kalman_Filter.c</FilePath>
+            </File>
+            <File>
+              <FileName>PID.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\hardware\PID\PID.c</FilePath>
+            </File>
+            <File>
+              <FileName>pca.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\hardware\pca\pca.c</FilePath>
+            </File>
+            <File>
+              <FileName>timer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\hardware\timer\timer.c</FilePath>
             </File>
           </Files>
         </Group>
