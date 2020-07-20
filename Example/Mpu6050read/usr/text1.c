@@ -21,8 +21,8 @@ void main(void)
    float angleAx,gyroGy;
    float Angle;
    int Angle_i;
-   //int i_x,i_y,i_z,;
-   //int *p_x=&i_x, *p_y=&i_y, *p_z=&i_z;
+   int i_x,i_y,i_z,;
+   int *p_x=&i_x, *p_y=&i_y, *p_z=&i_z;
    OLED_Init();
    simiic_init();
    mpu6050_init();
@@ -46,9 +46,9 @@ void main(void)
       
       Angle_i=(int)Angle;
       //mpu6050_get_gyro_mean(p_x, p_y, p_z,5);  
-      //sprintf(test,"%c%c%c%c%c%c%c%c",0x03,0xFC,(char)Angle_i,(char)(Angle_i>>4),(char)(Angle_i>>8),(char)(Angle_i>>12),0xFC,0x03);
+      sprintf(test,"%f %f\r\n",Angle,angleAx);
       //OLED_ShowString(0,3,test);
-      sprintf(test,"%d %.2f %.2f\n",Angle_i, angleAx,gyroGy);
+      //sprintf(test,"%d %.2f %.2f\n",Angle_i, angleAx,gyroGy);
 //      for(i = 0;i < 8;i++)
 //   	{
 //         SBUF = test[i];	        //SUBF接受/发送缓冲器(又叫串行通信特殊功能寄存器)

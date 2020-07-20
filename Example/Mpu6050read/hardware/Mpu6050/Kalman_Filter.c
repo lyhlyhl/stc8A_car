@@ -7,8 +7,8 @@ float Gyro_y = 0;
 
 float Q_angle=0.01;  
 float Q_gyro=0.001;
-float R_angle=0.5;
-float dt=0.3;	                  //dt?kalman???????;
+float R_angle=0.035;
+float dt=0.028;	                  //dt?kalman???????;
 char  C_0 = 1;
 float Q_bias = 0, Angle_err;
 float PCt_0, PCt_1, E;
