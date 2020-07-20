@@ -1,0 +1,1 @@
+"..\hardware\Mpu6050\Kalman_Filter.c" LARGE OMF2 OPTIMIZE (2,SPEED) BROWSE INCDIR(..\hardware\delay;..\hardware\IIC;..\hardware\OLED;..\hardware\ADC;..\hardware\Mpu6050;..\hardware\KEY;..\hardware\LED;..\hardware\PWM;..\hardware\pca;..\hardware\timer;..\hardware\PID;..\hardware\CCD) DEBUG PRINT(.\Kalman_Filter.lst) TABS (2) OBJECT(.\Kalman_Filter.obj)
