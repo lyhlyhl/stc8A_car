@@ -43,14 +43,14 @@ float GetCarSpeed(int dat)
    float speed;
    speed = (float)dat;
    speed = speed / 70 * 0.045 * 3.14;
-   speed = speed * 20;
+   speed = speed * 50;
    return speed;
 }
 
 void time0_itp() interrupt 1 //定时器0中断服务函数
 {
    static int cnt = 0; //设置计数 到50读取计数器计数值
-   if (cnt >= 50)
+   if (cnt >= 20)
    {
       flag = 1;
       cnt = 0;
