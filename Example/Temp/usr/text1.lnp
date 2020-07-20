@@ -1,4 +1,3 @@
-"STARTUP.obj",
 "text1.obj",
 ".\OLED.obj",
 ".\I2C.obj",
@@ -12,7 +11,8 @@
 ".\Kalman_Filter.obj",
 ".\PID.obj",
 ".\pca.obj",
-".\timer.obj" 
+".\timer.obj",
+".\SEEKFREE_TSL1401.obj" 
 TO "text1" 
 
 REMOVEUNUSED 

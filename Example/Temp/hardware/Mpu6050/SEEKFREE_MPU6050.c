@@ -26,8 +26,7 @@
 
 #include "SEEKFREE_IIC.h"
 #include "SEEKFREE_MPU6050.h"
-#include "delay.h"
-#include "LED.h"
+
 int mpu_gyro_x,mpu_gyro_y,mpu_gyro_z;
 int mpu_acc_x,mpu_acc_y,mpu_acc_z;
 
