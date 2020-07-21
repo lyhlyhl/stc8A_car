@@ -10,17 +10,16 @@
       <TargetName>Target 1</TargetName>
       <ToolsetNumber>0x0</ToolsetNumber>
       <ToolsetName>MCS-51</ToolsetName>
-      <uAC6>0</uAC6>
       <TargetOption>
         <TargetCommonOption>
-          <Device>STC8A8K64S4A12</Device>
+          <Device>STC15F2K60S2</Device>
           <Vendor>STC</Vendor>
-          <Cpu>IRAM(0-0xFF) XRAM(0-0x1FFF) IROM(0-0xFFF8) CLOCK(35000000) MODP2</Cpu>
+          <Cpu>IRAM(0-0xFF) XRAM(0-0x6FF) IROM(0-0xEFF8) CLOCK(35000000) MODP2</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
           <StartupFile>"LIB\STARTUP.A51" ("Standard 8051 Startup Code")</StartupFile>
           <FlashDriverDll></FlashDriverDll>
-          <DeviceId>63016</DeviceId>
-          <RegisterFile>STC8.H</RegisterFile>
+          <DeviceId>62472</DeviceId>
+          <RegisterFile>REG51.H</RegisterFile>
           <MemoryEnv></MemoryEnv>
           <Cmp></Cmp>
           <Asm></Asm>
@@ -36,8 +35,8 @@
           <BinPath></BinPath>
           <IncludePath></IncludePath>
           <LibPath></LibPath>
-          <RegisterFilePath>STC\</RegisterFilePath>
-          <DBRegisterFilePath>STC\</DBRegisterFilePath>
+          <RegisterFilePath></RegisterFilePath>
+          <DBRegisterFilePath></DBRegisterFilePath>
           <TargetStatus>
             <Error>0</Error>
             <ExitCodeStop>0</ExitCodeStop>
@@ -83,8 +82,6 @@
             <UserProg2Name></UserProg2Name>
             <UserProg1Dos16Mode>0</UserProg1Dos16Mode>
             <UserProg2Dos16Mode>0</UserProg2Dos16Mode>
-            <nStopA1X>0</nStopA1X>
-            <nStopA2X>0</nStopA2X>
           </AfterMake>
           <SelectedForBatchBuild>0</SelectedForBatchBuild>
           <SVCSIdString></SVCSIdString>
@@ -125,7 +122,7 @@
             <Oh166RecLen>16</Oh166RecLen>
           </OPTHX>
           <Simulator>
-            <UseSimulator>0</UseSimulator>
+            <UseSimulator>1</UseSimulator>
             <LoadApplicationAtStartup>1</LoadApplicationAtStartup>
             <RunToMain>1</RunToMain>
             <RestoreBreakpoints>1</RestoreBreakpoints>
@@ -137,7 +134,7 @@
             <RestoreSysVw>1</RestoreSysVw>
           </Simulator>
           <Target>
-            <UseTarget>1</UseTarget>
+            <UseTarget>0</UseTarget>
             <LoadApplicationAtStartup>1</LoadApplicationAtStartup>
             <RunToMain>0</RunToMain>
             <RestoreBreakpoints>1</RestoreBreakpoints>
@@ -147,9 +144,10 @@
             <RestoreToolbox>1</RestoreToolbox>
             <RestoreTracepoints>0</RestoreTracepoints>
             <RestoreSysVw>1</RestoreSysVw>
+            <UsePdscDebugDescription>1</UsePdscDebugDescription>
           </Target>
           <RunDebugAfterBuild>0</RunDebugAfterBuild>
-          <TargetSelection>12</TargetSelection>
+          <TargetSelection>-1</TargetSelection>
           <SimDlls>
             <CpuDll></CpuDll>
             <CpuDllArguments></CpuDllArguments>
@@ -163,7 +161,7 @@
             <PeripheralDll></PeripheralDll>
             <PeripheralDllArguments></PeripheralDllArguments>
             <InitializationFile></InitializationFile>
-            <Driver>BIN\STCMON51.DLL</Driver>
+            <Driver></Driver>
           </TargetDlls>
         </DebugOption>
         <Utilities>
@@ -175,7 +173,7 @@
             <Capability>0</Capability>
             <DriverSelection>-1</DriverSelection>
           </Flash1>
-          <bUseTDR>1</bUseTDR>
+          <bUseTDR>0</bUseTDR>
           <Flash2></Flash2>
           <Flash3></Flash3>
           <Flash4></Flash4>
@@ -186,7 +184,7 @@
         </Utilities>
         <Target51>
           <Target51Misc>
-            <MemoryModel>2</MemoryModel>
+            <MemoryModel>0</MemoryModel>
             <RTOS>0</RTOS>
             <RomSize>2</RomSize>
             <DataHold>0</DataHold>
@@ -206,7 +204,7 @@
             <Mode2>0</Mode2>
             <useCB>0</useCB>
             <useXB>0</useXB>
-            <useL251>1</useL251>
+            <useL251>0</useL251>
             <useA251>0</useA251>
             <Mx51>0</Mx51>
             <ModC812>0</ModC812>
@@ -218,14 +216,12 @@
             <Mx51P>0</Mx51P>
             <hadXRAM2>0</hadXRAM2>
             <uocXram2>0</uocXram2>
-            <hadXRAM3>0</hadXRAM3>
             <ModC2>0</ModC2>
             <ModH2>0</ModH2>
             <Mdu_R515>0</Mdu_R515>
             <Mdu_F120>0</Mdu_F120>
             <Psoc>0</Psoc>
             <hadIROM2>0</hadIROM2>
-            <hadIROM3>0</hadIROM3>
             <ModSmx2>0</ModSmx2>
             <cBanks>0</cBanks>
             <xBanks>0</xBanks>
@@ -233,7 +229,7 @@
               <RCB>
                 <Type>0</Type>
                 <StartAddress>0x0</StartAddress>
-                <Size>0xffff</Size>
+                <Size>0x10000</Size>
               </RCB>
               <RXB>
                 <Type>0</Type>
@@ -273,7 +269,7 @@
               <IRO>
                 <Type>1</Type>
                 <StartAddress>0x0</StartAddress>
-                <Size>0xfff9</Size>
+                <Size>0xeff9</Size>
               </IRO>
               <IRA>
                 <Type>0</Type>
@@ -283,7 +279,7 @@
               <XRA>
                 <Type>0</Type>
                 <StartAddress>0x0</StartAddress>
-                <Size>0x2000</Size>
+                <Size>0x700</Size>
               </XRA>
               <XRA512>
                 <Type>0</Type>
@@ -295,16 +291,6 @@
                 <StartAddress>0x0</StartAddress>
                 <Size>0x0</Size>
               </IROM512>
-              <XRA513>
-                <Type>0</Type>
-                <StartAddress>0x0</StartAddress>
-                <Size>0x0</Size>
-              </XRA513>
-              <IROM513>
-                <Type>0</Type>
-                <StartAddress>0x0</StartAddress>
-                <Size>0x0</Size>
-              </IROM513>
             </OnChipMemories>
           </Target51Misc>
           <C51>
@@ -314,7 +300,7 @@
             <uAregs>0</uAregs>
             <UseInterruptVector>1</UseInterruptVector>
             <Fuzzy>3</Fuzzy>
-            <Optimize>2</Optimize>
+            <Optimize>8</Optimize>
             <WarningLevel>2</WarningLevel>
             <SizeSpeed>1</SizeSpeed>
             <ObjectExtend>1</ObjectExtend>
@@ -324,7 +310,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\hardware\delay;..\hardware\IIC;..\hardware\OLED;..\hardware\ADC;..\hardware\Mpu6050;..\hardware\KEY;..\hardware\LED;..\hardware\PWM;..\hardware\pca;..\hardware\timer;..\hardware\PID;..\hardware\CCD</IncludePath>
+              <IncludePath></IncludePath>
             </VariousControls>
           </C51>
           <Ax51>
@@ -347,7 +333,7 @@
             <WarningLevel>2</WarningLevel>
             <DataOverlaying>1</DataOverlaying>
             <OverlayString></OverlayString>
-            <MiscControls>REMOVEUNUSED</MiscControls>
+            <MiscControls></MiscControls>
             <DisableWarningNumbers></DisableWarningNumbers>
             <LinkerCmdFile></LinkerCmdFile>
             <Assign></Assign>
@@ -374,87 +360,17 @@
       </TargetOption>
       <Groups>
         <Group>
-          <GroupName>Main</GroupName>
+          <GroupName>Source Group 1</GroupName>
           <Files>
+            <File>
+              <FileName>STARTUP.A51</FileName>
+              <FileType>2</FileType>
+              <FilePath>.\STARTUP.A51</FilePath>
+            </File>
             <File>
               <FileName>text1.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\text1.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>Hardware</GroupName>
-          <Files>
-            <File>
-              <FileName>OLED.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\hardware\OLED\OLED.c</FilePath>
-            </File>
-            <File>
-              <FileName>I2C.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\hardware\IIC\I2C.c</FilePath>
-            </File>
-            <File>
-              <FileName>delay.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\hardware\delay\delay.c</FilePath>
-            </File>
-            <File>
-              <FileName>adc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\hardware\ADC\adc.c</FilePath>
-            </File>
-            <File>
-              <FileName>SEEKFREE_MPU6050.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\hardware\Mpu6050\SEEKFREE_MPU6050.c</FilePath>
-            </File>
-            <File>
-              <FileName>SEEKFREE_IIC.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\hardware\Mpu6050\SEEKFREE_IIC.c</FilePath>
-            </File>
-            <File>
-              <FileName>KEY.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\hardware\KEY\KEY.c</FilePath>
-            </File>
-            <File>
-              <FileName>LED.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\hardware\LED\LED.c</FilePath>
-            </File>
-            <File>
-              <FileName>pwm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\hardware\PWM\pwm.c</FilePath>
-            </File>
-            <File>
-              <FileName>Kalman_Filter.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\hardware\Mpu6050\Kalman_Filter.c</FilePath>
-            </File>
-            <File>
-              <FileName>PID.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\hardware\PID\PID.c</FilePath>
-            </File>
-            <File>
-              <FileName>pca.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\hardware\pca\pca.c</FilePath>
-            </File>
-            <File>
-              <FileName>timer.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\hardware\timer\timer.c</FilePath>
-            </File>
-            <File>
-              <FileName>SEEKFREE_TSL1401.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\hardware\CCD\SEEKFREE_TSL1401.c</FilePath>
             </File>
           </Files>
         </Group>
