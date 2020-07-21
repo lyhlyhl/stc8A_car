@@ -10,9 +10,8 @@
 ".\pwm.obj",
 ".\Kalman_Filter.obj",
 ".\PID.obj",
-".\pca.obj",
 ".\timer.obj",
-".\SEEKFREE_TSL1401.obj" 
+".\uart.obj" 
 TO "text1" 
 
 REMOVEUNUSED 

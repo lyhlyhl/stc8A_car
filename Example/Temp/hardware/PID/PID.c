@@ -1,24 +1,24 @@
 #include "PID.h"
 
-struct P_pid pid_speed={   //Éè¶¨ËÙ¶È»·pidµÄ³õÖµ
-   0.0,
-   0.0,
-   0.0,
-   0.0,
-   0.0,
-   0.0,
-   
-   
-   30.0,
-   5.0,
-   5.0,
+struct P_pid pid_speed = {
+
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+    0.0,
+
+    5.0,
+    0.0,
+    0.0,
 };
 
-float PID_realize(float err,struct P_pid pid)   //pidÔËËã
+float PID_realize(float err, struct P_pid pid) //pidçš„è®¡ç®—å…¬å¼
 {
-   pid.err=err;
-   pid.inegral+=pid.err;
-   pid.PIDReturn =pid.Kp*pid.err+pid.Ki*pid.inegral+pid.Kd*(pid.err-pid.Last_err);
-   pid.Last_err=pid.err;
-   return pid.PIDReturn; 
+    pid.err = err;
+    pid.inegral += pid.err;
+    pid.PIDReturn = pid.Kp * pid.err + pid.Ki * pid.inegral + pid.Kd * (pid.err - pid.Last_err);
+    pid.Last_err = pid.err;
+    return pid.PIDReturn;
 }

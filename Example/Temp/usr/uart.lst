@@ -1,0 +1,125 @@
+C51 COMPILER V9.53.0.0   UART                                                              07/22/2020 03:11:47 PAGE 1   
+
+
+C51 COMPILER V9.53.0.0, COMPILATION OF MODULE UART
+OBJECT MODULE PLACED IN .\uart.obj
+COMPILER INVOKED BY: F:\MDK5\C51\BIN\C51.EXE ..\hardware\UART\uart.c LARGE OMF2 OPTIMIZE(2,SPEED) BROWSE INCDIR(..\hardw
+                    -are\delay;..\hardware\IIC;..\hardware\OLED;..\hardware\ADC;..\hardware\Mpu6050;..\hardware\KEY;..\hardware\LED;..\hardwa
+                    -re\PWM;..\hardware\pca;..\hardware\timer;..\hardware\PID;..\hardware\CCD;..\hardware\UART) DEBUG PRINT(.\uart.lst) TABS(
+                    -3) OBJECT(.\uart.obj)
+
+line level    source
+
+   1          #include "uart.h"
+   2          
+   3          extern int dat_set;
+   4          struct recstr_struct
+   5          {
+   6              char *p_head;
+   7              char *p_now;
+   8              char recstr[20];
+   9          };
+  10          struct recstr_struct rec;
+  11          char c_variable[10], c_data[10];
+  12          void rec_struct_init()
+  13          {
+  14   1          rec.p_head = rec.recstr;
+  15   1          rec.p_now = rec.recstr;
+  16   1      }
+  17          
+  18          void uart_putchar(u8 dat)
+  19          {
+  20   1          SBUF = dat;
+  21   1          while (!TI)
+  22   1              ;
+  23   1          TI = 0;
+  24   1      }
+  25          
+  26          void uart_putstr(u8 *str)
+  27          {
+  28   1          while (*str)
+  29   1          {
+  30   2              uart_putchar(*str++);
+  31   2          }
+  32   1      }
+  33          
+  34          void uart_get_data()
+  35          {
+  36   1          u8 rec_dat;
+  37   1          rec_dat = SBUF;
+  38   1          uart_rec_data_add(rec_dat);
+  39   1      
+  40   1      }   
+  41          void uart_rec_data_add(u8 dat)
+  42          {
+  43   1          if (dat == '+')
+  44   1          {
+  45   2              rec.p_now = rec.recstr;
+  46   2          }
+  47   1          else if (dat == '*')
+  48   1          {
+  49   2              *rec.p_now = '\0';
+  50   2              //uart_putstr(rec.recstr);
+  51   2             spilt_str();
+  52   2             uart_putstr(c_variable);
+C51 COMPILER V9.53.0.0   UART                                                              07/22/2020 03:11:47 PAGE 2   
+
+  53   2             uart_putchar(' ');
+  54   2             uart_putstr(c_data);
+  55   2            
+  56   2          }
+  57   1          else
+  58   1          {
+  59   2              *rec.p_now = dat;
+  60   2              rec.p_now++;
+  61   2          }
+  62   1      }
+  63          void spilt_str()   //’‚¿Ô”–bug
+  64          {
+  65   1          u8 i, Possem,j;
+  66   1            u8 dat[10]="dat_set";
+  67   1          for (i = 0; rec.recstr[i] != '\0'; i++)
+  68   1          {
+  69   2              if (rec.recstr[i] == ':')
+  70   2              {
+  71   3                  Possem = i;
+  72   3                  break;
+  73   3              }
+  74   2          }
+  75   1          for (j = 0; j < Possem; j++)
+  76   1          {
+  77   2              c_variable[j] = rec.recstr[j];
+  78   2          }
+  79   1          c_variable[j] = '\0';
+  80   1          for (i = Possem + 1; i <= strlen(rec.recstr); i++)
+  81   1          {
+  82   2              c_data[i -Possem - 1] = rec.recstr[i];
+  83   2          }
+  84   1          c_data[i-Possem - 1] = '\0';
+  85   1          if(strcmp(c_variable,dat) == 0)
+  86   1          {
+  87   2            dat_set = 2;
+  88   2          }
+  89   1          else
+  90   1          {
+  91   2            uart_putchar(strcmp(c_variable,"dat_set"));
+  92   2          }
+  93   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    633    ----
+   CONSTANT SIZE    =     18    ----
+   XDATA SIZE       =     46      19
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+   EDATA SIZE       =   ----    ----
+   HDATA SIZE       =   ----    ----
+   XDATA CONST SIZE =   ----    ----
+   FAR CONST SIZE   =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
