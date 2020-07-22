@@ -3,7 +3,7 @@
 
 void Pwm_set(float L, float R)
 {
-   if (L >= 100)
+   if (L >= 100)  //限制进入计算的pid值为100到-100之间
    {
       L = 100;
    }

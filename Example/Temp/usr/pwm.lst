@@ -1,4 +1,4 @@
-C51 COMPILER V9.53.0.0   PWM                                                               07/22/2020 02:02:20 PAGE 1   
+C51 COMPILER V9.53.0.0   PWM                                                               07/22/2020 12:22:09 PAGE 1   
 
 
 C51 COMPILER V9.53.0.0, COMPILATION OF MODULE PWM
@@ -15,7 +15,7 @@ line level    source
    3          
    4          void Pwm_set(float L, float R)
    5          {
-   6   1         if (L >= 100)
+   6   1         if (L >= 100)  //限制进入计算的pid值为100到-100之间
    7   1         {
    8   2            L = 100;
    9   2         }
@@ -62,7 +62,7 @@ line level    source
   50   2            R = -R;
   51   2            PWM6T1 = (PWMC * (R / 100));
   52   2            P23 = 0;
-C51 COMPILER V9.53.0.0   PWM                                                               07/22/2020 02:02:20 PAGE 2   
+C51 COMPILER V9.53.0.0   PWM                                                               07/22/2020 12:22:09 PAGE 2   
 
   53   2            PWM6CR = 0x80;
   54   2         }

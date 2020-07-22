@@ -85,7 +85,7 @@ void time0_itp() interrupt 1 //定时器0中断服务函数
    }
    cnt++;
 }
-void uart_int(void) interrupt 4 using 1
+void uart_int(void) interrupt 4 using 1   //串口中断函数
 {
    if (RI)
    {

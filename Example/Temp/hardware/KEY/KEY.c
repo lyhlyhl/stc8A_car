@@ -1,7 +1,7 @@
 #include "KEY.h"
 
 
-u8 KEYScan(u8 key)
+u8 KEYScan(u8 key)   //°´¼üÉ¨Ãè¼ì²âº¯Êý
 {
    if(key == 2 )
    {
