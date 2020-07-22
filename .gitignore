@@ -1,0 +1,8 @@
+.gitignore *.lst
+.gitignore *.obj
+.gitignore *.SBR
+.gitignore *._i
+.gitignore *.html
+.gitignore *.lnp
+.gitignore *.MAP
+.gitignore *.OBJ
