@@ -1,11 +1,11 @@
-C51 COMPILER V9.60.0.0   LED                                                               07/22/2020 15:40:43 PAGE 1   
+C51 COMPILER V9.53.0.0   LED                                                               07/22/2020 16:08:57 PAGE 1   
 
 
-C51 COMPILER V9.60.0.0, COMPILATION OF MODULE LED
+C51 COMPILER V9.53.0.0, COMPILATION OF MODULE LED
 OBJECT MODULE PLACED IN .\LED.obj
-COMPILER INVOKED BY: D:\keil\C51\BIN\C51.EXE ..\hardware\LED\LED.c LARGE OMF2 OPTIMIZE(2,SPEED) BROWSE INCDIR(..\hardwar
+COMPILER INVOKED BY: F:\MDK5\C51\BIN\C51.EXE ..\hardware\LED\LED.c LARGE OMF2 OPTIMIZE(2,SPEED) BROWSE INCDIR(..\hardwar
                     -e\delay;..\hardware\IIC;..\hardware\OLED;..\hardware\ADC;..\hardware\Mpu6050;..\hardware\KEY;..\hardware\LED;..\hardware
-                    -\PWM;..\hardware\pca;..\hardware\timer;..\hardware\PID;..\hardware\CCD;..\hardware\UART) DEBUG PRINT(.\LED.lst) TABS(2) 
+                    -\PWM;..\hardware\pca;..\hardware\timer;..\hardware\PID;..\hardware\CCD;..\hardware\UART) DEBUG PRINT(.\LED.lst) TABS(3) 
                     -OBJECT(.\LED.obj)
 
 line level    source

@@ -1,12 +1,12 @@
-C51 COMPILER V9.60.0.0   UART                                                              07/22/2020 15:40:53 PAGE 1   
+C51 COMPILER V9.53.0.0   UART                                                              07/22/2020 16:10:46 PAGE 1   
 
 
-C51 COMPILER V9.60.0.0, COMPILATION OF MODULE UART
+C51 COMPILER V9.53.0.0, COMPILATION OF MODULE UART
 OBJECT MODULE PLACED IN .\uart.obj
-COMPILER INVOKED BY: D:\keil\C51\BIN\C51.EXE ..\hardware\UART\uart.c LARGE OMF2 OPTIMIZE(2,SPEED) BROWSE INCDIR(..\hardw
+COMPILER INVOKED BY: F:\MDK5\C51\BIN\C51.EXE ..\hardware\UART\uart.c LARGE OMF2 OPTIMIZE(2,SPEED) BROWSE INCDIR(..\hardw
                     -are\delay;..\hardware\IIC;..\hardware\OLED;..\hardware\ADC;..\hardware\Mpu6050;..\hardware\KEY;..\hardware\LED;..\hardwa
                     -re\PWM;..\hardware\pca;..\hardware\timer;..\hardware\PID;..\hardware\CCD;..\hardware\UART) DEBUG PRINT(.\uart.lst) TABS(
-                    -2) OBJECT(.\uart.obj)
+                    -3) OBJECT(.\uart.obj)
 
 line level    source
 
@@ -62,13 +62,13 @@ line level    source
   50   1          {
   51   2              *rec.p_now = '\0'; //最后添加结束符
   52   2                                 //        uart_putstr(rec.recstr);
-C51 COMPILER V9.60.0.0   UART                                                              07/22/2020 15:40:53 PAGE 2   
+C51 COMPILER V9.53.0.0   UART                                                              07/22/2020 16:10:46 PAGE 2   
 
   53   2              //spilt_str();       //直接分割字符串得到结果
   54   2                                 //        uart_putstr(c_variable); //方便调试显示用
   55   2                                 //        uart_putchar(' ');
   56   2                                 //        uart_putstr(c_data);
-  57   2            uflag = 1;
+  57   2               uflag = 1;
   58   2          }
   59   1          else
   60   1          {
@@ -79,82 +79,70 @@ line level    source
   65          
   66          void spilt_str() // 分割字符串
   67          {
-  68   1          u8 i, Possem, j, c;
-  69   1        u8 da[10] = "aaaa";
-  70   1        
-  71   1          for (i = 0; rec.recstr[i] != '\0'; i++) //识别字符串中间的冒号的位置
-  72   1          {
-  73   2              if (rec.recstr[i] == ':')
-  74   2              {
-  75   3                  Possem = i;
-  76   3                  break;
-  77   3              }
-  78   2          }
-  79   1          for (j = 0; j < Possem; j++) //分别赋值给俩个字符串
-  80   1          {
-  81   2              c_variable[j] = rec.recstr[j];
-  82   2          }
-  83   1          c_variable[j] = '\0';
-  84   1      
-  85   1          for (i = Possem + 1; i <= strlen(rec.recstr); i++)
-  86   1          {
-  87   2              c_data[i - Possem - 1] = rec.recstr[i];
-  88   2          }
-  89   1          c_data[i - Possem - 1] = '\0';
-  90   1          c = str_cmp_fuck(c_variable, "adc");
-  91   1          uart_putstr(da);
-  92   1        
-  93   1          if (c == 0) //开始识别
-  94   1          {
-  95   2              dat_set = 2;
-  96   2          }
-  97   1          else
-  98   1          {
-  99   2              uart_putchar(c); //要重写strcmp函数
- 100   2          }
- 101   1      }
- 102          
- 103          char str_cmp_fuck(u8 *s_a, u8 *s_b)
- 104          {
- 105   1          int p, q, i, t = 0;
- 106   1          p = strlen(s_a);
- 107   1          q = strlen(s_b);
- 108   1          uart_putstr("\r\n");
- 109   1          uart_putstr(s_a);
- 110   1          uart_putstr("\r\n");
- 111   1          uart_putstr(s_b);
- 112   1          uart_putstr("\r\n");
- 113   1      
- 114   1          for (i = 0; s_a[i] != '\0' && s_b[i] != '\0'; i++)
-C51 COMPILER V9.60.0.0   UART                                                              07/22/2020 15:40:53 PAGE 3   
+  68   1          u8 i, Possem, j;
+  69   1         
+  70   1          for (i = 0; rec.recstr[i] != '\0'; i++) //识别字符串中间的冒号的位置
+  71   1          {
+  72   2              if (rec.recstr[i] == ':')
+  73   2              {
+  74   3                  Possem = i;
+  75   3                  break;
+  76   3              }
+  77   2          }
+  78   1          for (j = 0; j < Possem; j++) //分别赋值给俩个字符串
+  79   1          {
+  80   2              c_variable[j] = rec.recstr[j];
+  81   2          }
+  82   1          c_variable[j] = '\0';
+  83   1      
+  84   1          for (i = Possem + 1; i <= strlen(rec.recstr); i++)
+  85   1          {
+  86   2              c_data[i - Possem - 1] = rec.recstr[i];
+  87   2          }
+  88   1          c_data[i - Possem - 1] = '\0';
+  89   1         
+  90   1          if (str_cmp_fuck(c_variable, "adc")) //开始识别
+  91   1          {
+  92   2              dat_set = atoi(c_data);
+  93   2          }
+  94   1      }
+  95          
+  96          char str_cmp_fuck(u8 *s_a, u8 *s_b)
+  97          {
+  98   1          int p, q, i, t = 0;
+  99   1          p = strlen(s_a);
+ 100   1          q = strlen(s_b);
+ 101   1         
+ 102   1          for (i = 0; s_a[i] != '\0' && s_b[i] != '\0'; i++)
+ 103   1          {
+ 104   2              if (s_a[i] > s_b[i])
+ 105   2              {
+ 106   3                  t = 1;
+ 107   3                  return t;
+ 108   3              }
+ 109   2              if (s_a[i] < s_b[i])
+ 110   2              {
+ 111   3                  t = -1;
+ 112   3                  return t;
+ 113   3              }
+ 114   2          }
+C51 COMPILER V9.53.0.0   UART                                                              07/22/2020 16:10:46 PAGE 3   
 
- 115   1          {
- 116   2              if (s_a[i] > s_b[i])
- 117   2              {
- 118   3                  t = 1;
- 119   3                  return t;
- 120   3              }
- 121   2              if (s_a[i] < s_b[i])
- 122   2              {
- 123   3                  t = -1;
- 124   3                  return t;
- 125   3              }
- 126   2          }
- 127   1          if (t == 0)
- 128   1          {
- 129   2              if (p > q)
- 130   2                  t = 1;
- 131   2              if (p < q)
- 132   2                  t = -1;
- 133   2          }
- 134   1          return t;
- 135   1      }
+ 115   1          if (t == 0)
+ 116   1          {
+ 117   2              if (p > q)
+ 118   2                  t = 1;
+ 119   2              if (p < q)
+ 120   2                  t = -1;
+ 121   2          }
+ 122   1          return t;
+ 123   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =   1077    ----
-   CONSTANT SIZE    =     17    ----
-   XDATA SIZE       =     56      34
+   CODE SIZE        =    962    ----
+   CONSTANT SIZE    =      4    ----
+   XDATA SIZE       =     56      23
    PDATA SIZE       =   ----    ----
    DATA SIZE        =   ----    ----
    IDATA SIZE       =   ----    ----

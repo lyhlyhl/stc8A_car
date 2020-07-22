@@ -65,8 +65,7 @@ void uart_rec_data_add(u8 dat) //识别通信协议
 
 void spilt_str() // 分割字符串
 {
-    u8 i, Possem, j, c;
-	u8 da[10] = "aaaa";
+    u8 i, Possem, j;
 	
     for (i = 0; rec.recstr[i] != '\0'; i++) //识别字符串中间的冒号的位置
     {
@@ -87,16 +86,10 @@ void spilt_str() // 分割字符串
         c_data[i - Possem - 1] = rec.recstr[i];
     }
     c_data[i - Possem - 1] = '\0';
-    c = str_cmp_fuck(c_variable, "adc");
-    uart_putstr(da);
 	
-    if (c == 0) //开始识别
+    if (str_cmp_fuck(c_variable, "adc")) //开始识别
     {
-        dat_set = 2;
-    }
-    else
-    {
-        uart_putchar(c); //要重写strcmp函数
+        dat_set = atoi(c_data);
     }
 }
 
@@ -105,12 +98,7 @@ char str_cmp_fuck(u8 *s_a, u8 *s_b)
     int p, q, i, t = 0;
     p = strlen(s_a);
     q = strlen(s_b);
-    uart_putstr("\r\n");
-    uart_putstr(s_a);
-    uart_putstr("\r\n");
-    uart_putstr(s_b);
-    uart_putstr("\r\n");
-
+   
     for (i = 0; s_a[i] != '\0' && s_b[i] != '\0'; i++)
     {
         if (s_a[i] > s_b[i])
