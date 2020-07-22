@@ -89,7 +89,9 @@ void uart_int(void) interrupt 4 using 1   //´®¿ÚÖÐ¶Ïº¯Êý
 {
    if (RI)
    {
+		 EA = 0;
       uart_get_data();
+		 EA = 1;
       RI = 0;
    }
 }

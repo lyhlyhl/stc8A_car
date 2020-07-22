@@ -5,6 +5,8 @@ extern int flag;
 extern struct P_pid pid_speed;
 extern unsigned long length;
 
+int uflag=0;
+
 int dat1, dat2,dat_set = 1;
 void main(void)
 {
@@ -15,6 +17,13 @@ void main(void)
       Pwm_set(-50, -50);
       while (1)
       {
+				
+				
+				if (uflag == 1)
+				{
+					spilt_str();
+					uflag =0;
+				}
 
             //		if(tsl1401_finish_flag)
             //		{

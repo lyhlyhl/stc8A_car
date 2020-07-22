@@ -1,11 +1,11 @@
-C51 COMPILER V9.53.0.0   ADC                                                               07/22/2020 14:45:25 PAGE 1   
+C51 COMPILER V9.60.0.0   ADC                                                               07/22/2020 15:40:42 PAGE 1   
 
 
-C51 COMPILER V9.53.0.0, COMPILATION OF MODULE ADC
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE ADC
 OBJECT MODULE PLACED IN .\adc.obj
-COMPILER INVOKED BY: F:\MDK5\C51\BIN\C51.EXE ..\hardware\ADC\adc.c LARGE OMF2 OPTIMIZE(2,SPEED) BROWSE INCDIR(..\hardwar
+COMPILER INVOKED BY: D:\keil\C51\BIN\C51.EXE ..\hardware\ADC\adc.c LARGE OMF2 OPTIMIZE(2,SPEED) BROWSE INCDIR(..\hardwar
                     -e\delay;..\hardware\IIC;..\hardware\OLED;..\hardware\ADC;..\hardware\Mpu6050;..\hardware\KEY;..\hardware\LED;..\hardware
-                    -\PWM;..\hardware\pca;..\hardware\timer;..\hardware\PID;..\hardware\CCD;..\hardware\UART) DEBUG PRINT(.\adc.lst) TABS(3) 
+                    -\PWM;..\hardware\pca;..\hardware\timer;..\hardware\PID;..\hardware\CCD;..\hardware\UART) DEBUG PRINT(.\adc.lst) TABS(2) 
                     -OBJECT(.\adc.obj)
 
 line level    source
@@ -28,20 +28,20 @@ line level    source
   16   1          _nop_(); //设置ADC_CONTR寄存器后需加4个CPU时钟周期的延时，才能保证值被写入ADC_CONTR寄存器 
   17   1      //    _nop_(); 
   18   1      //    _nop_(); 
-  19   1          while (!(ADC_CONTR & ADC_FLAG));//Wait complete flag       等待转化完成
+  19   1          while (!(ADC_CONTR & ADC_FLAG));//Wait complete flag    等待转化完成
   20   1         ADC_CONTR &= ~ADC_FLAG;         //Close ADC 将标志位清零等待下次硬件置1
   21   1         //也可以写成 ADC_CONTR= ADC_CONTR & ( ~ADC_FLAG)
   22   1       
-  23   1         //只读取8位ADC采集结果 并 以5v为基准进行换算
+  23   1        //只读取8位ADC采集结果 并 以5v为基准进行换算
   24   1          //Vo=ADC_RES;//*25/256;                 //Return ADC result（为显示整数，这里将电压值扩大了十倍） 
   25   1                                               //5/256  因为是8位 把5V分成256份  ADC_RES为采集的份数
   26   1                                               //ADC_RES*（5/256） 为采集的电压值  然后扩大10倍便于计算
   27   1         
   28   1         ADCCFG=0x20;
   29   1         adc_value = ADC_RES;  //存储 ADC 的 10 位结果的高 2 位
-  30   1         adc_value <<= 8;
-  31   1         //adc_value = ADC_RESL; 
-  32   1         adc_value |= ADC_RESL;  //存储 ADC 的 10 位结果的低 8 位
+  30   1        adc_value <<= 8;
+  31   1        //adc_value = ADC_RESL; 
+  32   1        adc_value |= ADC_RESL;  //存储 ADC 的 10 位结果的低 8 位
   33   1         //adc_value = adc_value*25;
   34   1          return adc_value;
   35   1      } 
@@ -51,7 +51,7 @@ line level    source
              ------------
   39          //  @brief      ADC初始化
   40          //  @param      adcn            选择ADC通道
-  41          //  @param      speed            ADC时钟频率
+  41          //  @param      speed         ADC时钟频率
   42          //  @return     void
   43          //  Sample usage:               adc_init(ADC_P10,ADC_SYSclk_DIV_2);//初始化P1.0为ADC功能,ADC时钟频率：SYSc
              -lk/2
@@ -59,26 +59,26 @@ line level    source
              ------------
   45          void adc_init(ADCN_enum adcn,ADC_SPEED_enum speed)
   46          {
-  47   1         ADC_CONTR |= 1<<7;         //打开 ADC 电源
-  48   1         
-  49   1         if((adcn >> 3) == 1)       //P0口
-C51 COMPILER V9.53.0.0   ADC                                                               07/22/2020 14:45:25 PAGE 2   
+  47   1        ADC_CONTR |= 1<<7;      //打开 ADC 电源
+  48   1        
+  49   1        if((adcn >> 3) == 1)    //P0口
+C51 COMPILER V9.60.0.0   ADC                                                               07/22/2020 15:40:42 PAGE 2   
 
-  50   1         {
-  51   2            //IO口设置为高阻输入
-  52   2            P0M0 &= ~(1 << (adcn & 0x07));
-  53   2            P0M1 |= (1 << (adcn & 0x07));
-  54   2         }
-  55   1         else if((adcn >> 3) == 0)  //P1口
-  56   1         {
-  57   2            //IO口设置为高阻输入
-  58   2            P1M0 &= ~(1 << (adcn & 0x07));
-  59   2             P1M1 |= (1 << (adcn & 0x07));
-  60   2         }
+  50   1        {
+  51   2          //IO口设置为高阻输入
+  52   2          P0M0 &= ~(1 << (adcn & 0x07));
+  53   2          P0M1 |= (1 << (adcn & 0x07));
+  54   2        }
+  55   1        else if((adcn >> 3) == 0)   //P1口
+  56   1        {
+  57   2          //IO口设置为高阻输入
+  58   2          P1M0 &= ~(1 << (adcn & 0x07));
+  59   2            P1M1 |= (1 << (adcn & 0x07));
+  60   2        }
   61   1      
-  62   1         ADCCFG |= speed&0x0F;      //ADC时钟频率SYSclk/2/16/speed&0x0F;
+  62   1        ADCCFG |= speed&0x0F;   //ADC时钟频率SYSclk/2/16/speed&0x0F;
   63   1      
-  64   1         ADCCFG |= 1<<5;      //转换结果右对齐。 ADC_RES 保存结果的高 2 位， ADC_RESL 保存结果的低 8 位。
+  64   1        ADCCFG |= 1<<5;   //转换结果右对齐。 ADC_RES 保存结果的高 2 位， ADC_RESL 保存结果的低 8 位。
   65   1      }
   66          
   67          
@@ -94,31 +94,31 @@ line level    source
              ------------
   76          uint16 adc_once(ADCN_enum adcn,ADCRES_enum resolution)
   77          {
-  78   1         uint16 adc_value;
-  79   1         
-  80   1         ADC_CONTR &= (0xF0); //清除ADC_CHS[3:0] ： ADC 模拟通道选择位
-  81   1         ADC_CONTR |= adcn;
-  82   1         
-  83   1         ADC_CONTR |= 0x40;  // 启动 AD 转换
-  84   1      // _nop_();
-  85   1      // _nop_();
-  86   1         while (!(ADC_CONTR & 0x20));  // 查询 ADC 完成标志
-  87   1         ADC_CONTR &= ~0x20;  // 清完成标志
-  88   1         
-  89   1         
-  90   1         adc_value = ADC_RES;  //存储 ADC 的 10 位结果的高 2 位
-  91   1         adc_value <<= 8;
-  92   1         adc_value |= ADC_RESL;  //存储 ADC 的 10 位结果的低 8 位
-  93   1         
-  94   1         adc_value >>= resolution;//取多少位
-  95   1         
+  78   1        uint16 adc_value;
+  79   1        
+  80   1        ADC_CONTR &= (0xF0);  //清除ADC_CHS[3:0] ： ADC 模拟通道选择位
+  81   1        ADC_CONTR |= adcn;
+  82   1        
+  83   1        ADC_CONTR |= 0x40;  // 启动 AD 转换
+  84   1      //  _nop_();
+  85   1      //  _nop_();
+  86   1        while (!(ADC_CONTR & 0x20));  // 查询 ADC 完成标志
+  87   1        ADC_CONTR &= ~0x20;  // 清完成标志
+  88   1        
+  89   1        
+  90   1        adc_value = ADC_RES;  //存储 ADC 的 10 位结果的高 2 位
+  91   1        adc_value <<= 8;
+  92   1        adc_value |= ADC_RESL;  //存储 ADC 的 10 位结果的低 8 位
+  93   1        
+  94   1        adc_value >>= resolution;//取多少位
+  95   1        
   96   1      
-  97   1         return adc_value;
+  97   1        return adc_value;
   98   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    399    ----
+   CODE SIZE        =    406    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----       9
    PDATA SIZE       =   ----    ----
@@ -126,7 +126,7 @@ MODULE INFORMATION:   STATIC OVERLAYABLE
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
    EDATA SIZE       =   ----    ----
-C51 COMPILER V9.53.0.0   ADC                                                               07/22/2020 14:45:25 PAGE 3   
+C51 COMPILER V9.60.0.0   ADC                                                               07/22/2020 15:40:42 PAGE 3   
 
    HDATA SIZE       =   ----    ----
    XDATA CONST SIZE =   ----    ----

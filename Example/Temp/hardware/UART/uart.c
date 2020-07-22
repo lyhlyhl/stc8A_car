@@ -1,6 +1,8 @@
 #include "uart.h"
 
 extern int dat_set;
+extern int uflag;
+
 struct recstr_struct //接受的字符结构体
 {
     char *p_head;
@@ -48,10 +50,11 @@ void uart_rec_data_add(u8 dat) //识别通信协议
     {
         *rec.p_now = '\0'; //最后添加结束符
                            //        uart_putstr(rec.recstr);
-        spilt_str();       //直接分割字符串得到结果
+        //spilt_str();       //直接分割字符串得到结果
                            //        uart_putstr(c_variable); //方便调试显示用
                            //        uart_putchar(' ');
                            //        uart_putstr(c_data);
+			uflag = 1;
     }
     else
     {
@@ -59,10 +62,12 @@ void uart_rec_data_add(u8 dat) //识别通信协议
         rec.p_now++;
     }
 }
+
 void spilt_str() // 分割字符串
 {
     u8 i, Possem, j, c;
-
+	u8 da[10] = "aaaa";
+	
     for (i = 0; rec.recstr[i] != '\0'; i++) //识别字符串中间的冒号的位置
     {
         if (rec.recstr[i] == ':')
@@ -82,8 +87,9 @@ void spilt_str() // 分割字符串
         c_data[i - Possem - 1] = rec.recstr[i];
     }
     c_data[i - Possem - 1] = '\0';
-    c = str_cmp_fuck("1234", "5462", c_variable);
-    uart_putstr("\r\n");
+    c = str_cmp_fuck(c_variable, "adc");
+    uart_putstr(da);
+	
     if (c == 0) //开始识别
     {
         dat_set = 2;
@@ -94,7 +100,7 @@ void spilt_str() // 分割字符串
     }
 }
 
-char str_cmp_fuck(u8 *s_a, u8 *s_b, u8 *s_c)
+char str_cmp_fuck(u8 *s_a, u8 *s_b)
 {
     int p, q, i, t = 0;
     p = strlen(s_a);
@@ -104,7 +110,7 @@ char str_cmp_fuck(u8 *s_a, u8 *s_b, u8 *s_c)
     uart_putstr("\r\n");
     uart_putstr(s_b);
     uart_putstr("\r\n");
-    uart_putstr(s_c);
+
     for (i = 0; s_a[i] != '\0' && s_b[i] != '\0'; i++)
     {
         if (s_a[i] > s_b[i])
