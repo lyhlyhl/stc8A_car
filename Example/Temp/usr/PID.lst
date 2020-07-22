@@ -1,45 +1,50 @@
-C51 COMPILER V9.53.0.0   PID                                                               07/22/2020 16:05:18 PAGE 1   
+C51 COMPILER V9.53.0.0   PID                                                               07/23/2020 04:29:30 PAGE 1   
 
 
 C51 COMPILER V9.53.0.0, COMPILATION OF MODULE PID
 OBJECT MODULE PLACED IN .\PID.obj
 COMPILER INVOKED BY: F:\MDK5\C51\BIN\C51.EXE ..\hardware\PID\PID.c LARGE OMF2 OPTIMIZE(2,SPEED) BROWSE INCDIR(..\hardwar
                     -e\delay;..\hardware\IIC;..\hardware\OLED;..\hardware\ADC;..\hardware\Mpu6050;..\hardware\KEY;..\hardware\LED;..\hardware
-                    -\PWM;..\hardware\pca;..\hardware\timer;..\hardware\PID;..\hardware\CCD;..\hardware\UART) DEBUG PRINT(.\PID.lst) TABS(3) 
-                    -OBJECT(.\PID.obj)
+                    -\PWM;..\hardware\pca;..\hardware\timer;..\hardware\PID;..\hardware\CCD;..\hardware\UART;..\hardware\Motor) DEBUG PRINT(.
+                    -\PID.lst) TABS(3) OBJECT(.\PID.obj)
 
 line level    source
 
    1          #include "PID.h"
-   2          
-   3          struct P_pid pid_speed = {
-   4          
-   5              0.0,
-   6              0.0,
-   7              0.0,
-   8              0.0,
-   9              0.0,
-  10              0.0,
-  11          
-  12              5.0,
-  13              0.0,
-  14              0.0,
-  15          };
-  16          
-  17          float PID_realize(float err, struct P_pid pid) //pid的计算公式
-  18          {
-  19   1          pid.err = err;
-  20   1          pid.inegral += pid.err;
-  21   1          pid.PIDReturn = pid.Kp * pid.err + pid.Ki * pid.inegral + pid.Kd * (pid.err - pid.Last_err);
-  22   1          pid.Last_err = pid.err;
-  23   1          return pid.PIDReturn;
-  24   1      }
+   2          #include "common.h"
+   3          struct P_pid pid_speed,pid_angle;
+   4          void pid_init()
+   5          {
+   6   1         pid_speed.err = 0;
+   7   1         pid_speed.Last_err=0;
+   8   1         pid_speed.Kp = 3.0;
+   9   1         pid_speed.Ki = 0.0;
+  10   1         pid_speed.Kd = 0.0;
+  11   1         pid_speed.inegral = 0.0;
+  12   1         
+  13   1         pid_angle.err = 0;
+  14   1         pid_angle.Last_err=0;
+  15   1         pid_angle.Kp = 45;
+  16   1         pid_angle.Kd = 0.0;
+  17   1         pid_angle.Kd = 0.0;
+  18   1         pid_angle.inegral = 0.0;
+  19   1         
+  20   1      }
+  21          
+  22          float PID_realize(float err, struct P_pid *pid) //pid的计算公式
+  23          {
+  24   1          pid->err = err;
+  25   1          pid->inegral += pid->err;
+  26   1          pid->PIDReturn = pid->Kp * pid->err ; //pid->Ki * pid->inegral + pid->Kd * (pid->err - pid->Last_err);
+  27   1          pid->Last_err = pid->err;
+  28   1          return pid->PIDReturn;
+  29   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    268    ----
+   CODE SIZE        =    356    ----
    CONSTANT SIZE    =   ----    ----
-   XDATA SIZE       =     40      44
+   XDATA SIZE       =     80       7
    PDATA SIZE       =   ----    ----
    DATA SIZE        =   ----    ----
    IDATA SIZE       =   ----    ----

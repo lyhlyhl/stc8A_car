@@ -26,11 +26,31 @@ Project File Date:  07/22/2020
 
 <h2>Output:</h2>
 Build target 'Target 1'
-compiling uart.c...
+compiling pwm.c...
 linking...
-Program Size: data=23.1 xdata=327 const=20 code=9447
+*** WARNING L15: MULTIPLE CALL TO FUNCTION
+    NAME:    SIMIIC_DELAY/SEEKFREE_IIC
+    CALLER1: TIME0_ITP/TIMER
+    CALLER2: ?C_C51STARTUP
+*** WARNING L15: MULTIPLE CALL TO FUNCTION
+    NAME:    _SEND_CH/SEEKFREE_IIC
+    CALLER1: TIME0_ITP/TIMER
+    CALLER2: ?C_C51STARTUP
+*** WARNING L15: MULTIPLE CALL TO FUNCTION
+    NAME:    _READ_CH/SEEKFREE_IIC
+    CALLER1: TIME0_ITP/TIMER
+    CALLER2: ?C_C51STARTUP
+*** WARNING L15: MULTIPLE CALL TO FUNCTION
+    NAME:    _SIMIIC_SENDACK/SEEKFREE_IIC
+    CALLER1: TIME0_ITP/TIMER
+    CALLER2: ?C_C51STARTUP
+*** WARNING L15: MULTIPLE CALL TO FUNCTION
+    NAME:    _PWM_SET/PWM
+    CALLER1: TIME0_ITP/TIMER
+    CALLER2: ?C_C51STARTUP
+Program Size: data=23.2 xdata=388 const=20 code=11153
 creating hex file from "text1"...
-"text1" - 0 Error(s), 0 Warning(s).
+"text1" - 0 Error(s), 5 Warning(s).
 </pre>
 </body>
 </html>

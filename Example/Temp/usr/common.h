@@ -30,4 +30,5 @@
 #include "timer.h"
 #include "string.h"
 #include <stdlib.h>
+#include "motor_control.h"
 #endif

@@ -11,7 +11,8 @@
 ".\Kalman_Filter.obj",
 ".\PID.obj",
 ".\timer.obj",
-".\uart.obj" 
+".\uart.obj",
+".\motor_control.obj" 
 TO "text1" 
 
 REMOVEUNUSED 
