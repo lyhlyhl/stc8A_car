@@ -1,50 +1,173 @@
-C51 COMPILER V9.53.0.0   PID                                                               07/23/2020 04:29:30 PAGE 1   
+C51 COMPILER V9.60.0.0   PID                                                               08/05/2020 05:32:50 PAGE 1   
 
 
-C51 COMPILER V9.53.0.0, COMPILATION OF MODULE PID
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE PID
 OBJECT MODULE PLACED IN .\PID.obj
-COMPILER INVOKED BY: F:\MDK5\C51\BIN\C51.EXE ..\hardware\PID\PID.c LARGE OMF2 OPTIMIZE(2,SPEED) BROWSE INCDIR(..\hardwar
+COMPILER INVOKED BY: D:\keil\C51\BIN\C51.EXE ..\hardware\PID\PID.c LARGE OMF2 OPTIMIZE(2,SPEED) BROWSE INCDIR(..\hardwar
                     -e\delay;..\hardware\IIC;..\hardware\OLED;..\hardware\ADC;..\hardware\Mpu6050;..\hardware\KEY;..\hardware\LED;..\hardware
                     -\PWM;..\hardware\pca;..\hardware\timer;..\hardware\PID;..\hardware\CCD;..\hardware\UART;..\hardware\Motor) DEBUG PRINT(.
-                    -\PID.lst) TABS(3) OBJECT(.\PID.obj)
+                    -\PID.lst) TABS(2) OBJECT(.\PID.obj)
 
 line level    source
 
    1          #include "PID.h"
    2          #include "common.h"
-   3          struct P_pid pid_speed,pid_angle;
-   4          void pid_init()
-   5          {
-   6   1         pid_speed.err = 0;
-   7   1         pid_speed.Last_err=0;
-   8   1         pid_speed.Kp = 3.0;
-   9   1         pid_speed.Ki = 0.0;
-  10   1         pid_speed.Kd = 0.0;
-  11   1         pid_speed.inegral = 0.0;
-  12   1         
-  13   1         pid_angle.err = 0;
-  14   1         pid_angle.Last_err=0;
-  15   1         pid_angle.Kp = 45;
-  16   1         pid_angle.Kd = 0.0;
-  17   1         pid_angle.Kd = 0.0;
-  18   1         pid_angle.inegral = 0.0;
-  19   1         
-  20   1      }
-  21          
-  22          float PID_realize(float err, struct P_pid *pid) //pid的计算公式
-  23          {
-  24   1          pid->err = err;
-  25   1          pid->inegral += pid->err;
-  26   1          pid->PIDReturn = pid->Kp * pid->err ; //pid->Ki * pid->inegral + pid->Kd * (pid->err - pid->Last_err);
-  27   1          pid->Last_err = pid->err;
-  28   1          return pid->PIDReturn;
-  29   1      }
+   3          
+   4          
+   5          struct P_pid pid_speed,pid_angle, pid_turn;     //速度  角度 角加速度
+   6          
+   7          float Turn[5][4]  = {{40, 0.000,0, 0},  // 130  // 转向外环动态PID  中线法
+   8                    {6, 0, 0, 0}, // 140
+   9                    {0, 0, 0, 0}, // 150
+  10                    {0, 0, 0, 0}, // 1608
+  11                    {0, 0, 0, 0}};  // 170
+  12           
+  13          void pid_init()
+  14          {
+  15   1         pid_speed.err = 0;
+  16   1         pid_speed.Last_err=0;
+  17   1         pid_speed.Kp = 1.6;  //-15  -5     -20
+  18   1         pid_speed.Ki = 0.02;  //-0.06  -0.01  -0.05
+  19   1         pid_speed.Kd = 0; 
+  20   1         pid_speed.inegral = 0.0;
+  21   1          
+  22   1        
+  23   1         pid_angle.err = 0;
+  24   1         pid_angle.Last_err=0;
+  25   1         pid_angle.Kp = 360;    //170        250
+  26   1         pid_angle.Ki = 0.0;
+  27   1         pid_angle.Kd = 1.6;   //0.6         0.4
+  28   1         pid_angle.inegral = 0.0;
+  29   1         pid_angle.PrevError =0; 
+  30   1        
+  31   1         pid_turn.err = 0;
+  32   1         pid_turn.Last_err=0;
+  33   1         pid_turn.Kp = 0;
+  34   1         pid_turn.Kd = 0.0;
+  35   1         pid_turn.Kd = 0.0;
+  36   1         pid_turn.inegral = 0.0;
+  37   1      }
+  38          
+  39          float PID_realize(float err, struct P_pid *pid, int gyro_y) //pid的计算公式
+  40          {
+  41   1          pid->err = err;
+  42   1          pid->inegral += pid->err;
+  43   1          pid->PIDReturn = pid->Kp * pid->err + pid->Kd * gyro_y;// pid->Ki * pid->inegral + pid->Kd * (pid->err
+             - - pid->Last_err);
+  44   1          pid->Last_err = pid->err;
+  45   1          return pid->PIDReturn;
+  46   1      }
+  47          
+  48          
+  49          // 位置式动态PID控制
+  50          int PlacePID_Control(float NowPiont, float SetPoint,struct P_pid *pid, float *PID)
+  51          {
+C51 COMPILER V9.60.0.0   PID                                                               08/05/2020 05:32:50 PAGE 2   
+
+  52   1        //定义为寄存器变量，只能用于整型和字符型变量，提高运算速度
+  53   1        float iError; //当前误差
+  54   1        int  Actual;  //最后得出的实际输出值
+  55   1        float Kp;   //动态P
+  56   1        
+  57   1        iError = SetPoint - NowPiont; //计算当前误差
+  58   1        pid->SumError += iError*0.01;
+  59   1        if (pid->SumError >= PID[KT])
+  60   1        {
+  61   2          pid->SumError = PID[KT];
+  62   2        }
+  63   1        else if (pid->SumError <= PID[KT])
+  64   1        {
+  65   2          pid->SumError = -PID[KT];
+  66   2        }
+  67   1        //二次函数是为了达到 误差越大  反应越快 回复力越大 其中 KI值是误差为0时的P
+             - 也就是直道上的P值
+  68   1        Kp = 1.0 * (iError*iError) /PID[KP] + PID[KI];  //P值与差值成二次函数关系，此处P和I不是PI
+             -D参数，而是动态PID参数，要注意！！！
+  69   1        
+  70   1        Actual = Kp * iError
+  71   1             + PID[KD] * ((0.8*iError + 0.2*pid->Last_err) - pid->Last_err);//不完全微分  
+  72   1        pid->Last_err = iError;   //更新上次误差
+  73   1      
+  74   1        //Actual = range_protect(Actual, -260, 260);
+  75   1      
+  76   1        return Actual;
+  77   1      }
+  78          
+  79          /*{
+  80          //// 位置式PID控制
+  81          //int32 PID_Realize(PID *sptr, float *PID, int32 NowData, int32 Point)
+  82          //{
+  83          //  //当前误差，定义为寄存器变量，只能用于整型和字符型变量，提高运算速度
+  84          //  int32 Realize;  // 最后得出的实际增量
+  85          
+  86          //  sptr->Dis_Err = Point - NowData;  // 计算当前误差
+  87          //  sptr->SumError += PID[KI] * sptr->Dis_Err;  // 误差积分
+  88          //  
+  89          //  if (sptr->SumError >= PID[KT])
+  90          //  {
+  91          //    sptr->SumError = PID[KT];
+  92          //  }
+  93          //  else if (sptr->SumError <= -PID[KT])
+  94          //  {
+  95          //    sptr->SumError = -PID[KT];
+  96          //  }
+  97          //  
+  98          //  Realize = PID[KP] * sptr->Dis_Err
+  99          //      + sptr->SumError
+ 100          //      + PID[KD] *(sptr->Dis_Err  - sptr->LastError);
+ 101          ////      + PID[KB] * ( NowData- sptr->LastData); //微分先行
+ 102          //  
+ 103          //  sptr->PrevError = sptr->LastError;  // 更新前次误差
+ 104          //  sptr->LastError = sptr->Dis_Err;        // 更新上次误差
+ 105          //  sptr->LastData  = NowData;      // 更新上次数据
+ 106          
+ 107          //  return Realize; // 返回实际值
+ 108          //}
+ 109          }*/
+ 110          
+ 111          
+C51 COMPILER V9.60.0.0   PID                                                               08/05/2020 05:32:50 PAGE 3   
+
+ 112          
+ 113          // 增量式PID电机控制
+ 114          float PID_Increase(float NowData, float Point,struct P_pid *pid)
+ 115          {
+ 116   1        float iError, //当前误差
+ 117   1          Increase; //最后得出的实际增量
+ 118   1      
+ 119   1        iError = Point - NowData; // 计算当前误差
+ 120   1      
+ 121   1        Increase =  pid->Kp * (iError - pid->Last_err)
+ 122   1              + pid->Ki * iError
+ 123   1              + pid->Kd * (iError - 2 * pid->Last_err + pid->PrevError);
+ 124   1        
+ 125   1        pid->PrevError = pid->Last_err; // 更新前次误差
+ 126   1        pid->Last_err = iError;       // 更新上次误差
+ 127   1        
+ 128   1        return Increase;  // 返回增量
+ 129   1      }
+ 130          
+ 131          int range_protect(int duty, int min, int max)//限幅保护
+ 132          {
+ 133   1        if (duty >= max)
+ 134   1        {
+ 135   2          return max;
+ 136   2        }
+ 137   1        if (duty <= min)
+ 138   1        {
+ 139   2          return min;
+ 140   2        }
+ 141   1        else
+ 142   1        {
+ 143   2          return duty;
+ 144   2        }
+ 145   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    356    ----
+   CODE SIZE        =   1639    ----
    CONSTANT SIZE    =   ----    ----
-   XDATA SIZE       =     80       7
+   XDATA SIZE       =    224      58
    PDATA SIZE       =   ----    ----
    DATA SIZE        =   ----    ----
    IDATA SIZE       =   ----    ----

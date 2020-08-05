@@ -6,4 +6,6 @@
 float Kalman_Filter(float Accel,float Gyro);
 
 float GetAngle(void);
+int lowV(int com);
+float lpf_filter(void);
 #endif

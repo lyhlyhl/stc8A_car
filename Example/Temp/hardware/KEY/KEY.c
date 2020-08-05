@@ -9,7 +9,7 @@ u8 KEYScan(u8 key)   //°´¼üÉ¨Ãè¼ì²âº¯Êý
       {
          Delay1ms(5);
          if(P20 == 0)
-            return 2;
+            return 2 ;
       }
    }
    else if(key == 3)

@@ -324,7 +324,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\hardware\delay;..\hardware\IIC;..\hardware\OLED;..\hardware\ADC;..\hardware\Mpu6050;..\hardware\KEY;..\hardware\LED;..\hardware\PWM;..\hardware\pca;..\hardware\timer;..\hardware\PID;..\hardware\CCD;..\hardware\UART</IncludePath>
+              <IncludePath>..\hardware\delay;..\hardware\IIC;..\hardware\OLED;..\hardware\ADC;..\hardware\Mpu6050;..\hardware\KEY;..\hardware\LED;..\hardware\PWM;..\hardware\pca;..\hardware\timer;..\hardware\PID;..\hardware\CCD;..\hardware\UART;..\hardware\Motor</IncludePath>
             </VariousControls>
           </C51>
           <Ax51>
@@ -450,6 +450,11 @@
               <FileName>uart.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\hardware\UART\uart.c</FilePath>
+            </File>
+            <File>
+              <FileName>motor_control.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\hardware\Motor\motor_control.c</FilePath>
             </File>
           </Files>
         </Group>

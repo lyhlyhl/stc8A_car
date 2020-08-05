@@ -65,13 +65,42 @@ float Kalman_Filter(float Accel, float Gyro) //卡尔曼滤波
 float GetAngle(void)
 {
    float angleAx, gyroGy;
-   float Angle;
 
    mpu6050_get_accdata();
    mpu6050_get_gyro();
-   angleAx = atan2(mpu_acc_x, mpu_acc_z) * 180 / 3.14;
-   gyroGy = (-mpu_gyro_y) / 16.40;
+   angleAx = atan2(mpu_acc_x, mpu_acc_z) * 180 / 3.1416;
+   gyroGy = (-mpu_gyro_y) / 16.4;
    Angle = Kalman_Filter(angleAx, gyroGy);
 
    return Angle;
 }
+
+
+float K1 =0.3; 
+//float angle11=0 ;
+float lpf_filter(void)
+{
+	float angleAx, gyroGy;
+	
+	 mpu6050_get_accdata();
+   mpu6050_get_gyro();
+	 angleAx = atan2(mpu_acc_x, mpu_acc_z) * 180 / 3.1416;
+   gyroGy = (-mpu_gyro_y) / 16.4;
+   Angle = K1 * angleAx+ (1-K1) * (Angle + gyroGy * 0.005);
+	
+	return Angle;
+}
+
+
+int lowV(int com)
+{
+    static int iLastData;    //上一次值
+    int iData;               //本次计算值
+	
+    float dPower = 0.2;               //滤波系数
+    iData = ( com * dPower ) + ( 1 - dPower ) * iLastData; //计算
+    iLastData = iData;                                     //存贮本次数据
+	
+    return iData;                                         //返回数据
+}
+

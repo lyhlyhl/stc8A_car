@@ -5,8 +5,8 @@
 #include "i2c.h"
 #include "delay.h"
 
-sbit SCL = P1 ^ 5; //I2C  时钟
-sbit SDA = P1 ^ 4; //I2C  数据
+sbit SCL = P3 ^ 5; //I2C  时钟
+sbit SDA = P3 ^ 4; //I2C  数据
 
 //SDA方向控制
 void IO_SDA(u8 m)

@@ -1,148 +1,245 @@
-C51 COMPILER V9.53.0.0   UART                                                              07/22/2020 23:15:42 PAGE 1   
+C51 COMPILER V9.60.0.0   UART                                                              08/05/2020 02:47:41 PAGE 1   
 
 
-C51 COMPILER V9.53.0.0, COMPILATION OF MODULE UART
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE UART
 OBJECT MODULE PLACED IN .\uart.obj
-COMPILER INVOKED BY: F:\MDK5\C51\BIN\C51.EXE ..\hardware\UART\uart.c LARGE OMF2 OPTIMIZE(2,SPEED) BROWSE INCDIR(..\hardw
+COMPILER INVOKED BY: D:\keil\C51\BIN\C51.EXE ..\hardware\UART\uart.c LARGE OMF2 OPTIMIZE(2,SPEED) BROWSE INCDIR(..\hardw
                     -are\delay;..\hardware\IIC;..\hardware\OLED;..\hardware\ADC;..\hardware\Mpu6050;..\hardware\KEY;..\hardware\LED;..\hardwa
                     -re\PWM;..\hardware\pca;..\hardware\timer;..\hardware\PID;..\hardware\CCD;..\hardware\UART;..\hardware\Motor) DEBUG PRINT
-                    -(.\uart.lst) TABS(3) OBJECT(.\uart.obj)
+                    -(.\uart.lst) TABS(2) OBJECT(.\uart.obj)
 
 line level    source
 
    1          #include "uart.h"
    2          
-   3          extern int dat_set;
-   4          extern int uflag;
-   5          
-   6          struct recstr_struct //接受的字符结构体
-   7          {
-   8              char *p_head;
-   9              char *p_now;
-  10              char recstr[20];
-  11          };
-  12          struct recstr_struct rec;
-  13          u8 c_variable[10] = "1234", c_data[10];
-  14          u8 datee[10] = "adc";
-  15          void rec_struct_init() //结构体初始化赋值
-  16          {
-  17   1          rec.p_head = rec.recstr;
-  18   1          rec.p_now = rec.recstr;
-  19   1      }
-  20          
-  21          void uart_putchar(u8 dat) //发送一个字节
-  22          {
-  23   1          SBUF = dat;
-  24   1          while (!TI)
-  25   1              ;
-  26   1          TI = 0;
-  27   1      }
-  28          
-  29          void uart_putstr(u8 *str) //发送一个字符串
-  30          {
-  31   1          while (*str)
-  32   1          {
-  33   2              uart_putchar(*str++);
-  34   2          }
-  35   1      }
-  36          
-  37          void uart_get_data() //获取数据添加到字符串中
-  38          {
-  39   1          u8 rec_dat;
-  40   1          rec_dat = SBUF;
-  41   1          uart_rec_data_add(rec_dat);
-  42   1      }
-  43          void uart_rec_data_add(u8 dat) //识别通信协议
-  44          {
-  45   1          if (dat == '+') //第一位为加号
-  46   1          {
-  47   2              rec.p_now = rec.recstr; //把当前的字符串指针指向头指针
-  48   2          }
-  49   1          else if (dat == '*') //如果最后一位为星号
-  50   1          {
-  51   2              *rec.p_now = '\0'; //最后添加结束符
-  52   2                                 //        uart_putstr(rec.recstr);
-C51 COMPILER V9.53.0.0   UART                                                              07/22/2020 23:15:42 PAGE 2   
+   3          extern int uflag;
+   4          extern struct P_pid pid_angle,pid_speed,pid_turn;
+   5          extern float set_angle;
+   6          int flag_stop = 1;
+   7          extern int set_speed;
+   8          struct recstr_struct //接受的字符结构体
+   9          {
+  10              char *p_head;
+  11              char *p_now;
+  12              char recstr[20];
+  13          };
+  14          struct recstr_struct rec;
+  15          u8 c_variable[20] = "1234", c_data[10];
+  16          u8 datee[10] = "adc";
+  17          void rec_struct_init() //结构体初始化赋值
+  18          {
+  19   1          rec.p_head = rec.recstr;
+  20   1          rec.p_now = rec.recstr;
+  21   1      }
+  22          
+  23          void uart_putchar(u8 dat) //发送一个字节
+  24          {
+  25   1          SBUF = dat;
+  26   1          while (!TI)
+  27   1              ;
+  28   1          TI = 0;
+  29   1      }
+  30          
+  31          void uart_putstr(u8 *str) //发送一个字符串
+  32          {
+  33   1          while (*str)
+  34   1          {
+  35   2              uart_putchar(*str++);
+  36   2          }
+  37   1      }
+  38          
+  39          void uart_get_data() //获取数据添加到字符串中
+  40          {
+  41   1          u8 rec_dat;
+  42   1          rec_dat = SBUF;
+  43   1        
+  44   1          uart_rec_data_add(rec_dat);
+  45   1      }
+  46          void uart_rec_data_add(u8 dat) //识别通信协议
+  47          {
+  48   1          if (dat == '+') //第一位为加号
+  49   1          {
+  50   2              rec.p_now = rec.recstr; //把当前的字符串指针指向头指针
+  51   2          }
+  52   1          else if (dat == '*') //如果最后一位为星号
+C51 COMPILER V9.60.0.0   UART                                                              08/05/2020 02:47:41 PAGE 2   
 
-  53   2              //spilt_str();       //直接分割字符串得到结果
-  54   2                                 //        uart_putstr(c_variable); //方便调试显示用
-  55   2                                 //        uart_putchar(' ');
-  56   2                                 //        uart_putstr(c_data);
-  57   2               uflag = 1;
-  58   2          }
-  59   1          else
-  60   1          {
-  61   2              *rec.p_now = dat;
-  62   2              rec.p_now++;
-  63   2          }
-  64   1      }
-  65          
-  66          void spilt_str() // 分割字符串
-  67          {
-  68   1          u8 i, Possem, j;
-  69   1         
-  70   1          for (i = 0; rec.recstr[i] != '\0'; i++) //识别字符串中间的冒号的位置
-  71   1          {
-  72   2              if (rec.recstr[i] == ':')
-  73   2              {
-  74   3                  Possem = i;
-  75   3                  break;
-  76   3              }
-  77   2          }
-  78   1          for (j = 0; j < Possem; j++) //分别赋值给俩个字符串
-  79   1          {
-  80   2              c_variable[j] = rec.recstr[j];
+  53   1          {
+  54   2              *rec.p_now = '\0'; //最后添加结束符
+  55   2                                 //        uart_putstr(rec.recstr);
+  56   2              //spilt_str();       //直接分割字符串得到结果
+  57   2                                 //        uart_putstr(c_variable); //方便调试显示用
+  58   2                                 //        uart_putchar(' ');
+  59   2                                 //        uart_putstr(c_data);
+  60   2            uflag = 1;
+  61   2          }
+  62   1          else
+  63   1          {
+  64   2              *rec.p_now = dat;
+  65   2              rec.p_now++;
+  66   2          }
+  67   1      }
+  68          
+  69          void spilt_str() // 分割字符串
+  70          {
+  71   1          u8 i, Possem, j;
+  72   1          char test[20];
+  73   1        
+  74   1          for (i = 0; rec.recstr[i] != '\0'; i++) //识别字符串中间的冒号的位置
+  75   1          {
+  76   2              if (rec.recstr[i] == ':')
+  77   2              {
+  78   3                  Possem = i;
+  79   3                  break;
+  80   3              }
   81   2          }
-  82   1          c_variable[j] = '\0';
-  83   1      
-  84   1          for (i = Possem + 1; i <= strlen(rec.recstr); i++)
-  85   1          {
-  86   2              c_data[i - Possem - 1] = rec.recstr[i];
-  87   2          }
-  88   1          c_data[i - Possem - 1] = '\0';
-  89   1         
-  90   1          if (str_cmp_fuck(c_variable, "adc")) //开始识别
-  91   1          {
-  92   2              dat_set = atoi(c_data);
-  93   2          }
-  94   1      }
-  95          
-  96          char str_cmp_fuck(u8 *s_a, u8 *s_b)
-  97          {
-  98   1          int p, q, i, t = 0;
-  99   1          p = strlen(s_a);
- 100   1          q = strlen(s_b);
- 101   1         
- 102   1          for (i = 0; s_a[i] != '\0' && s_b[i] != '\0'; i++)
- 103   1          {
- 104   2              if (s_a[i] > s_b[i])
- 105   2              {
- 106   3                  t = 1;
- 107   3                  return t;
- 108   3              }
- 109   2              if (s_a[i] < s_b[i])
- 110   2              {
- 111   3                  t = -1;
- 112   3                  return t;
- 113   3              }
- 114   2          }
-C51 COMPILER V9.53.0.0   UART                                                              07/22/2020 23:15:42 PAGE 3   
+  82   1          for (j = 0; j < Possem; j++) //分别赋值给俩个字符串
+  83   1          {
+  84   2              c_variable[j] = rec.recstr[j];
+  85   2          }
+  86   1          c_variable[j] = '\0';
+  87   1      
+  88   1          for (i = Possem + 1; i <= strlen(rec.recstr); i++)
+  89   1          {
+  90   2              c_data[i - Possem - 1] = rec.recstr[i];
+  91   2          }
+  92   1          c_data[i - Possem - 1] = '\0';
+  93   1        
+  94   1      //    if (str_cmp_fuck(c_variable, "adc")==0) //开始识别
+  95   1      //    {
+  96   1      //        dat_set = atof(c_data);
+  97   1      //      uart_putstr(rec.recstr);
+  98   1      //    }
+  99   1           if (str_cmp_fuck(c_variable, "fstop")==0) //开始识别
+ 100   1          {
+ 101   2            flag_stop= atof(c_data);
+ 102   2            sprintf(test,"%.2f ok!\r\n",flag_stop);
+ 103   2            uart_putstr(test);
+ 104   2          }
+ 105   1          
+ 106   1          if (str_cmp_fuck(c_variable, "speed")==0) //开始识别
+ 107   1          {
+ 108   2            set_speed= atoi(c_data);
+ 109   2            sprintf(test,"%d ok!\r\n",set_speed);
+ 110   2            uart_putstr(test);
+ 111   2          }
+ 112   1          
+ 113   1          if(str_cmp_fuck(c_variable, "Flag_Left")==0)
+ 114   1          {
+C51 COMPILER V9.60.0.0   UART                                                              08/05/2020 02:47:41 PAGE 3   
 
- 115   1          if (t == 0)
- 116   1          {
- 117   2              if (p > q)
- 118   2                  t = 1;
- 119   2              if (p < q)
- 120   2                  t = -1;
- 121   2          }
- 122   1          return t;
- 123   1      }
+ 115   2            Flag_Left =atof(c_data);
+ 116   2            sprintf(test,"%d ok!\r\n",Flag_Left);
+ 117   2            uart_putstr(test);
+ 118   2          }
+ 119   1          if(str_cmp_fuck(c_variable, "Flag_Right")==0)
+ 120   1          {
+ 121   2            Flag_Right =atof(c_data);
+ 122   2            sprintf(test,"%d ok!\r\n",Flag_Right);
+ 123   2            uart_putstr(test);
+ 124   2          } 
+ 125   1          
+ 126   1          if(str_cmp_fuck(c_variable, "angle.Kp")==0)
+ 127   1          {
+ 128   2            pid_angle.Kp =atof(c_data);
+ 129   2            sprintf(test,"%.2f ok!\r\n",pid_angle.Kp);
+ 130   2            uart_putstr(test);
+ 131   2          }
+ 132   1            if(str_cmp_fuck(c_variable, "zhongzhi")==0)
+ 133   1          {
+ 134   2            set_angle=atof(c_data);
+ 135   2            sprintf(test,"%.2f ok!\r\n",set_angle);
+ 136   2            uart_putstr(test);
+ 137   2          }
+ 138   1          if(str_cmp_fuck(c_variable, "angle.Ki")==0)
+ 139   1          {
+ 140   2            pid_angle.Ki =atof(c_data);
+ 141   2            sprintf(test,"%.2f ok!\r\n",pid_angle.Ki);
+ 142   2            uart_putstr(test);
+ 143   2          }
+ 144   1          if(str_cmp_fuck(c_variable, "angle.Kd")==0)
+ 145   1          {
+ 146   2            pid_angle.Kd =atof(c_data);
+ 147   2            sprintf(test,"%.2f ok!\r\n",pid_angle.Kd);
+ 148   2            uart_putstr(test);
+ 149   2          } 
+ 150   1          
+ 151   1          if(str_cmp_fuck(c_variable, "speed.Kp")==0)
+ 152   1          {
+ 153   2            pid_speed.Kp =atof(c_data);
+ 154   2            sprintf(test,"%.2f ok!\r\n",pid_speed.Kp);
+ 155   2            uart_putstr(test);
+ 156   2          } 
+ 157   1          if(str_cmp_fuck(c_variable, "speed.Ki")==0)
+ 158   1          {
+ 159   2            pid_speed.Ki =atof(c_data);
+ 160   2            sprintf(test,"%.2f ok!\r\n",pid_speed.Ki);
+ 161   2            uart_putstr(test);
+ 162   2          } 
+ 163   1              
+ 164   1          if(str_cmp_fuck(c_variable, "turn")==0)
+ 165   1          {
+ 166   2            Turn[0][0] =atoi(c_data);
+ 167   2            sprintf(test,"%.2f ok!\r\n",Turn[0][0]);
+ 168   2            uart_putstr(test);
+ 169   2          } 
+ 170   1          if(str_cmp_fuck(c_variable, "turn1kd")==0)
+ 171   1          {
+ 172   2            Turn[0][1] =atoi(c_data);
+ 173   2            sprintf(test,"%.2f ok!\r\n",Turn[0][1]);
+ 174   2            uart_putstr(test);
+ 175   2          } 
+ 176   1          if(str_cmp_fuck(c_variable, "turn2kp")==0)
+C51 COMPILER V9.60.0.0   UART                                                              08/05/2020 02:47:41 PAGE 4   
+
+ 177   1          {
+ 178   2            Turn[1][0] =atoi(c_data);
+ 179   2            sprintf(test,"%.2f ok!\r\n",Turn[1][0]);
+ 180   2            uart_putstr(test);
+ 181   2          }
+ 182   1          if(str_cmp_fuck(c_variable, "turn2kd")==0)
+ 183   1          {
+ 184   2            Turn[1][1] =atoi(c_data);
+ 185   2            sprintf(test,"%.2f ok!\r\n",Turn[1][1]);
+ 186   2            uart_putstr(test);
+ 187   2          }
+ 188   1          
+ 189   1      }
+ 190          
+ 191          char str_cmp_fuck(u8 *s_a, u8 *s_b)
+ 192          {
+ 193   1          int p, q, i, t = 0;
+ 194   1          p = strlen(s_a);
+ 195   1          q = strlen(s_b);
+ 196   1      
+ 197   1          for (i = 0; s_a[i] != '\0' && s_b[i] != '\0'; i++)
+ 198   1          {
+ 199   2              if (s_a[i] > s_b[i])
+ 200   2              {
+ 201   3                  t = 1;
+ 202   3                  return t;
+ 203   3              }
+ 204   2              if (s_a[i] < s_b[i])
+ 205   2              {
+ 206   3                  t = -1;
+ 207   3                  return t;
+ 208   3              }
+ 209   2          }
+ 210   1          if (t == 0)
+ 211   1          {
+ 212   2              if (p > q)
+ 213   2                  t = 1;
+ 214   2              if (p < q)
+ 215   2                  t = -1;
+ 216   2          }
+ 217   1          return t;
+ 218   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    962    ----
-   CONSTANT SIZE    =      4    ----
-   XDATA SIZE       =     56      23
+   CODE SIZE        =   2743    ----
+   CONSTANT SIZE    =    136    ----
+   XDATA SIZE       =     68      43
    PDATA SIZE       =   ----    ----
    DATA SIZE        =   ----    ----
    IDATA SIZE       =   ----    ----

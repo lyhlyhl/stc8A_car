@@ -1,50 +1,50 @@
-C51 COMPILER V9.53.0.0   TIMER                                                             07/23/2020 05:03:47 PAGE 1   
+C51 COMPILER V9.60.0.0   TIMER                                                             08/04/2020 23:19:58 PAGE 1   
 
 
-C51 COMPILER V9.53.0.0, COMPILATION OF MODULE TIMER
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE TIMER
 OBJECT MODULE PLACED IN .\timer.obj
-COMPILER INVOKED BY: F:\MDK5\C51\BIN\C51.EXE ..\hardware\timer\timer.c LARGE OMF2 OPTIMIZE(2,SPEED) BROWSE INCDIR(..\har
+COMPILER INVOKED BY: D:\keil\C51\BIN\C51.EXE ..\hardware\timer\timer.c LARGE OMF2 OPTIMIZE(2,SPEED) BROWSE INCDIR(..\har
                     -dware\delay;..\hardware\IIC;..\hardware\OLED;..\hardware\ADC;..\hardware\Mpu6050;..\hardware\KEY;..\hardware\LED;..\hard
                     -ware\PWM;..\hardware\pca;..\hardware\timer;..\hardware\PID;..\hardware\CCD;..\hardware\UART;..\hardware\Motor) DEBUG PRI
-                    -NT(.\timer.lst) TABS(3) OBJECT(.\timer.obj)
+                    -NT(.\timer.lst) TABS(2) OBJECT(.\timer.obj)
 
 line level    source
 
    1          #include "timer.h"
    2          
    3          int flag = 0;
-   4          u8 busy[5];
-   5          
-   6          void Timer_uart_init() //串口中断初始化
-   7          {
-   8   1         SCON |= 0x50;                            //REN=1允许串行接受状态，串口工作模式2
-   9   1         TMOD |= 0x00;                            //定时器1为模式0（16位自动重载）
-  10   1         AUXR = 0X40;                             //开启1T模式`    PS：这一行不能或等于不然串口无法打开
-  11   1         TL1 = (65535 - (24000000 / 4 / 9600)); //设置波特率重装值
-  12   1         TH1 = (65535 - (24000000 / 4 / 9600)) >> 8;
-  13   1         TR1 = 1; //开启定时器1
-  14   1         ES = 1;  //开串口中断
-  15   1         EA = 1;  // 开总中断
-  16   1         busy[1] = 0;
-  17   1      }
-  18          
-  19          //UART1中断
-  20          void UartIsr() interrupt 4
-  21          {
-  22   1         u8 res;
-  23   1      
-  24   1         if (SCON & 0x02)
-  25   1         {
-  26   2            SCON &= ~0x02; // UART1_CLEAR_TX_FLAG;
-  27   2            busy[1] = 0;
-  28   2         }
-  29   1         if (SCON & 0x01)
-  30   1         {
-  31   2            SCON &= ~0x01; //  UART1_CLEAR_RX_FLAG;
-  32   2      
-  33   2            res = SBUF;
-  34   2         }
-  35   1      }
+   4          
+   5          void Timer_uart_init() //串口中断初始化
+   6          {
+   7   1         SCON |= 0x50;                            //REN=1允许串行接受状态，串口工作模式2
+   8   1         TMOD |= 0x00;                            //定时器1为模式0（16位自动重载）
+   9   1         AUXR = 0X40;                             //开启1T模式`    PS：这一行不能或等于不然串口无法打开
+  10   1         TL1 = (65535 - (24000000 / 4 / 115200)); //设置波特率重装值
+  11   1         TH1 = (65535 - (24000000 / 4 / 115200)) >> 8;
+  12   1         TR1 = 1; //开启定时器1
+  13   1         ES = 1;  //开串口中断
+  14   1      
+  15   1      }
+  16          
+  17          /*{
+  18          //UART1中断
+  19          //void UartIsr() interrupt 4
+  20          //{
+  21          //   u8 res;
+  22          
+  23          //   if (SCON & 0x02)
+  24          //   {
+  25          //      SCON &= ~0x02; // UART1_CLEAR_TX_FLAG;
+  26          //      busy[1] = 0;
+  27          //   }
+  28          //   if (SCON & 0x01)
+  29          //   {
+  30          //      SCON &= ~0x01; //  UART1_CLEAR_RX_FLAG;
+  31          
+  32          //      res = SBUF;
+  33          //   }
+  34          //}
+  35          }*/
   36          void Timer0_init() //定时器中断0初始化
   37          {
   38   1         TMOD |= 0x00;
@@ -53,93 +53,150 @@ line level    source
   41   1         TH0 = 0xf8;
   42   1         TR0 = 1;
   43   1         ET0 = 1;
-  44   1         EA = 1;
-  45   1      }
-  46          
-  47          void speed_count_init() //设定T3T4计数器读取编码器的值
-  48          {
-  49   1         T3L = 0x00;
-  50   1         T3H = 0x00;
-  51   1      
-  52   1         T4L = 0x00;
-C51 COMPILER V9.53.0.0   TIMER                                                             07/23/2020 05:03:47 PAGE 2   
+  44   1      }
+  45          
+  46          void speed_count_init() //设定T3T4计数器读取编码器的值
+  47          {
+  48   1         T3L = 0x00;
+  49   1         T3H = 0x00;
+  50   1      
+  51   1         T4L = 0x00;
+  52   1         T4H = 0x00;
+C51 COMPILER V9.60.0.0   TIMER                                                             08/04/2020 23:19:58 PAGE 2   
 
-  53   1         T4H = 0x00;
-  54   1      
-  55   1         IE2 = 0x60;
-  56   1         T4T3M = 0xcc;
-  57   1      }
+  53   1      
+  54   1         IE2 = 0x60;
+  55   1         T4T3M = 0xcc;
+  56   1      }
+  57          
   58          
-  59          float GetCarSpeed(int dat)
-  60          {
-  61   1         float speed;
-  62   1         speed = (float)dat;
-  63   1         speed = speed / 16 /2.2* 0.049 * 3.14;
-  64   1         speed = speed * 200;
-  65   1         return speed;
-  66   1      }
-  67          
-  68          extern int dat1, dat2;
-  69          void time0_itp() interrupt 1 //定时器0中断服务函数
-  70          {
-  71   1         static int cnt = 0,cnt_stand = 0; //设置计数 到5读取计数器计数值
-  72   1         float motor_pwm;
-  73   1         char test[10];
-  74   1         if (cnt >= 5)
-  75   1         {
-  76   2            cnt = 0;
-  77   2            dat1 = (int)(T3H << 8);
-  78   2            dat1 = dat1 | (int)T3L;
-  79   2            dat2 = (int)(T4H << 8);
-  80   2            dat2 = dat2 | (int)T4L;
-  81   2            T4T3M = 0x44;
-  82   2            T3H = 0;
-  83   2            T3L = 0;
-  84   2            T4H = 0;
-  85   2            T4L = 0;
-  86   2            T4T3M = 0xCC;
-  87   2         }
-  88   1         if(cnt_stand >= 10)
-  89   1         {
-  90   2            cnt_stand = 0;
-  91   2            motor_pwm = stand();
-  92   2            Pwm_set(motor_pwm,motor_pwm);
-  93   2            sprintf(test,"%.2f\r\n",motor_pwm);
-  94   2            uart_putstr(test);
-  95   2            
-  96   2         }
-  97   1         cnt_stand++;
-  98   1         cnt++;
-  99   1      }
- 100          void uart_int(void) interrupt 4 using 1   //串口中断函数
- 101          {
- 102   1         if (RI)
- 103   1         {
- 104   2             EA = 0;
- 105   2            uart_get_data();
- 106   2             EA = 1;
- 107   2            RI = 0;
- 108   2         }
- 109   1      }
- 110          void TM3() interrupt 19 //下面俩个都是计数器的中断服务函数，但是计数器不可能计满所以没用
- 111          {
- 112   1         //LED = !LED;
- 113   1         AUXINTIF &= ~T3IF;
- 114   1      }
-C51 COMPILER V9.53.0.0   TIMER                                                             07/23/2020 05:03:47 PAGE 3   
+  59          
+  60          extern int  Encoder_Left, Encoder_Right;
+  61          int a1=0;
+  62          int cnt_speed = 0 ;
+  63          void time0_itp() interrupt 1 //定时器0中断服务函数
+  64          {
+  65   1         static int cnt = 0,cnt_stand = 0; //设置计数 到5读取计数器计数值
+  66   1         float a=0;
+  67   1         char test[30];
+  68   1        
+  69   1        if (cnt == 5)
+  70   1        {
+  71   2          flag_angle = 1;
+  72   2          
+  73   2          if (SpeedControlPeriod == 9)
+  74   2            SpeedControlPeriod=0;
+  75   2          
+  76   2          cnt =0;
+  77   2      
+  78   2        }
+  79   1        if (cnt_speed == 45)
+  80   1        {
+  81   2          flag_speed = 1;
+  82   2          cnt_speed =0;
+  83   2        }
+  84   1        /*{
+  85   1        
+  86   1      //   if (cnt_stand== 9)
+  87   1      //   {
+  88   1      //      //P55 =1;
+  89   1      //      dat11 = (int)(T3H << 8);
+  90   1      //      dat11 = dat11 | (int)T3L;
+  91   1      //      dat22 = (int)(T4H << 8);
+  92   1      //      dat22 = dat22 | (int)T4L;
+  93   1      //      T4T3M = 0x44;
+  94   1      //      T3H = 0;
+  95   1      //      T3L = 0;
+  96   1      //      T4H = 0;
+  97   1      //      T4L = 0;
+  98   1      //      T4T3M = 0xCC;
+  99   1      //      if (P42 ==0 && P40 == 1)
+ 100   1      //      {
+ 101   1      //        Encoder_Right = -dat11;
+ 102   1      //        Encoder_Left = -dat22;
+ 103   1      //      }
+ 104   1      //      if (P42 ==1 && P40 == 0)
+ 105   1      //      {
+ 106   1      //        Encoder_Right = dat11;
+ 107   1      //        Encoder_Left = dat22;
+ 108   1      //      }
+ 109   1      //      h1 = adc_once(ADC_P01, ADC_12BIT);
+ 110   1      //      h2 = adc_once(ADC_P11, ADC_12BIT);
+ 111   1      //      h3= adc_once(ADC_P12, ADC_12BIT);
+ 112   1      //      h4= adc_once(ADC_P16, ADC_12BIT);
+ 113   1      //      h5= adc_once(ADC_P17, ADC_12BIT);
+ 114   1      //      guiyi(h1);
+C51 COMPILER V9.60.0.0   TIMER                                                             08/04/2020 23:19:58 PAGE 3   
 
- 115          
- 116          void TM4() interrupt 20
- 117          {
- 118   1         //LED = !LED;
- 119   1         AUXINTIF &= ~T4IF;
- 120   1      }
+ 115   1      //      guiyi(h2);
+ 116   1      //      guiyi(h3);
+ 117   1      //      guiyi(h4);
+ 118   1      //      guiyi(h5);
+ 119   1      //      dcc=(float)(h1-h5)/(h1+h3+h5)*100;
+ 120   1      //      a1 =(float)(h1-h5)/(h1+h5)*100;
+ 121   1      ////      sprintf(test,"%d %d %d %d %d\r\n",(int)dcc,h1,guiyi(h3),h5 , a1);
+ 122   1      ////      uart_putstr(test);
+ 123   1      //      //P55 =0;
+ 124   1      //     cnt_stand = 0;
+ 125   1      //   }
+ 126   1      //   
+ 127   1      //   if(cnt_stand == 2)
+ 128   1      //   {
+ 129   1      //    // P55 =1;
+ 130   1      //     
+ 131   1      //     stand();    
+ 132   1      //     if (turn_off(tangle)==1||flag_stop ==0)
+ 133   1      //     { Pwm_set(0,0);}
+ 134   1      //     else
+ 135   1      //     { 
+ 136   1      //       if (Moto1>5) 
+ 137   1      //         a=-200;
+ 138   1      //       if (Moto1<-5)  
+ 139   1      //         a=+100; 
+ 140   1      //      
+ 141   1      //     Pwm_set(Moto1-a,Moto2);}
+ 142   1      
+ 143   1      ////      sprintf(test,"%.2f\r\n",motor_pwm);
+ 144   1      ////      uart_putstr(test);
+ 145   1      //    //  P55 =0;
+ 146   1      //     
+ 147   1      //   }
+ 148   1      }*/
+ 149   1         cnt_speed++;
+ 150   1         cnt_stand++;
+ 151   1         cnt++;
+ 152   1      }
+*** WARNING C280 IN LINE 67 OF ..\hardware\timer\timer.c: 'test': unreferenced local variable
+ 153          
+ 154          void uart_int(void) interrupt 4    //串口中断函数
+ 155          {
+ 156   1         if(RI)
+ 157   1         {
+ 158   2           uart_get_data();
+ 159   2           RI = 0;
+ 160   2         }
+ 161   1      }
+ 162          
+ 163          
+ 164          void TM3() interrupt 19 //下面俩个都是计数器的中断服务函数，但是计数器不可能计满所以没用
+ 165          {
+ 166   1         //LED = !LED;
+ 167   1         AUXINTIF &= ~T3IF;
+ 168   1      }
+ 169          
+ 170          void TM4() interrupt 20
+ 171          {
+ 172   1         //LED = !LED;
+ 173   1         AUXINTIF &= ~T4IF;
+ 174   1      }
+
+C51 COMPILER V9.60.0.0   TIMER                                                             08/04/2020 23:19:58 PAGE 4   
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    655    ----
-   CONSTANT SIZE    =      7    ----
-   XDATA SIZE       =     11      21
+   CODE SIZE        =    310    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =     10      34
    PDATA SIZE       =   ----    ----
    DATA SIZE        =   ----    ----
    IDATA SIZE       =   ----    ----
@@ -151,4 +208,4 @@ MODULE INFORMATION:   STATIC OVERLAYABLE
 END OF MODULE INFORMATION.
 
 
-C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
+C51 COMPILATION COMPLETE.  1 WARNING(S),  0 ERROR(S)

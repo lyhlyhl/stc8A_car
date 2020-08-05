@@ -1,12 +1,12 @@
-C51 COMPILER V9.53.0.0   KALMAN_FILTER                                                     07/22/2020 23:15:41 PAGE 1   
+C51 COMPILER V9.60.0.0   KALMAN_FILTER                                                     08/03/2020 05:26:37 PAGE 1   
 
 
-C51 COMPILER V9.53.0.0, COMPILATION OF MODULE KALMAN_FILTER
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE KALMAN_FILTER
 OBJECT MODULE PLACED IN .\Kalman_Filter.obj
-COMPILER INVOKED BY: F:\MDK5\C51\BIN\C51.EXE ..\hardware\Mpu6050\Kalman_Filter.c LARGE OMF2 OPTIMIZE(2,SPEED) BROWSE INC
+COMPILER INVOKED BY: D:\keil\C51\BIN\C51.EXE ..\hardware\Mpu6050\Kalman_Filter.c LARGE OMF2 OPTIMIZE(2,SPEED) BROWSE INC
                     -DIR(..\hardware\delay;..\hardware\IIC;..\hardware\OLED;..\hardware\ADC;..\hardware\Mpu6050;..\hardware\KEY;..\hardware\L
                     -ED;..\hardware\PWM;..\hardware\pca;..\hardware\timer;..\hardware\PID;..\hardware\CCD;..\hardware\UART;..\hardware\Motor)
-                    - DEBUG PRINT(.\Kalman_Filter.lst) TABS(3) OBJECT(.\Kalman_Filter.obj)
+                    - DEBUG PRINT(.\Kalman_Filter.lst) TABS(2) OBJECT(.\Kalman_Filter.obj)
 
 line level    source
 
@@ -62,7 +62,7 @@ line level    source
   50   1      
   51   1         PP[0][0] -= K_0 * t_0;
   52   1         //?????????
-C51 COMPILER V9.53.0.0   KALMAN_FILTER                                                     07/22/2020 23:15:41 PAGE 2   
+C51 COMPILER V9.60.0.0   KALMAN_FILTER                                                     08/03/2020 05:26:37 PAGE 2   
 
   53   1         PP[0][1] -= K_0 * t_1;
   54   1         PP[1][0] -= K_1 * t_0;
@@ -79,24 +79,55 @@ line level    source
   65          float GetAngle(void)
   66          {
   67   1         float angleAx, gyroGy;
-  68   1         float Angle;
-  69   1      
-  70   1         mpu6050_get_accdata();
-  71   1         mpu6050_get_gyro();
-  72   1         angleAx = atan2(mpu_acc_x, mpu_acc_z) * 180 / 3.14;
-  73   1         gyroGy = (-mpu_gyro_y) / 16.40;
-  74   1         Angle = Kalman_Filter(angleAx, gyroGy);
-  75   1      
-  76   1         return Angle;
-  77   1      }
+  68   1      
+  69   1         mpu6050_get_accdata();
+  70   1         mpu6050_get_gyro();
+  71   1         angleAx = atan2(mpu_acc_x, mpu_acc_z) * 180 / 3.1416;
+  72   1         gyroGy = (-mpu_gyro_y) / 16.4;
+  73   1         Angle = Kalman_Filter(angleAx, gyroGy);
+  74   1      
+  75   1         return Angle;
+  76   1      }
+  77          
+  78          
+  79          float K1 =0.3; 
+  80          //float angle11=0 ;
+  81          float lpf_filter(void)
+  82          {
+  83   1        float angleAx, gyroGy;
+  84   1        
+  85   1         mpu6050_get_accdata();
+  86   1         mpu6050_get_gyro();
+  87   1         angleAx = atan2(mpu_acc_x, mpu_acc_z) * 180 / 3.1416;
+  88   1         gyroGy = (-mpu_gyro_y) / 16.4;
+  89   1         Angle = K1 * angleAx+ (1-K1) * (Angle + gyroGy * 0.005);
+  90   1        
+  91   1        return Angle;
+  92   1      }
+  93          
+  94          
+  95          int lowV(int com)
+  96          {
+  97   1          static int iLastData;    //上一次值
+  98   1          int iData;               //本次计算值
+  99   1        
+ 100   1          float dPower = 0.2;               //滤波系数
+ 101   1          iData = ( com * dPower ) + ( 1 - dPower ) * iLastData; //计算
+ 102   1          iLastData = iData;                                     //存贮本次数据
+ 103   1        
+ 104   1          return iData;                                         //返回数据
+ 105   1      }
+ 106          
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =   1522    ----
+   CODE SIZE        =   1988    ----
    CONSTANT SIZE    =   ----    ----
-   XDATA SIZE       =     93      20
+   XDATA SIZE       =     99      32
    PDATA SIZE       =   ----    ----
    DATA SIZE        =   ----    ----
+C51 COMPILER V9.60.0.0   KALMAN_FILTER                                                     08/03/2020 05:26:37 PAGE 3   
+
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
    EDATA SIZE       =   ----    ----
